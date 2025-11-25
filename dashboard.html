@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Дашборд - BSK Education</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Шапка */
+        header {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, #fff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-link:hover {
+            color: #ffd700;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #ff6b9d, #ff1493);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        /* Основной контент */
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 6rem 2rem 2rem;
+        }
+
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: slideUp 0.8s ease-out;
+        }
+
+        .welcome-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #fff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .welcome-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 2rem;
+        }
+
+        .date-display {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            display: inline-block;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Статистика */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 20px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            color: #ffd700;
+            margin-bottom: 1rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+        }
+
+        /* Прогресс */
+        .progress-section {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2.5rem;
+            border-radius: 25px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-title i {
+            color: #ffd700;
+        }
+
+        .progress-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .progress-percent {
+            font-weight: 700;
+            color: #ffd700;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(45deg, #ff6b9d, #ff1493);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        /* Рекомендации */
+        .recommendations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .recommendation-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 20px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .recommendation-card:hover {
+            transform: translateY(-5px);
+            border-color: #ffd700;
+        }
+
+        .rec-icon {
+            font-size: 2rem;
+            color: #ffd700;
+            margin-bottom: 1rem;
+        }
+
+        .rec-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .rec-description {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .rec-button {
+            background: linear-gradient(45deg, #ff6b9d, #ff1493);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .rec-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 20, 147, 0.4);
+        }
+
+        /* Уведомление */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            border-left: 4px solid #ff1493;
+            z-index: 1000;
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        /* Анимации */
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .dashboard-container {
+                padding: 5rem 1rem 1rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .welcome-title {
+                font-size: 2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .progress-section {
+                padding: 1.5rem;
+            }
+
+            .recommendations-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-container {
+                padding: 0 1rem;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .user-menu {
+                margin-top: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Уведомление -->
+    <div class="notification" id="notification" role="alert" aria-live="polite">
+        <div id="notificationMessage"></div>
+    </div>
+
+    <!-- Шапка -->
+    <header>
+        <div class="nav-container">
+            <a href="index.html" class="logo">BSK Education</a>
+            <div class="nav-links">
+    <a href="dashboard.html" class="nav-link">
+        <i class="fas fa-home"></i>Главная
+    </a>
+    <a href="tasks.html" class="nav-link">
+        <i class="fas fa-tasks"></i>Задания
+    </a>
+    <a href="profile.html" class="nav-link">
+        <i class="fas fa-user"></i>Профиль
+    </a>
+    <a href="help.html" class="nav-link">
+        <i class="fas fa-question-circle"></i>Помощь
+    </a>
+</div>
+                <div class="user-menu">
+                    <div class="user-avatar" id="userAvatar">У</div>
+                    <a href="login.html" class="nav-link" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i>Выйти
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Основной контент -->
+    <div class="dashboard-container">
+        <!-- Приветствие -->
+        <div class="welcome-section">
+            <h1 class="welcome-title" id="welcomeTitle">Добро пожаловать!</h1>
+            <p class="welcome-subtitle">Продолжайте свой путь к успешной сдаче экзаменов</p>
+            <div class="date-display" id="currentDate"></div>
+        </div>
+
+        <!-- Статистика -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="stat-value" id="completedTests">0</div>
+                <div class="stat-label">Пройдено тестов</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="stat-value" id="averageScore">0%</div>
+                <div class="stat-label">Средний результат</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="stat-value" id="studyDays">0</div>
+                <div class="stat-label">Дней обучения</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <div class="stat-value" id="currentLevel">Новичок</div>
+                <div class="stat-label">Текущий уровень</div>
+            </div>
+        </div>
+
+        <!-- Прогресс по темам -->
+        <div class="progress-section">
+            <h2 class="section-title">
+                <i class="fas fa-tasks"></i>
+                Прогресс обучения
+            </h2>
+            <div id="progressList">
+                <!-- Прогресс будет загружен через JavaScript -->
+            </div>
+        </div>
+
+        <!-- Рекомендации -->
+        <div class="progress-section">
+            <h2 class="section-title">
+                <i class="fas fa-lightbulb"></i>
+                Рекомендации для вас
+            </h2>
+            <div class="recommendations-grid">
+                <div class="recommendation-card">
+                    <div class="rec-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3 class="rec-title">Повторите алгебру</h3>
+                    <p class="rec-description">Освежите знания по квадратным уравнениям и функциям для лучшего понимания</p>
+                    <button class="rec-button">Начать повторение</button>
+                </div>
+                <div class="recommendation-card">
+                    <div class="rec-icon">
+                        <i class="fas fa-puzzle-piece"></i>
+                    </div>
+                    <h3 class="rec-title">Новая тема: Геометрия</h3>
+                    <p class="rec-description">Изучите свойства треугольников и окружностей для подготовки к экзамену</p>
+                    <button class="rec-button">Изучить</button>
+                </div>
+                <div class="recommendation-card">
+                    <div class="rec-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="rec-title">Практический тест</h3>
+                    <p class="rec-description">Проверьте свои знания с помощью теста по пройденным темам</p>
+                    <button class="rec-button">Пройти тест</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Функция показа уведомления
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            const messageEl = document.getElementById('notificationMessage');
+            
+            messageEl.textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Загрузка данных пользователя
+        function loadUserData() {
+            try {
+                const savedUser = localStorage.getItem('bsk_user');
+                const savedStats = localStorage.getItem('userStatistics');
+                
+                if (!savedUser) {
+                    showNotification('Пожалуйста, войдите в систему');
+                    setTimeout(() => {
+                        window.location.href = 'login.html';
+                    }, 2000);
+                    return;
+                }
+
+                const user = JSON.parse(savedUser);
+                const stats = savedStats ? JSON.parse(savedStats) : getDefaultStats();
+
+                // Обновляем приветствие
+                document.getElementById('welcomeTitle').textContent = `Добро пожаловать, ${user.name || 'Пользователь'}!`;
+                
+                // Обновляем аватар
+                if (user.name) {
+                    document.getElementById('userAvatar').textContent = user.name.charAt(0).toUpperCase();
+                }
+
+                // Обновляем статистику
+                document.getElementById('completedTests').textContent = stats.completedTests || 0;
+                document.getElementById('averageScore').textContent = stats.averageScore || "0%";
+                document.getElementById('studyDays').textContent = stats.studyDays || 0;
+                document.getElementById('currentLevel').textContent = getCurrentLevel(stats);
+
+                // Обновляем прогресс
+                updateProgressList(stats.topics || []);
+
+            } catch (error) {
+                console.error('Ошибка загрузки данных:', error);
+                showNotification('Ошибка загрузки данных');
+            }
+        }
+
+        // Получение статистики по умолчанию
+        function getDefaultStats() {
+            return {
+                completedTests: 0,
+                averageScore: "0%",
+                studyDays: 0,
+                topics: [
+                    { name: 'Алгебра', progress: 0 },
+                    { name: 'Геометрия', progress: 0 },
+                    { name: 'Тригонометрия', progress: 0 }
+                ]
+            };
+        }
+
+        // Определение текущего уровня
+        function getCurrentLevel(stats) {
+            const avgScore = parseInt(stats.averageScore) || 0;
+            if (avgScore >= 90) return 'Эксперт';
+            if (avgScore >= 70) return 'Продвинутый';
+            if (avgScore >= 50) return 'Средний';
+            return 'Новичок';
+        }
+
+        // Обновление списка прогресса
+        function updateProgressList(topics) {
+            const progressList = document.getElementById('progressList');
+            progressList.innerHTML = '';
+
+            topics.forEach(topic => {
+                const progressItem = document.createElement('div');
+                progressItem.className = 'progress-item';
+                progressItem.innerHTML = `
+                    <div class="progress-header">
+                        <span class="progress-name">${topic.name}</span>
+                        <span class="progress-percent">${topic.progress || 0}%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${topic.progress || 0}%"></div>
+                    </div>
+                `;
+                progressList.appendChild(progressItem);
+            });
+        }
+
+        // Обновление даты
+        function updateDate() {
+            const now = new Date();
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            };
+            document.getElementById('currentDate').textContent = 
+                now.toLocaleDateString('ru-RU', options);
+        }
+
+        // Выход из системы
+        function logout() {
+            try {
+                const savedUser = localStorage.getItem('bsk_user');
+                if (savedUser) {
+                    const user = JSON.parse(savedUser);
+                    user.isLoggedIn = false;
+                    localStorage.setItem('bsk_user', JSON.stringify(user));
+                }
+                showNotification('Вы вышли из системы');
+            } catch (error) {
+                console.error('Ошибка выхода:', error);
+            }
+        }
+
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            loadUserData();
+            updateDate();
+
+            // Добавляем обработчики для кнопок рекомендаций
+            document.querySelectorAll('.rec-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    showNotification('Функция в разработке');
+                });
+            });
+        });
+
+        // Обновляем дату каждую минуту
+        setInterval(updateDate, 60000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация - BSK Education</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+
+        /* Логотип */
+        .logo {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, #fff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            transition: transform 0.3s ease;
+            z-index: 1000;
+            text-decoration: none;
+        }
+
+        .logo:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Контейнер регистрации */
+        .register-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .register-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+        }
+
+        .register-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 3rem;
+            border-radius: 25px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            width: 100%;
+            max-width: 500px;
+            position: relative;
+            z-index: 2;
+            animation: slideUp 0.8s ease-out;
+        }
+
+        .register-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .register-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, #fff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .register-subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+        }
+
+        /* Форма */
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem 1.2rem;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-family: inherit;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #ffd700;
+            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.1);
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .form-input:hover {
+            border-color: #ffd700;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .password-toggle:hover {
+            color: #ffd700;
+        }
+
+        /* Чекбокс */
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+            margin-bottom: 2rem;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            margin-top: 0.2rem;
+            accent-color: #ff1493;
+            transform: scale(1.2);
+        }
+
+        .checkbox-label {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.4;
+        }
+
+        .checkbox-label a {
+            color: #ffd700;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .checkbox-label a:hover {
+            color: #ff6b9d;
+            text-decoration: underline;
+        }
+
+        /* Кнопка регистрации */
+        .register-button {
+            width: 100%;
+            background: linear-gradient(45deg, #ff6b9d, #ff1493);
+            color: white;
+            border: none;
+            padding: 1.2rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 30px rgba(255, 20, 147, 0.4);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .register-button:disabled {
+            background: rgba(255, 255, 255, 0.2);
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .register-button:not(:disabled):hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 20, 147, 0.6);
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Разделитель */
+        .divider {
+            text-align: center;
+            margin: 2rem 0;
+            position: relative;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .divider span {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0 1rem;
+            position: relative;
+            z-index: 1;
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+        }
+
+        /* Социальные кнопки */
+        .social-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            padding: 1rem;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            color: white;
+            text-decoration: none;
+            backdrop-filter: blur(10px);
+        }
+
+        .social-button:hover {
+            border-color: #ffd700;
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .social-button i {
+            font-size: 1.2rem;
+        }
+
+        .social-google {
+            color: #fff;
+        }
+
+        .social-vk {
+            color: #fff;
+        }
+
+        /* Ссылка на вход */
+        .login-link {
+            text-align: center;
+            margin-top: 2rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .login-link a {
+            color: #ffd700;
+            text-decoration: none;
+            font-weight: 600;
+            margin-left: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .login-link a:hover {
+            color: #ff6b9d;
+            text-decoration: underline;
+        }
+
+        /* Анимации */
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Декоративные элементы */
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .floating-element {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-element:nth-child(1) {
+            width: 40px;
+            height: 40px;
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .floating-element:nth-child(2) {
+            width: 30px;
+            height: 30px;
+            top: 70%;
+            left: 85%;
+            animation-delay: 2s;
+        }
+
+        .floating-element:nth-child(3) {
+            width: 25px;
+            height: 25px;
+            top: 80%;
+            left: 15%;
+            animation-delay: 4s;
+        }
+
+        /* Уведомления */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            border-left: 4px solid #ff1493;
+            z-index: 1002;
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .register-container {
+                padding: 1rem;
+            }
+
+            .register-card {
+                padding: 2rem;
+            }
+
+            .register-title {
+                font-size: 2rem;
+            }
+
+            .logo {
+                position: absolute;
+                top: 1.5rem;
+                left: 1.5rem;
+                font-size: 2rem;
+            }
+
+            .social-buttons {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .register-card {
+                padding: 1.5rem;
+            }
+
+            .register-title {
+                font-size: 1.8rem;
+            }
+
+            .logo {
+                font-size: 1.8rem;
+                top: 1rem;
+                left: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Уведомление -->
+    <div class="notification" id="notification" role="alert" aria-live="polite">
+        <div id="notificationMessage"></div>
+    </div>
+
+    <!-- Логотип -->
+    <a href="index.html" class="logo">BSK Education</a>
+
+    <!-- Контейнер регистрации -->
+    <div class="register-container">
+        <div class="floating-elements">
+            <div class="floating-element"></div>
+            <div class="floating-element"></div>
+            <div class="floating-element"></div>
+        </div>
+
+        <div class="register-card">
+            <div class="register-header">
+                <h1 class="register-title">Регистрация</h1>
+                <p class="register-subtitle">Создайте аккаунт для начала обучения</p>
+            </div>
+
+            <form id="registerForm">
+                <div class="form-group">
+                    <label class="form-label" for="name">Имя</label>
+                    <input type="text" id="name" class="form-input" placeholder="Введите ваше имя" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="email">Email</label>
+                    <input type="email" id="email" class="form-input" placeholder="your@email.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="password">Пароль</label>
+                    <div style="position: relative;">
+                        <input type="password" id="password" class="form-input" placeholder="Создайте надежный пароль" required>
+                        <button type="button" class="password-toggle" onclick="togglePassword('password')">
+                            <i class="far fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="confirmPassword">Подтвердите пароль</label>
+                    <div style="position: relative;">
+                        <input type="password" id="confirmPassword" class="form-input" placeholder="Повторите пароль" required>
+                        <button type="button" class="password-toggle" onclick="togglePassword('confirmPassword')">
+                            <i class="far fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="agreement" required>
+                    <label class="checkbox-label" for="agreement">
+                        Я соглашаюсь с <a href="#">условиями использования</a> и <a href="#">политикой конфиденциальности</a>
+                    </label>
+                </div>
+
+                <button type="submit" class="register-button" id="registerButton">
+                    Создать аккаунт
+                    <i class="fas fa-arrow-right" style="margin-left: 10px;"></i>
+                </button>
+            </form>
+
+            <div class="divider">
+                <span>или войдите через</span>
+            </div>
+
+            <div class="social-buttons">
+                <a href="#" class="social-button social-google">
+                    <i class="fab fa-google"></i>
+                    Google
+                </a>
+                <a href="#" class="social-button social-vk">
+                    <i class="fab fa-vk"></i>
+                    VK
+                </a>
+            </div>
+
+            <div class="login-link">
+                Уже есть аккаунт?
+                <a href="login.html">Войти</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Глобальная переменная для отслеживания состояния
+        let isRegistering = false;
+
+        // Класс для управления пользователем
+        class UserManager {
+            constructor() {
+                this.currentUser = null;
+                this.loadUserData();
+                this.checkAuthStatus();
+            }
+
+            // Загрузка данных пользователя из LocalStorage
+            loadUserData() {
+                const savedUser = localStorage.getItem('bsk_user');
+                if (savedUser) {
+                    try {
+                        this.currentUser = JSON.parse(savedUser);
+                        console.log('Пользователь загружен:', this.currentUser);
+                    } catch (error) {
+                        console.error('Ошибка загрузки пользователя:', error);
+                        this.currentUser = null;
+                    }
+                } else {
+                    console.log('Пользователь не найден в LocalStorage');
+                }
+            }
+
+            // Сохранение данных пользователя в LocalStorage
+            saveUserData(userData) {
+                this.currentUser = {...this.currentUser, ...userData};
+                localStorage.setItem('bsk_user', JSON.stringify(this.currentUser));
+                console.log('Пользователь сохранен:', this.currentUser);
+                this.showNotification('Регистрация успешна!');
+            }
+
+            // Регистрация пользователя
+            registerUser(name, email, password) {
+                const userData = {
+                    name: name,
+                    email: email,
+                    password: password,
+                    registeredAt: new Date().toISOString(),
+                    isRegistered: true,
+                    isLoggedIn: true
+                };
+                
+                this.saveUserData(userData);
+                return true;
+            }
+
+            // Проверка статуса авторизации
+            checkAuthStatus() {
+                const userInfo = this.getUserInfo();
+                
+                // Если пользователь уже авторизован и профиль настроен - перенаправляем на дашборд
+                if (userInfo.isLoggedIn && userInfo.setupCompleted) {
+                    window.location.href = 'dashboard.html';
+                }
+                // Если пользователь авторизован но профиль не настроен - перенаправляем на настройку
+                else if (userInfo.isLoggedIn) {
+                    window.location.href = 'profile-setup.html';
+                }
+                // Если не авторизован - остаемся на странице регистрации
+            }
+
+            // Получение информации о пользователе
+            getUserInfo() {
+                if (!this.currentUser) {
+                    return { 
+                        isLoggedIn: false,
+                        setupCompleted: false 
+                    };
+                }
+                
+                return {
+                    isLoggedIn: this.currentUser.isLoggedIn || false,
+                    setupCompleted: this.currentUser.setupCompleted || false,
+                    name: this.currentUser.name,
+                    email: this.currentUser.email
+                };
+            }
+
+            // Показать уведомление
+            showNotification(message) {
+                const notification = document.getElementById('notification');
+                const messageEl = document.getElementById('notificationMessage');
+                
+                messageEl.textContent = message;
+                notification.classList.add('show');
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 3000);
+            }
+        }
+
+        // Инициализация менеджера пользователя
+        const userManager = new UserManager();
+
+        // Переключение видимости пароля
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            const wrapper = input.parentElement;
+            const icon = wrapper.querySelector('i');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        // Валидация формы
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (isRegistering) return;
+            isRegistering = true;
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const agreement = document.getElementById('agreement').checked;
+            const button = document.getElementById('registerButton');
+            const originalText = button.innerHTML;
+
+            // Проверка заполнения полей
+            if (!name || !email || !password || !confirmPassword) {
+                userManager.showNotification('Заполните все поля!');
+                isRegistering = false;
+                return;
+            }
+
+            // Проверка email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                userManager.showNotification('Введите корректный email!');
+                isRegistering = false;
+                return;
+            }
+
+            // Проверка совпадения паролей
+            if (password !== confirmPassword) {
+                userManager.showNotification('Пароли не совпадают!');
+                isRegistering = false;
+                return;
+            }
+
+            // Проверка согласия с условиями
+            if (!agreement) {
+                userManager.showNotification('Необходимо согласиться с условиями использования');
+                isRegistering = false;
+                return;
+            }
+
+            // Проверка сложности пароля
+            if (password.length < 6) {
+                userManager.showNotification('Пароль должен содержать минимум 6 символов');
+                isRegistering = false;
+                return;
+            }
+
+            // Регистрация пользователя
+            button.innerHTML = '<span class="loading"></span>Регистрация...';
+            button.disabled = true;
+
+            setTimeout(() => {
+                // Регистрируем пользователя
+                const success = userManager.registerUser(name, email, password);
+                
+                if (success) {
+                    // Перенаправление на страницу настройки профиля
+                    setTimeout(() => {
+                        window.location.href = 'profile-setup.html';
+                    }, 1500);
+                } else {
+                    userManager.showNotification('Ошибка регистрации');
+                    button.innerHTML = originalText;
+                    button.disabled = false;
+                    isRegistering = false;
+                }
+            }, 2000);
+        });
+
+        // Анимация для логотипа
+        const logo = document.querySelector('.logo');
+        logo.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-2px)';
+        });
+        
+        logo.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+        });
+
+        // Добавляем интерактивность полям ввода
+        document.querySelectorAll('.form-input').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.style.background = 'rgba(255, 255, 255, 0.15)';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.style.background = 'rgba(255, 255, 255, 0.1)';
+            });
+        });
+
+        // Обработка социальных кнопок
+        document.querySelectorAll('.social-button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                userManager.showNotification('Функция входа через социальные сети в разработке');
+            });
+        });
+    </script>
+</body>
+</html>

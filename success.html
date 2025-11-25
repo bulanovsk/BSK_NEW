@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Успешная регистрация - BSK Education</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+
+        .logo {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, #fff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            transition: transform 0.3s ease;
+            z-index: 1000;
+            text-decoration: none;
+        }
+
+        .logo:hover {
+            transform: translateY(-2px);
+        }
+
+        .success-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .success-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+        }
+
+        .success-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 4rem 3rem;
+            border-radius: 25px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            width: 100%;
+            max-width: 900px;
+            position: relative;
+            z-index: 2;
+            animation: slideUp 0.8s ease-out;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .success-content {
+            text-align: center;
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            color: #4CAF50;
+            margin-bottom: 1.5rem;
+            animation: bounce 1s ease-in-out;
+        }
+
+        .success-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, #fff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .success-message {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+        }
+
+        .success-button {
+            display: inline-flex;
+            align-items: center;
+            background: linear-gradient(45deg, #ff6b9d, #ff1493);
+            color: white;
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 20, 147, 0.4);
+            backdrop-filter: blur(10px);
+        }
+
+        .success-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 20, 147, 0.6);
+        }
+
+        .success-robot {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .robot {
+            width: 250px;
+            height: 250px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            border-radius: 50%;
+            position: relative;
+            box-shadow: 
+                0 20px 50px rgba(0, 0, 0, 0.2),
+                inset 0 -10px 20px rgba(0, 0, 0, 0.1),
+                inset 0 10px 20px rgba(255, 255, 255, 0.1);
+            animation: robotGlow 2s ease-in-out infinite alternate;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .robot::before {
+            content: '🎓';
+            font-size: 6rem;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Декоративные элементы */
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .floating-element {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            animation: floatElement 6s ease-in-out infinite;
+        }
+
+        .floating-element:nth-child(1) {
+            width: 40px;
+            height: 40px;
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .floating-element:nth-child(2) {
+            width: 30px;
+            height: 30px;
+            top: 70%;
+            left: 85%;
+            animation-delay: 2s;
+        }
+
+        .floating-element:nth-child(3) {
+            width: 25px;
+            height: 25px;
+            top: 80%;
+            left: 15%;
+            animation-delay: 4s;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        @keyframes floatElement {
+            0%, 100% {
+                transform: translateY(0px) translateX(0px);
+            }
+            50% {
+                transform: translateY(-10px) translateX(5px);
+            }
+        }
+
+        @keyframes robotGlow {
+            0% {
+                box-shadow: 
+                    0 20px 50px rgba(0, 0, 0, 0.2),
+                    inset 0 -10px 20px rgba(0, 0, 0, 0.1),
+                    inset 0 10px 20px rgba(255, 255, 255, 0.1);
+            }
+            100% {
+                box-shadow: 
+                    0 25px 60px rgba(255, 20, 147, 0.2),
+                    inset 0 -10px 20px rgba(0, 0, 0, 0.1),
+                    inset 0 10px 20px rgba(255, 255, 255, 0.15);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .success-card {
+                grid-template-columns: 1fr;
+                padding: 3rem 2rem;
+                text-align: center;
+                gap: 2rem;
+            }
+            .success-title {
+                font-size: 2rem;
+            }
+            .robot {
+                width: 200px;
+                height: 200px;
+            }
+            .robot::before {
+                font-size: 4rem;
+            }
+            .logo {
+                position: absolute;
+                top: 1.5rem;
+                left: 1.5rem;
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .success-card {
+                padding: 2rem 1.5rem;
+            }
+            .success-title {
+                font-size: 1.8rem;
+            }
+            .logo {
+                font-size: 1.8rem;
+                top: 1rem;
+                left: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="logo">BSK Education</a>
+
+    <!-- Декоративные элементы -->
+    <div class="floating-elements">
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+    </div>
+
+    <div class="success-container">
+        <div class="success-card">
+            <div class="success-content">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h1 class="success-title">Регистрация завершена!</h1>
+                <p class="success-message">
+                    Ваш аккаунт успешно создан. Теперь вы можете начать подготовку к экзаменам и отслеживать свой прогресс в обучении.
+                </p>
+                <a href="profile-setup.html" class="success-button">
+                    Начать обучение
+                    <i class="fas fa-arrow-right" style="margin-left: 10px;"></i>
+                </a>
+            </div>
+            <div class="success-robot">
+                <div class="robot"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Автоматическое перенаправление через 5 секунд
+        setTimeout(() => {
+            window.location.href = 'profile-setup.html';
+        }, 5000);
+
+        // Анимация для логотипа
+        const logo = document.querySelector('.logo');
+        logo.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-2px)';
+        });
+        
+        logo.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+        });
+
+        // Добавляем интерактивность для кнопки
+        const successButton = document.querySelector('.success-button');
+        successButton.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-3px) scale(1.05)';
+        });
+        
+        successButton.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(-3px) scale(1)';
+        });
+    </script>
+</body>
+</html>

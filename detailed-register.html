@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Дополнительная информация - BSK Education</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+
+        /* Шапка */
+        header {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.2rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 30px rgba(102, 126, 234, 0.15);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, #fff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+        }
+
+        /* Контейнер формы */
+        .detailed-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+            margin-top: 4rem;
+        }
+
+        .detailed-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+        }
+
+        .detailed-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 3rem;
+            border-radius: 25px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            width: 100%;
+            max-width: 600px;
+            position: relative;
+            z-index: 2;
+            animation: slideUp 0.8s ease-out;
+        }
+
+        .detailed-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .detailed-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, #fff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .detailed-subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+        }
+
+        /* Секции формы */
+        .form-section {
+            margin-bottom: 2.5rem;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .section-title i {
+            color: #ffd700;
+        }
+
+        /* Выбор класса */
+        .grade-buttons {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .grade-button {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            padding: 1.2rem;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .grade-button:hover {
+            border-color: #ffd700;
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .grade-button.selected {
+            background: linear-gradient(45deg, #ff6b9d, #ff1493);
+            color: white;
+            border-color: #ff1493;
+            box-shadow: 0 5px 15px rgba(255, 20, 147, 0.4);
+        }
+
+        /* Выбор цели */
+        .goal-cards {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.2rem;
+        }
+
+        .goal-card {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            padding: 1.5rem;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .goal-card:hover {
+            border-color: #ffd700;
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .goal-card.selected {
+            background: linear-gradient(45deg, #ff6b9d, #ff1493);
+            color: white;
+            border-color: #ff1493;
+            box-shadow: 0 5px 15px rgba(255, 20, 147, 0.4);
+        }
+
+        .goal-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffd700;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .goal-card.selected .goal-icon {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .goal-content {
+            flex: 1;
+        }
+
+        .goal-title {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            color: white;
+        }
+
+        .goal-description {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .goal-card.selected .goal-description {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Кнопка отправки */
+        .submit-button {
+            width: 100%;
+            background: linear-gradient(45deg, #ff6b9d, #ff1493);
+            color: white;
+            border: none;
+            padding: 1.2rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 30px rgba(255, 20, 147, 0.4);
+            position: relative;
+            overflow: hidden;
+            margin-top: 1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .submit-button:disabled {
+            background: rgba(255, 255, 255, 0.2);
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .submit-button:not(:disabled):hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 20, 147, 0.6);
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Прогресс */
+        .progress-info {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+        }
+
+        /* Уведомление */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            border-left: 4px solid #ff1493;
+            z-index: 1000;
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        /* Анимации */
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Декоративные элементы */
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .floating-element {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-element:nth-child(1) {
+            width: 40px;
+            height: 40px;
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .floating-element:nth-child(2) {
+            width: 30px;
+            height: 30px;
+            top: 70%;
+            left: 85%;
+            animation-delay: 2s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .detailed-container {
+                padding: 1rem;
+                margin-top: 5rem;
+            }
+
+            .detailed-card {
+                padding: 2rem;
+            }
+
+            .detailed-title {
+                font-size: 1.8rem;
+            }
+
+            .grade-buttons {
+                grid-template-columns: 1fr;
+            }
+
+            .goal-card {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .detailed-card {
+                padding: 1.5rem;
+            }
+
+            .form-section {
+                padding: 1rem;
+            }
+
+            .grade-button {
+                padding: 1rem;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Уведомление -->
+    <div class="notification" id="notification" role="alert" aria-live="polite">
+        <div id="notificationMessage"></div>
+    </div>
+
+    <!-- Шапка -->
+    <header>
+        <div class="nav-container">
+            <a href="index.html" class="logo">BSK Education</a>
+        </div>
+    </header>
+
+    <!-- Контейнер формы -->
+    <div class="detailed-container">
+        <div class="floating-elements">
+            <div class="floating-element"></div>
+            <div class="floating-element"></div>
+        </div>
+
+        <div class="detailed-card">
+            <div class="detailed-header">
+                <h1 class="detailed-title">Дополнительная информация</h1>
+                <p class="detailed-subtitle">Помогите нам подобрать для вас подходящие задания</p>
+            </div>
+
+            <div class="progress-info">
+                Шаг 2 из 2 - почти готово!
+            </div>
+
+            <form id="detailedForm">
+                <!-- Выбор класса -->
+                <div class="form-section">
+                    <div class="section-title">
+                        <i class="fas fa-graduation-cap"></i>
+                        В каком классе вы учитесь?
+                    </div>
+                    <div class="grade-buttons">
+                        <button type="button" class="grade-button" data-grade="8">8 класс</button>
+                        <button type="button" class="grade-button" data-grade="9">9 класс</button>
+                        <button type="button" class="grade-button" data-grade="10">10 класс</button>
+                        <button type="button" class="grade-button" data-grade="11">11 класс</button>
+                    </div>
+                    <input type="hidden" id="selectedGrade" name="grade" required>
+                </div>
+
+                <!-- Выбор цели -->
+                <div class="form-section">
+                    <div class="section-title">
+                        <i class="fas fa-bullseye"></i>
+                        Для чего вам нужна наша платформа?
+                    </div>
+                    <div class="goal-cards">
+                        <div class="goal-card" data-goal="exam">
+                            <div class="goal-icon">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <div class="goal-content">
+                                <div class="goal-title">Подготовка к экзаменам</div>
+                                <div class="goal-description">
+                                    ОГЭ, ЕГЭ или другие важные экзамены. Системная подготовка по всем темам.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="goal-card" data-goal="test">
+                            <div class="goal-icon">
+                                <i class="fas fa-tasks"></i>
+                            </div>
+                            <div class="goal-content">
+                                <div class="goal-title">Подготовка к контрольным</div>
+                                <div class="goal-description">
+                                    Регулярные тренировки для успешного написания контрольных работ.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="goal-card" data-goal="both">
+                            <div class="goal-icon">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="goal-content">
+                                <div class="goal-title">И то, и другое</div>
+                                <div class="goal-description">
+                                    Комплексная подготовка как к экзаменам, так и к контрольным работам.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="selectedGoal" name="goal" required>
+                </div>
+
+                <button type="submit" class="submit-button" id="submitButton" disabled>
+                    Завершить регистрацию
+                    <i class="fas fa-check" style="margin-left: 10px;"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Глобальная переменная для отслеживания состояния
+        let isSubmitting = false;
+
+        // Функция показа уведомления
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            const messageEl = document.getElementById('notificationMessage');
+            
+            messageEl.textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Выбор класса
+        const gradeButtons = document.querySelectorAll('.grade-button');
+        const selectedGradeInput = document.getElementById('selectedGrade');
+        
+        gradeButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Убираем выделение у всех кнопок
+                gradeButtons.forEach(btn => btn.classList.remove('selected'));
+                // Добавляем выделение текущей кнопке
+                this.classList.add('selected');
+                // Сохраняем значение
+                selectedGradeInput.value = this.dataset.grade;
+                checkFormValidity();
+            });
+        });
+
+        // Выбор цели
+        const goalCards = document.querySelectorAll('.goal-card');
+        const selectedGoalInput = document.getElementById('selectedGoal');
+        
+        goalCards.forEach(card => {
+            card.addEventListener('click', function() {
+                // Убираем выделение у всех карточек
+                goalCards.forEach(c => c.classList.remove('selected'));
+                // Добавляем выделение текущей карточке
+                this.classList.add('selected');
+                // Сохраняем значение
+                selectedGoalInput.value = this.dataset.goal;
+                checkFormValidity();
+            });
+        });
+
+        // Проверка валидности формы
+        function checkFormValidity() {
+            const isGradeSelected = selectedGradeInput.value !== '';
+            const isGoalSelected = selectedGoalInput.value !== '';
+            const submitButton = document.getElementById('submitButton');
+            
+            submitButton.disabled = !(isGradeSelected && isGoalSelected);
+        }
+
+        // Обработка отправки формы
+        document.getElementById('detailedForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            if (isSubmitting) return;
+            isSubmitting = true;
+
+            const submitButton = document.getElementById('submitButton');
+            const originalText = submitButton.innerHTML;
+            
+            try {
+                // Показываем загрузку
+                submitButton.innerHTML = '<span class="loading"></span>Сохранение...';
+                submitButton.disabled = true;
+
+                // Собираем данные
+                const formData = {
+                    grade: selectedGradeInput.value,
+                    goal: selectedGoalInput.value,
+                    registrationDate: new Date().toISOString()
+                };
+
+                // Проверяем существование страницы профиля
+                const profileExists = await checkPageExists('profile.html');
+                if (!profileExists) {
+                    throw new Error('Страница профиля временно недоступна');
+                }
+
+                // Имитация сохранения данных
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                
+                // Сохраняем настройки обучения
+                localStorage.setItem('userPreferences', JSON.stringify(formData));
+                
+                // Сохраняем данные пользователя
+                const userData = {
+                    name: localStorage.getItem('userName') || 'Пользователь',
+                    email: localStorage.getItem('userEmail') || '',
+                    preferences: formData
+                };
+                localStorage.setItem('bsk_user', JSON.stringify(userData));
+                
+                // Сбрасываем статистику для нового пользователя
+                resetUserStatistics();
+                
+                // Показываем успех
+                showNotification('Регистрация завершена успешно!');
+                submitButton.innerHTML = '<i class="fas fa-check"></i> Успешно!';
+                
+                // Перенаправляем на профиль
+                setTimeout(() => {
+                    window.location.href = 'profile.html';
+                }, 1000);
+                
+            } catch (error) {
+                console.error('Form submission error:', error);
+                showNotification('Произошла ошибка. Пожалуйста, попробуйте еще раз.');
+                
+                // Восстанавливаем кнопку
+                submitButton.innerHTML = originalText;
+                submitButton.disabled = false;
+                isSubmitting = false;
+            }
+        });
+
+        // Функция проверки существования страницы
+        async function checkPageExists(url) {
+            try {
+                const response = await fetch(url, { method: 'HEAD' });
+                return response.ok;
+            } catch {
+                return false;
+            }
+        }
+
+        // Функция сброса статистики для нового пользователя
+        function resetUserStatistics() {
+            const cleanStats = {
+                // Общая статистика
+                completedTests: 0,
+                averageScore: "0%",
+                studyDays: 0,
+                
+                // Прогресс по темам
+                algebraProgress: 0,
+                geometryProgress: 0,
+                trigonometryProgress: 0,
+                
+                // Детальная статистика по темам
+                topics: getDefaultTopics(),
+                
+                // Дата регистрации
+                registrationDate: new Date().toISOString(),
+                
+                // Последняя активность
+                lastActivity: new Date().toISOString()
+            };
+            
+            localStorage.setItem('userStatistics', JSON.stringify(cleanStats));
+        }
+
+        // Функция для получения тем по умолчанию в зависимости от класса
+        function getDefaultTopics() {
+            const grade = selectedGradeInput.value || '10';
+            
+            const topicsByGrade = {
+                '8': [
+                    { name: 'Алгебраические выражения', completed: 0, total: 15, score: 0 },
+                    { name: 'Линейные уравнения', completed: 0, total: 12, score: 0 },
+                    { name: 'Геометрия: основы', completed: 0, total: 10, score: 0 }
+                ],
+                '9': [
+                    { name: 'Квадратные уравнения', completed: 0, total: 18, score: 0 },
+                    { name: 'Функции и графики', completed: 0, total: 15, score: 0 },
+                    { name: 'Геометрия: треугольники', completed: 0, total: 12, score: 0 }
+                ],
+                '10': [
+                    { name: 'Тригонометрия', completed: 0, total: 20, score: 0 },
+                    { name: 'Производные', completed: 0, total: 16, score: 0 },
+                    { name: 'Стереометрия', completed: 0, total: 14, score: 0 }
+                ],
+                '11': [
+                    { name: 'Интегралы', completed: 0, total: 18, score: 0 },
+                    { name: 'Вероятность', completed: 0, total: 12, score: 0 },
+                    { name: 'Подготовка к ЕГЭ', completed: 0, total: 25, score: 0 }
+                ]
+            };
+            
+            return topicsByGrade[grade] || topicsByGrade['10'];
+        }
+
+        // Анимация при загрузке
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                document.querySelector('.detailed-card').style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+</html>
