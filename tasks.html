@@ -641,70 +641,8 @@
             </a>
 
             <!-- Карточка задания -->
-            <div class="task-card">
-                <div class="task-header">
-                    <div>
-                        <div class="task-meta">
-                            <span class="task-tag" id="currentSubject">Информатика</span>
-                            <span class="task-tag" id="currentLevel">ЕГЭ 2026</span>
-                            <span class="task-tag" id="currentTopic">Цифровая грамотность</span>
-                        </div>
-                        <h2 class="task-title">Задача: Определение IP-адресов в компьютерных сетях</h2>
-                    </div>
-                </div>
-
-                <div class="task-description">
-                    <p><strong>Условие задачи:</strong></p>
-                    <p>В терминологии сетей TCP/IP маской сети называют двоичное число, которое показывает, какая часть IP-адреса узла сети относится к адресу сети, а какая – к адресу узла в этой сети. Адрес сети получается в результате применения поразрядной конъюнкции к заданному адресу узла и его маске.</p>
-                    
-                    <p>Широковещательным адресом называется специализированный адрес, в котором на месте нулей в маске стоят единицы. Адрес сети и широковещательный адрес не могут быть использованы для адресации сетевых устройств.</p>
-                    
-                    <p><strong>Сеть задана IP-адресом одного из входящих в неё узлов 98.81.154.195 и сетевой маской 255.252.0.0.</strong></p>
-                    
-                    <p>Найдите наибольший в данной сети IP-адрес, который может быть назначен компьютеру. В ответе укажите найденный IP-адрес без разделителей.</p>
-                    
-                    <div class="task-example">
-                        <strong>Пример:</strong> Если бы найденный адрес был равен 111.22.3.44, то в ответе следовало бы записать 11122344.
-                    </div>
-                </div>
-
-                <!-- Форма ответа -->
-                <div class="answer-form">
-                    <h3 style="margin-bottom: 1.5rem; color: white;">Выберите правильный ответ:</h3>
-                    
-                    <div class="answer-options">
-                        <label class="answer-option" onclick="selectAnswer(1)">
-                            <input type="radio" name="answer" value="1">
-                            <span class="answer-label">9883255254</span>
-                        </label>
-                        
-                        <label class="answer-option" onclick="selectAnswer(2)">
-                            <input type="radio" name="answer" value="2">
-                            <span class="answer-label">4582032013</span>
-                        </label>
-                        
-                        <label class="answer-option" onclick="selectAnswer(3)">
-                            <input type="radio" name="answer" value="3">
-                            <span class="answer-label">392033493</span>
-                        </label>
-                        
-                        <label class="answer-option" onclick="selectAnswer(4)">
-                            <input type="radio" name="answer" value="4">
-                            <span class="answer-label">3321234918</span>
-                        </label>
-                    </div>
-
-                    <button class="submit-button" id="submitButton" onclick="checkAnswer()" disabled>
-                        <i class="fas fa-paper-plane"></i>
-                        Проверить ответ
-                    </button>
-
-                    <!-- Сообщение о результате -->
-                    <div class="result-message" id="resultMessage">
-                        <i class="fas fa-check" id="resultIcon"></i>
-                        <span id="resultText"></span>
-                    </div>
-                </div>
+            <div class="task-card" id="taskCard">
+                <!-- Задание будет загружено динамически -->
             </div>
         </div>
     </div>
@@ -721,8 +659,11 @@
         const topicsDatabase = {
             math: {
                 oge: [
-                    { id: 'math_oge_algebra', name: 'Алгебра', description: 'Уравнения, неравенства, функции' },
-                    { id: 'math_oge_geometry', name: 'Геометрия', description: 'Планиметрия и стереометрия' }
+                    { 
+                        id: 'math_oge_numbers', 
+                        name: 'Числа и вычисления', 
+                        description: 'Действия с числами, сравнение, оценка' 
+                    }
                 ],
                 ege: [
                     { id: 'math_ege_algebra', name: 'Алгебра', description: 'Производные, интегралы, пределы' },
@@ -745,9 +686,58 @@
                     { id: 'informatics_oge_programming', name: 'Программирование', description: 'Алгоритмы и программы' }
                 ],
                 ege: [
-                    { id: 'informatics_ege_networks', name: 'Цифровая грамотность', description: 'Сети, IP-адреса, протоколы' },
+                    { 
+                        id: 'informatics_ege_networks', 
+                        name: 'Цифровая грамотность', 
+                        description: 'Сети, IP-адреса, протоколы' 
+                    },
                     { id: 'informatics_ege_algorithms', name: 'Алгоритмы', description: 'Поиск, сортировка, графы' }
                 ]
+            }
+        };
+
+        // База данных заданий
+        const tasksDatabase = {
+            'math_oge_numbers': {
+                title: "Оценка значения дроби",
+                description: `
+                    <p><strong>Условие задачи:</strong></p>
+                    <p>Между какими целыми числами заключено число <strong>110/13</strong>?</p>
+                    <p>Выберите правильный вариант из предложенных:</p>
+                `,
+                options: [
+                    "8 и 9",
+                    "9 и 10", 
+                    "10 и 11",
+                    "11 и 12"
+                ],
+                correctAnswer: 0, // Первый вариант (8 и 9)
+                explanation: "110 ÷ 13 ≈ 8.46, значит число заключено между 8 и 9"
+            },
+            'informatics_ege_networks': {
+                title: "Определение IP-адресов в компьютерных сетях",
+                description: `
+                    <p><strong>Условие задачи:</strong></p>
+                    <p>В терминологии сетей TCP/IP маской сети называют двоичное число, которое показывает, какая часть IP-адреса узла сети относится к адресу сети, а какая – к адресу узла в этой сети. Адрес сети получается в результате применения поразрядной конъюнкции к заданному адресу узла и его маске.</p>
+                    
+                    <p>Широковещательным адресом называется специализированный адрес, в котором на месте нулей в маске стоят единицы. Адрес сети и широковещательный адрес не могут быть использованы для адресации сетевых устройств.</p>
+                    
+                    <p><strong>Сеть задана IP-адресом одного из входящих в неё узлов 98.81.154.195 и сетевой маской 255.252.0.0.</strong></p>
+                    
+                    <p>Найдите наибольший в данной сети IP-адрес, который может быть назначен компьютеру. В ответе укажите найденный IP-адрес без разделителей.</p>
+                    
+                    <div class="task-example">
+                        <strong>Пример:</strong> Если бы найденный адрес был равен 111.22.3.44, то в ответе следовало бы записать 11122344.
+                    </div>
+                `,
+                options: [
+                    "9883255254",
+                    "4582032013",
+                    "392033493", 
+                    "3321234918"
+                ],
+                correctAnswer: 0, // Первый вариант (9883255254)
+                explanation: "Правильный ответ: 9883255254"
             }
         };
 
@@ -820,13 +810,68 @@
         // Выбор темы
         function selectTopic(topic) {
             currentState.topic = topic;
-            
-            // Обновляем информацию в задании
-            document.getElementById('currentSubject').textContent = getSubjectName(currentState.subject);
-            document.getElementById('currentLevel').textContent = getLevelName(currentState.level);
-            document.getElementById('currentTopic').textContent = topic.name;
-            
+            loadTask();
             goToStep(4);
+        }
+
+        // Загрузка задания
+        function loadTask() {
+            const taskCard = document.getElementById('taskCard');
+            const task = tasksDatabase[currentState.topic.id];
+            
+            if (!task) {
+                taskCard.innerHTML = `
+                    <div style="text-align: center; padding: 3rem; color: rgba(255,255,255,0.7);">
+                        <i class="fas fa-tasks" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                        <h3>Задания пока нет</h3>
+                        <p>В этой теме пока нет доступных заданий</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            taskCard.innerHTML = `
+                <div class="task-header">
+                    <div>
+                        <div class="task-meta">
+                            <span class="task-tag">${getSubjectName(currentState.subject)}</span>
+                            <span class="task-tag ${currentState.level}">${getLevelName(currentState.level)}</span>
+                            <span class="task-tag">${currentState.topic.name}</span>
+                        </div>
+                        <h2 class="task-title">${task.title}</h2>
+                    </div>
+                </div>
+
+                <div class="task-description">
+                    ${task.description}
+                </div>
+
+                <div class="answer-form">
+                    <h3 style="margin-bottom: 1.5rem; color: white;">Выберите правильный ответ:</h3>
+                    
+                    <div class="answer-options" id="answerOptions">
+                        ${task.options.map((option, index) => `
+                            <label class="answer-option" onclick="selectAnswer(${index})">
+                                <input type="radio" name="answer" value="${index}">
+                                <span class="answer-label">${option}</span>
+                            </label>
+                        `).join('')}
+                    </div>
+
+                    <button class="submit-button" id="submitButton" onclick="checkAnswer()" disabled>
+                        <i class="fas fa-paper-plane"></i>
+                        Проверить ответ
+                    </button>
+
+                    <div class="result-message" id="resultMessage">
+                        <i class="fas fa-check" id="resultIcon"></i>
+                        <span id="resultText"></span>
+                    </div>
+                </div>
+            `;
+            
+            // Сбрасываем состояние
+            selectedAnswer = null;
         }
 
         // Вспомогательные функции
@@ -850,8 +895,8 @@
         // Логика задания
         let selectedAnswer = null;
 
-        function selectAnswer(answerNumber) {
-            selectedAnswer = answerNumber;
+        function selectAnswer(answerIndex) {
+            selectedAnswer = answerIndex;
             
             // Снимаем выделение со всех вариантов
             document.querySelectorAll('.answer-option').forEach(option => {
@@ -866,7 +911,7 @@
         }
 
         function checkAnswer() {
-            if (!selectedAnswer) {
+            if (selectedAnswer === null) {
                 showNotification('Пожалуйста, выберите ответ');
                 return;
             }
@@ -876,24 +921,25 @@
             const resultIcon = document.getElementById('resultIcon');
             const resultText = document.getElementById('resultText');
 
+            const task = tasksDatabase[currentState.topic.id];
+            const isCorrect = selectedAnswer === task.correctAnswer;
+
             submitButton.disabled = true;
             submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Проверка...';
 
             // Имитация проверки
             setTimeout(() => {
-                const isCorrect = selectedAnswer === 1; // Правильный ответ - первый вариант
-                
                 if (isCorrect) {
                     resultMessage.className = 'result-message result-correct';
                     resultIcon.className = 'fas fa-check';
-                    resultText.textContent = 'Правильно! Отличная работа!';
+                    resultText.textContent = `Правильно! ${task.explanation}`;
                     
                     // Обновляем статистику
                     updateStatistics(true);
                 } else {
                     resultMessage.className = 'result-message result-incorrect';
                     resultIcon.className = 'fas fa-times';
-                    resultText.textContent = 'Неверно. Правильный ответ: 9883255254';
+                    resultText.textContent = `Неверно. ${task.explanation}`;
                     
                     // Обновляем статистику
                     updateStatistics(false);
@@ -929,7 +975,8 @@
         // Добавляем возможность использовать клавиши 1-4 для выбора ответа
         document.addEventListener('keydown', function(event) {
             if (event.key >= '1' && event.key <= '4') {
-                selectAnswer(parseInt(event.key));
+                const answerIndex = parseInt(event.key) - 1;
+                selectAnswer(answerIndex);
             }
         });
     </script>
