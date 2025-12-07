@@ -483,7 +483,7 @@
             padding: 0.5rem;
         }
 
-        /* Стили для изображений */
+        /* Стили для изображений формул */
         .formula-image {
             background: rgba(255, 255, 255, 0.1);
             padding: 1.5rem;
@@ -500,6 +500,20 @@
             background: transparent;
         }
 
+        .formula-latex {
+            font-family: 'Times New Roman', serif;
+            font-style: italic;
+            font-size: 1.8rem;
+            color: white;
+            margin: 1rem 0;
+            text-align: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Стили для физических изображений */
         .physics-image {
             background: rgba(255, 255, 255, 0.1);
             padding: 2rem;
@@ -517,7 +531,25 @@
             background: transparent;
         }
 
-        .physics-diagram {
+        /* Стили для геометрических изображений */
+        .geometry-image {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 1.5rem 0;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .geometry-image img {
+            max-width: 100%;
+            height: auto;
+            max-height: 300px;
+            filter: invert(1) brightness(2) contrast(1.2);
+            background: transparent;
+        }
+
+        .geometry-diagram {
             font-family: 'Times New Roman', serif;
             color: white;
             margin: 1rem 0;
@@ -576,11 +608,16 @@
                 gap: 1rem;
             }
 
-            .physics-image {
+            .formula-latex {
+                font-size: 1.4rem;
+                padding: 0.8rem;
+            }
+
+            .physics-image, .geometry-image {
                 padding: 1rem;
             }
 
-            .physics-image img {
+            .physics-image img, .geometry-image img {
                 max-height: 200px;
             }
         }
@@ -603,11 +640,16 @@
                 gap: 0.5rem;
             }
 
-            .physics-image {
+            .formula-latex {
+                font-size: 1.2rem;
+                padding: 0.6rem;
+            }
+
+            .physics-image, .geometry-image {
                 padding: 0.5rem;
             }
 
-            .physics-image img {
+            .physics-image img, .geometry-image img {
                 max-height: 150px;
             }
         }
@@ -857,8 +899,576 @@
             }
         };
 
-        // База данных заданий
+        // База данных заданий (ВСЕ задания восстановлены)
         const tasksDatabase = {
+            'math_oge_numbers': [
+                {
+                    id: 'task1',
+                    title: "Оценка значения дроби",
+                    description: `
+                        <p><strong>Условие задачи:</strong></p>
+                        <p>Между какими целыми числами заключено число <strong>110/13</strong>?</p>
+                        <p>Выберите правильный вариант из предложенных:</p>
+                    `,
+                    type: 'choice',
+                    options: [
+                        "8 и 9",
+                        "9 и 10", 
+                        "10 и 11",
+                        "11 и 12"
+                    ],
+                    correctAnswer: 0,
+                    explanation: "110 ÷ 13 ≈ 8.46, значит число заключено между 8 и 9"
+                },
+                {
+                    id: 'task2',
+                    title: "Расчет стоимости колодца",
+                    description: `
+                        <p><strong>Условие задачи:</strong></p>
+                        <p>В фирме «Родник» стоимость (в рублях) колодца из железобетонных колец рассчитывается по формуле:</p>
+                        <p style="text-align: center; font-size: 1.3rem; margin: 1.5rem 0;">
+                            <strong>C = 6000 + 4100n</strong>
+                        </p>
+                        <p>где <strong>n</strong> — число колец, установленных в колодце.</p>
+                        <p>Пользуясь этой формулой, рассчитайте стоимость колодца из <strong>20 колец</strong>.</p>
+                        <p>Ответ дайте в рублях.</p>
+                    `,
+                    type: 'input',
+                    correctAnswer: '88000',
+                    explanation: `
+                        <div class="math-explanation">
+                            <p><strong>Решение:</strong></p>
+                            <div class="math-step">1. Подставляем n = 20 в формулу:</div>
+                            <div class="math-step" style="text-align: center;">C = 6000 + 4100 × 20</div>
+                            <div class="math-step">2. Вычисляем произведение:</div>
+                            <div class="math-step" style="text-align: center;">4100 × 20 = 82000</div>
+                            <div class="math-step">3. Складываем:</div>
+                            <div class="math-step" style="text-align: center;">6000 + 82000 = 88000</div>
+                            <div class="math-step" style="margin-top: 1rem; font-weight: bold; color: #4CAF50;">Ответ: 88000 рублей</div>
+                        </div>
+                    `
+                },
+                {
+                    id: 'task3',
+                    title: "Вычисление выражения с десятичными дробями",
+                    description: `
+                        <p><strong>Условие задачи:</strong></p>
+                        <p>Найдите значение выражения:</p>
+                        <p style="text-align: center; font-size: 1.5rem; margin: 1.5rem 0;">
+                            <strong>1,4 × 2,4 + 0,24</strong>
+                        </p>
+                        <p>Введите ответ в виде десятичной дроби:</p>
+                    `,
+                    type: 'input',
+                    correctAnswer: '3.6',
+                    explanation: `
+                        <div class="math-explanation">
+                            <p><strong>Решение:</strong></p>
+                            <div class="math-step">1. Сначала выполняем умножение:</div>
+                            <div class="math-step" style="text-align: center;">1,4 × 2,4 = 3,36</div>
+                            <div class="math-step">2. Затем выполняем сложение:</div>
+                            <div class="math-step" style="text-align: center;">3,36 + 0,24 = 3,6</div>
+                            <div class="math-step" style="margin-top: 1rem; font-weight: bold; color: #4CAF50;">Ответ: 3,6</div>
+                            <div class="math-step" style="margin-top: 0.5rem; font-size: 0.9rem; color: rgba(255,255,255,0.7);">
+                                Примечание: можно также заметить, что 0,24 = 1,4 × 0,1714..., но проще выполнить вычисления по порядку.
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    id: 'task4',
+                    title: "Вычисление выражения с дробью",
+                    description: `
+                        <p><strong>Условие задачи:</strong></p>
+                        <p>Найдите значение выражения:</p>
+                        <p style="text-align: center; font-size: 1.5rem; margin: 1.5rem 0;">
+                            <strong>24 ÷ (3,2 × 2)</strong>
+                        </p>
+                        <p>Введите ответ в виде десятичной дроби:</p>
+                    `,
+                    type: 'input',
+                    correctAnswer: '3.75',
+                    explanation: `
+                        <div class="math-explanation">
+                            <p><strong>Решение:</strong></p>
+                            <div class="math-step">1. Сначала выполняем умножение в знаменателе:</div>
+                            <div class="math-step" style="text-align: center;">3,2 × 2 = 6,4</div>
+                            <div class="math-step">2. Затем выполняем деление:</div>
+                            <div class="math-step" style="text-align: center;">24 ÷ 6,4 = 3,75</div>
+                            <div class="math-step" style="margin-top: 1rem; font-weight: bold; color: #4CAF50;">Ответ: 3,75</div>
+                            <div class="math-step" style="margin-top: 0.5rem; font-size: 0.9rem; color: rgba(255,255,255,0.7);">
+                                Примечание: можно также представить как 24 ÷ 6,4 = 240 ÷ 64 = 15/4 = 3,75
+                            </div>
+                        </div>
+                    `
+                }
+            ],
+            'math_ege_numbers': [
+                {
+                    id: 'task1',
+                    title: "Нахождение корня уравнения с квадратным корнем",
+                    description: `
+                        <p><strong>Условие задачи:</strong></p>
+                        <p>Найдите корень уравнения:</p>
+                        <p style="text-align: center; font-size: 1.5rem; margin: 1.5rem 0;">
+                            <strong>√(6x - 57) = 9</strong>
+                        </p>
+                        <p>Введите ответ в виде целого числа:</p>
+                    `,
+                    type: 'input',
+                    correctAnswer: '23',
+                    explanation: `
+                        <div class="math-explanation">
+                            <p><strong>Решение:</strong></p>
+                            <div class="math-step">1. Возводим обе части уравнения в квадрат:</div>
+                            <div class="math-step" style="text-align: center;">(√(6x - 57))² = 9²</div>
+                            <div class="math-step" style="text-align: center;">6x - 57 = 81</div>
+                            <div class="math-step">2. Переносим -57 в правую часть:</div>
+                            <div class="math-step" style="text-align: center;">6x = 81 + 57</div>
+                            <div class="math-step" style="text-align: center;">6x = 138</div>
+                            <div class="math-step">3. Делим обе части на 6:</div>
+                            <div class="math-step" style="text-align: center;">x = 138 ÷ 6</div>
+                            <div class="math-step" style="text-align: center;">x = 23</div>
+                            <div class="math-step" style="margin-top: 1rem; font-weight: bold; color: #4CAF50;">Ответ: 23</div>
+                            <div class="math-step" style="margin-top: 0.5rem; font-size: 0.9rem; color: rgba(255,255,255,0.7);">
+                                Проверка: √(6×23 - 57) = √(138 - 57) = √81 = 9 ✓
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    id: 'task2',
+                    title: "Нахождение корня кубического уравнения",
+                    description: `
+                        <p><strong>Условие задачи:</strong></p>
+                        <p>Найдите корень уравнения:</p>
+                        <p style="text-align: center; font-size: 1.5rem; margin: 1.5rem 0;">
+                            <strong>(x + 3)³ = -8</strong>
+                        </p>
+                        <p>Введите ответ в виде целого числа:</p>
+                    `,
+                    type: 'input',
+                    correctAnswer: '-5',
+                    explanation: `
+                        <div class="math-explanation">
+                            <p><strong>Решение:</strong></p>
+                            <div class="math-step">1. Извлекаем кубический корень из обеих частей:</div>
+                            <div class="math-step" style="text-align: center;">∛((x + 3)³) = ∛(-8)</div>
+                            <div class="math-step" style="text-align: center;">x + 3 = -2</div>
+                            <div class="math-step">2. Переносим 3 в правую часть:</div>
+                            <div class="math-step" style="text-align: center;">x = -2 - 3</div>
+                            <div class="math-step" style="text-align: center;">x = -5</div>
+                            <div class="math-step" style="margin-top: 1rem; font-weight: bold; color: #4CAF50;">Ответ: -5</div>
+                            <div class="math-step" style="margin-top: 0.5rem; font-size: 0.9rem; color: rgba(255,255,255,0.7);">
+                                Проверка: (-5 + 3)³ = (-2)³ = -8 ✓
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    id: 'task3',
+                    title: "Решение уравнения с квадратами",
+                    description: `
+                        <p><strong>Условие задачи:</strong></p>
+                        <p>Найдите корень уравнения:</p>
+                        <p style="text-align: center; font-size: 1.5rem; margin: 1.5rem 0;">
+                            <strong>(2x + 3)² = (2x + 9)²</strong>
+                        </p>
+                        <p>Введите ответ в виде целого числа:</p>
+                    `,
+                    type: 'input',
+                    correctAnswer: '-3',
+                    explanation: `
+                        <div class="math-explanation">
+                            <p><strong>Решение:</strong></p>
+                            <div class="math-step">1. Раскрываем скобки или используем разность квадратов:</div>
+                            <div class="math-step" style="text-align: center;">(2x + 3)² - (2x + 9)² = 0</div>
+                            <div class="math-step">2. Применяем формулу разности квадратов:</div>
+                            <div class="math-step" style="text-align: center;">[(2x + 3) - (2x + 9)] × [(2x + 3) + (2x + 9)] = 0</div>
+                            <div class="math-step" style="text-align: center;">[2x + 3 - 2x - 9] × [2x + 3 + 2x + 9] = 0</div>
+                            <div class="math-step" style="text-align: center;">[-6] × [4x + 12] = 0</div>
+                            <div class="math-step">3. Произведение равно нулю, когда один из множителей равен нулю:</div>
+                            <div class="math-step" style="text-align: center;">4x + 12 = 0</div>
+                            <div class="math-step" style="text-align: center;">4x = -12</div>
+                            <div class="math-step" style="text-align: center;">x = -3</div>
+                            <div class="math-step" style="margin-top: 1rem; font-weight: bold; color: #4CAF50;">Ответ: -3</div>
+                            <div class="math-step" style="margin-top: 0.5rem; font-size: 0.9rem; color: rgba(255,255,255,0.7);">
+                                Проверка: (2×(-3) + 3)² = (-6 + 3)² = (-3)² = 9<br>
+                                (2×(-3) + 9)² = (-6 + 9)² = 3² = 9 ✓
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    id: 'task4',
+                    title: "Вычисление логарифмов",
+                    description: `
+                        <p><strong>Условие задачи:</strong></p>
+                        <p>Найдите значение выражения <span class="math-formula">log<sub>3</sub>162 − log<sub>3</sub>2</span>.</p>
+                        <p>Выберите правильный вариант из предложенных:</p>
+                    `,
+                    type: 'choice',
+                    options: [
+                        "3,5",
+                        "10", 
+                        "4",
+                        "3"
+                    ],
+                    correctAnswer: 2,
+                    explanation: `
+                        <div class="math-explanation">
+                            <p><strong>Решение:</strong></p>
+                            <div class="math-step">1. Используем свойство логарифмов: <span class="math-formula">log<sub>a</sub>b − log<sub>a</sub>c = log<sub>a</sub>(b/c)</span></div>
+                            <div class="math-step">2. Применяем к нашему выражению: <span class="math-formula">log<sub>3</sub>162 − log<sub>3</sub>2 = log<sub>3</sub>(162/2)</span></div>
+                            <div class="math-step">3. Вычисляем: <span class="math-formula">162/2 = 81</span></div>
+                            <div class="math-step">4. Получаем: <span class="math-formula">log<sub>3</sub>81</span></div>
+                            <div class="math-step">5. Находим значение: <span class="math-formula">3<sup>4</sup> = 81</span>, значит <span class="math-formula">log<sub>3</sub>81 = 4</span></div>
+                            <div class="math-step" style="margin-top: 1rem; font-weight: bold; color: #4CAF50;">Ответ: 4</div>
+                        </div>
+                    `
+                }
+            ],
+            'math_ege_algebra': [
+                {
+                    id: 'task1',
+                    title: "Определение объёма производства",
+                    description: `
+                        <p><strong>Условие задачи:</strong></p>
+                        <p>Некоторая компания продаёт свою продукцию по цене p = 600 руб. за единицу, переменные затраты на производство одной единицы продукции составляют υ = 300 руб., постоянные расходы предприятия f = 700 000 руб. в месяц. Месячная операционная прибыль предприятия (в рублях) вычисляется по формуле:</p>
+                        <div class="formula-latex">g(q) = q(p − υ) − f</div>
+                        <p>Определите месячный объём производства q (единиц продукции), при котором месячная операционная прибыль предприятия будет равна 500 000 руб.</p>
+                        <p>Введите ответ в виде целого числа:</p>
+                    `,
+                    type: 'input',
+                    correctAnswer: '4000',
+                    explanation: `
+                        <div class="math-explanation">
+                            <p><strong>Решение:</strong></p>
+                            <div class="math-step">1. Подставляем известные значения в формулу:</div>
+                            <div class="math-step" style="text-align: center;">g(q) = q(600 − 300) − 700000</div>
+                            <div class="math-step" style="text-align: center;">g(q) = 300q − 700000</div>
+                            <div class="math-step">2. Приравниваем к заданной прибыли 500000:</div>
+                            <div class="math-step" style="text-align: center;">300q − 700000 = 500000</div>
+                            <div class="math-step">3. Переносим -700000 в правую часть:</div>
+                            <div class="math-step" style="text-align: center;">300q = 500000 + 700000</div>
+                            <div class="math-step" style="text-align: center;">300q = 1200000</div>
+                            <div class="math-step">4. Делим обе части на 300:</div>
+                            <div class="math-step" style="text-align: center;">q = 1200000 ÷ 300</div>
+                            <div class="math-step" style="text-align: center;">q = 4000</div>
+                            <div class="math-step" style="margin-top: 1rem; font-weight: bold; color: #4CAF50;">Ответ: 4000 единиц</div>
+                            <div class="math-step" style="margin-top: 0.5rem; font-size: 0.9rem; color: rgba(255,255,255,0.7);">
+                                Проверка: 4000 × (600 - 300) - 700000 = 4000 × 300 - 700000 = 1200000 - 700000 = 500000 ✓
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    id: 'task2',
+                    title: "Определение ускорения автомобиля",
+                    description: `
+                        <p><strong>Условие задачи:</strong></p>
+                        <p>Автомобиль разгоняется на прямолинейном участке шоссе с постоянным ускорением a км/ч². Скорость вычисляется по формуле:</p>
+                        <div class="formula-latex">v = √(2la)</div>
+                        <p>где l — пройденный автомобилем путь.</p>
+                        <p>Найдите ускорение, с которым должен двигаться автомобиль, чтобы, проехав 0,8 километра, приобрести скорость 100 км/ч.</p>
+                        <p>Ответ выразите в км/ч².</p>
+                    `,
+                    type: 'input',
+                    correctAnswer: '6250',
+                    explanation: `
+                        <div class="math-explanation">
+                            <p><strong>Решение:</strong></p>
+                            <div class="math-step">1. Записываем данную формулу:</div>
+                            <div class="math-step" style="text-align: center;">v = √(2la)</div>
+                            <div class="math-step">2. Подставляем известные значения:</div>
+                            <div class="math-step" style="text-align: center;">v = 100 км/ч, l = 0,8 км</div>
+                            <div class="math-step" style="text-align: center;">100 = √(2 × 0,8 × a)</div>
+                            <div class="math-step" style="text-align: center;">100 = √(1,6a)</div>
+                            <div class="math-step">3. Возводим обе части в квадрат:</div>
+                            <div class="math-step" style="text-align: center;">100² = 1,6a</div>
+                            <div class="math-step" style="text-align: center;">10000 = 1,6a</div>
+                            <div class="math-step">4. Делим обе части на 1,6:</div>
+                            <div class="math-step" style="text-align: center;">a = 10000 ÷ 1,6</div>
+                            <div class="math-step" style="text-align: center;">a = 6250</div>
+                            <div class="math-step" style="margin-top: 1rem; font-weight: bold; color: #4CAF50;">Ответ: 6250 км/ч²</div>
+                            <div class="math-step" style="margin-top: 0.5rem; font-size: 0.9rem; color: rgba(255,255,255,0.7);">
+                                Проверка: √(2 × 0,8 × 6250) = √(1,6 × 6250) = √10000 = 100 ✓
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    id: 'task3',
+                    title: "Определение времени движения автомобиля",
+                    description: `
+                        <p><strong>Условие задачи:</strong></p>
+                        <p>Автомобиль, масса которого равна m = 1500 кг, начинает двигаться с ускорением, которое в течение t секунд остаётся неизменным, и проходит за это время путь S = 1000 метров.</p>
+                        <p>Значение силы (в ньютонах), приложенной в это время к автомобилю, равно:</p>
+                        <div class="formula-latex">F = (2mS) / t²</div>
+                        <p>Определите наибольшее время после начала движения автомобиля, за которое он пройдёт указанный путь, если известно, что сила F, приложенная к автомобилю, не меньше 1200 Н.</p>
+                        <p>Ответ выразите в секундах.</p>
+                    `,
+                    type: 'input',
+                    correctAnswer: '50',
+                    explanation: `
+                        <div class="math-explanation">
+                            <p><strong>Решение:</strong></p>
+                            <div class="math-step">1. Записываем неравенство из условия:</div>
+                            <div class="math-step" style="text-align: center;">F ≥ 1200</div>
+                            <div class="math-step">2. Подставляем формулу для F:</div>
+                            <div class="math-step" style="text-align: center;">(2mS) / t² ≥ 1200</div>
+                            <div class="math-step">3. Подставляем числовые значения:</div>
+                            <div class="math-step" style="text-align: center;">(2 × 1500 × 1000) / t² ≥ 1200</div>
+                            <div class="math-step" style="text-align: center;">3000000 / t² ≥ 1200</div>
+                            <div class="math-step">4. Умножаем обе части на t² (t > 0):</div>
+                            <div class="math-step" style="text-align: center;">3000000 ≥ 1200t²</div>
+                            <div class="math-step">5. Делим обе части на 1200:</div>
+                            <div class="math-step" style="text-align: center;">2500 ≥ t²</div>
+                            <div class="math-step">6. Извлекаем квадратный корень:</div>
+                            <div class="math-step" style="text-align: center;">t ≤ √2500</div>
+                            <div class="math-step" style="text-align: center;">t ≤ 50</div>
+                            <div class="math-step">7. Наибольшее возможное время:</div>
+                            <div class="math-step" style="text-align: center;">t = 50 секунд</div>
+                            <div class="math-step" style="margin-top: 1rem; font-weight: bold; color: #4CAF50;">Ответ: 50 секунд</div>
+                            <div class="math-step" style="margin-top: 0.5rem; font-size: 0.9rem; color: rgba(255,255,255,0.7);">
+                                Проверка: F = (2 × 1500 × 1000) / 50² = 3000000 / 2500 = 1200 Н ✓
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    id: 'task4',
+                    title: "Сравнение капиталов компаний",
+                    description: `
+                        <p><strong>Условие задачи:</strong></p>
+                        <p>Компания «Альфа» начала инвестировать средства в перспективную отрасль в 2001 году, имея капитал в размере 3000 долларов. Каждый год, начиная с 2002 года, она получала прибыль, которая составляла 100% от капитала предыдущего года.</p>
+                        <p>А компания «Бета» начала инвестировать средства в другую отрасль в 2003 году, имея капитал в размере 6000 долларов, и, начиная с 2004 года, ежегодно получала прибыль, составляющую 200% от капитала предыдущего года.</p>
+                        <p>На сколько долларов капитал одной из компаний был больше капитала другой к концу 2006 года, если прибыль из оборота не изымалась?</p>
+                        <p>Введите ответ в виде целого числа:</p>
+                    `,
+                    type: 'input',
+                    correctAnswer: '66000',
+                    explanation: `
+                        <div class="math-explanation">
+                            <p><strong>Решение:</strong></p>
+                            <div class="math-step">1. Рассчитываем капитал компании «Альфа»:</div>
+                            <div class="math-step" style="text-align: center;">2001 год: 3000 $</div>
+                            <div class="math-step" style="text-align: center;">2002 год: 3000 × 2 = 6000 $</div>
+                            <div class="math-step" style="text-align: center;">2003 год: 6000 × 2 = 12000 $</div>
+                            <div class="math-step" style="text-align: center;">2004 год: 12000 × 2 = 24000 $</div>
+                            <div class="math-step" style="text-align: center;">2005 год: 24000 × 2 = 48000 $</div>
+                            <div class="math-step" style="text-align: center;">2006 год: 48000 × 2 = 96000 $</div>
+                            
+                            <div class="math-step">2. Рассчитываем капитал компании «Бета»:</div>
+                            <div class="math-step" style="text-align: center;">2003 год: 6000 $</div>
+                            <div class="math-step" style="text-align: center;">2004 год: 6000 × 3 = 18000 $ (200% прибыль = ×3)</div>
+                            <div class="math-step" style="text-align: center;">2005 год: 18000 × 3 = 54000 $</div>
+                            <div class="math-step" style="text-align: center;">2006 год: 54000 × 3 = 162000 $</div>
+                            
+                            <div class="math-step">3. Сравниваем капиталы к концу 2006 года:</div>
+                            <div class="math-step" style="text-align: center;">«Бета» - «Альфа» = 162000 - 96000 = 66000 $</div>
+                            
+                            <div class="math-step" style="margin-top: 1rem; font-weight: bold; color: #4CAF50;">Ответ: 66000 долларов</div>
+                            <div class="math-step" style="margin-top: 0.5rem; font-size: 0.9rem; color: rgba(255,255,255,0.7);">
+                                Капитал компании «Бета» больше капитала компании «Альфа» на 66000 долларов.
+                            </div>
+                        </div>
+                    `
+                }
+            ],
+            'math_ege_geometry': [
+                {
+                    id: 'task1',
+                    title: "Высота треугольника",
+                    description: `
+                        <p><strong>Условие задачи:</strong></p>
+                        <p>У треугольника со сторонами 9 и 6 проведены высоты к этим сторонам. Высота, проведенная к первой стороне, равна 4. Чему равна высота, проведенная ко второй стороне?</p>
+                        
+                        <div class="geometry-image">
+                            <img src="https://math-ege.sdamgia.ru/get_file?id=144288" alt="Треугольник с высотами">
+                        </div>
+                        
+                        <p>Введите ответ в виде десятичной дроби или целого числа:</p>
+                    `,
+                    type: 'input',
+                    correctAnswer: '6',
+                    explanation: `
+                        <div class="math-explanation">
+                            <p><strong>Решение:</strong></p>
+                            <div class="math-step">1. Площадь треугольника можно найти двумя способами:</div>
+                            <div class="math-step" style="text-align: center;">S = (1/2) × a × h₁ = (1/2) × b × h₂</div>
+                            <div class="math-step">2. Подставляем известные значения:</div>
+                            <div class="math-step" style="text-align: center;">(1/2) × 9 × 4 = (1/2) × 6 × h₂</div>
+                            <div class="math-step">3. Упрощаем уравнение:</div>
+                            <div class="math-step" style="text-align: center;">36 = 6 × h₂</div>
+                            <div class="math-step">4. Решаем уравнение:</div>
+                            <div class="math-step" style="text-align: center;">h₂ = 36 ÷ 6 = 6</div>
+                            
+                            <div class="math-step" style="margin-top: 1rem; font-weight: bold; color: #4CAF50;">Ответ: 6</div>
+                            <div class="math-step" style="margin-top: 0.5rem; font-size: 0.9rem; color: rgba(255,255,255,0.7);">
+                                Проверка: Площадь через первую высоту: (1/2)×9×4 = 18<br>
+                                Площадь через вторую высоту: (1/2)×6×6 = 18 ✓
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    id: 'task2',
+                    title: "Углы параллелограмма",
+                    description: `
+                        <p><strong>Условие задачи:</strong></p>
+                        <p>Сумма двух углов параллелограмма равна 100°. Найдите один из оставшихся углов. Ответ дайте в градусах.</p>
+                        
+                        <div class="geometry-image">
+                            <img src="https://math-ege.sdamgia.ru/get_file?id=29623" alt="Параллелограмм">
+                        </div>
+                        
+                        <p>Введите ответ в виде целого числа:</p>
+                    `,
+                    type: 'input',
+                    correctAnswer: '130',
+                    explanation: `
+                        <div class="math-explanation">
+                            <p><strong>Решение:</strong></p>
+                            <div class="math-step">1. Свойства параллелограмма:</div>
+                            <div class="math-step" style="text-align: center;">Сумма углов, прилежащих к одной стороне = 180°</div>
+                            <div class="math-step" style="text-align: center;">Противоположные углы равны</div>
+                            
+                            <div class="math-step">2. Если сумма двух углов = 100°, то это могут быть:</div>
+                            <div class="math-step" style="text-align: center;">а) Противоположные углы (тогда каждый = 50°)</div>
+                            <div class="math-step" style="text-align: center;">б) Соседние углы (тогда один = x, другой = 100° - x)</div>
+                            
+                            <div class="math-step">3. Проверим вариант а):</div>
+                            <div class="math-step" style="text-align: center;">Если противоположные углы по 50°, то соседние = 180° - 50° = 130°</div>
+                            
+                            <div class="math-step">4. Проверим вариант б):</div>
+                            <div class="math-step" style="text-align: center;">Если соседние углы = x и 100° - x, то их сумма должна быть 180°</div>
+                            <div class="math-step" style="text-align: center;">x + (100° - x) = 100° ≠ 180° → это невозможно</div>
+                            
+                            <div class="math-step">5. Значит, это противоположные углы:</div>
+                            <div class="math-step" style="text-align: center;">Каждый противоположный угол = 100° ÷ 2 = 50°</div>
+                            <div class="math-step" style="text-align: center;">Соседний угол = 180° - 50° = 130°</div>
+                            
+                            <div class="math-step" style="margin-top: 1rem; font-weight: bold; color: #4CAF50;">Ответ: 130°</div>
+                            <div class="math-step" style="margin-top: 0.5rem; font-size: 0.9rem; color: rgba(255,255,255,0.7);">
+                                Проверка: 50° + 50° = 100° (данная сумма)<br>
+                                50° + 130° = 180° (соседние углы) ✓
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    id: 'task3',
+                    title: "Диагональ прямоугольника",
+                    description: `
+                        <p><strong>Условие задачи:</strong></p>
+                        <p>Периметр прямоугольника равен 10, а площадь равна 4,5. Найдите диагональ этого прямоугольника.</p>
+                        
+                        <div class="geometry-image">
+                            <img src="https://math-ege.sdamgia.ru/get_file?id=113307" alt="Прямоугольник">
+                        </div>
+                        
+                        <p>Введите ответ в виде десятичной дроби:</p>
+                    `,
+                    type: 'input',
+                    correctAnswer: '4',
+                    explanation: `
+                        <div class="math-explanation">
+                            <p><strong>Решение:</strong></p>
+                            <div class="math-step">1. Записываем данные:</div>
+                            <div class="math-step" style="text-align: center;">2(a + b) = 10 → a + b = 5</div>
+                            <div class="math-step" style="text-align: center;">a × b = 4,5</div>
+                            
+                            <div class="math-step">2. Найдем a² + b²:</div>
+                            <div class="math-step" style="text-align: center;">(a + b)² = a² + 2ab + b²</div>
+                            <div class="math-step" style="text-align: center;">5² = a² + b² + 2 × 4,5</div>
+                            <div class="math-step" style="text-align: center;">25 = a² + b² + 9</div>
+                            <div class="math-step" style="text-align: center;">a² + b² = 25 - 9 = 16</div>
+                            
+                            <div class="math-step">3. Диагональ прямоугольника:</div>
+                            <div class="math-step" style="text-align: center;">d = √(a² + b²) = √16 = 4</div>
+                            
+                            <div class="math-step" style="margin-top: 1rem; font-weight: bold; color: #4CAF50;">Ответ: 4</div>
+                            <div class="math-step" style="margin-top: 0.5rem; font-size: 0.9rem; color: rgba(255,255,255,0.7);">
+                                Проверка: Пусть a = 4,5, b = 0,5 → 2(4,5+0,5)=10 ✓<br>
+                                Площадь: 4,5×0,5=2,25 ≠4,5<br>
+                                Правильное решение: a=3, b=1,5 → 2(3+1,5)=9 ≠10<br>
+                                Решаем систему: a+b=5, ab=4,5<br>
+                                Квадратное уравнение: x²-5x+4,5=0<br>
+                                D=25-18=7, x=(5±√7)/2<br>
+                                Тогда a²+b²=(a+b)²-2ab=25-9=16<br>
+                                d=√16=4 ✓
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    id: 'task4',
+                    title: "Сторона правильного треугольника",
+                    description: `
+                        <p><strong>Условие задачи:</strong></p>
+                        <p>Радиус окружности, описанной около правильного треугольника, равен √3. Найдите сторону этого треугольника.</p>
+                        
+                        <div class="geometry-image">
+                            <img src="https://math-ege.sdamgia.ru/get_file?id=138540" alt="Правильный треугольник с описанной окружностью">
+                        </div>
+                        
+                        <p>Введите ответ в виде числа:</p>
+                    `,
+                    type: 'input',
+                    correctAnswer: '3',
+                    explanation: `
+                        <div class="math-explanation">
+                            <p><strong>Решение:</strong></p>
+                            <div class="math-step">1. Формула связи стороны правильного треугольника и радиуса описанной окружности:</div>
+                            <div class="math-step" style="text-align: center;">R = a√3 / 3</div>
+                            <div class="math-step">где a — сторона треугольника, R — радиус описанной окружности.</div>
+                            
+                            <div class="math-step">2. Подставляем данное значение R:</div>
+                            <div class="math-step" style="text-align: center;">√3 = a√3 / 3</div>
+                            
+                            <div class="math-step">3. Умножаем обе части на 3:</div>
+                            <div class="math-step" style="text-align: center;">3√3 = a√3</div>
+                            
+                            <div class="math-step">4. Делим обе части на √3:</div>
+                            <div class="math-step" style="text-align: center;">a = 3</div>
+                            
+                            <div class="math-step" style="margin-top: 1rem; font-weight: bold; color: #4CAF50;">Ответ: 3</div>
+                            <div class="math-step" style="margin-top: 0.5rem; font-size: 0.9rem; color: rgba(255,255,255,0.7);">
+                                Проверка: Для правильного треугольника со стороной 3:<br>
+                                R = 3√3 / 3 = √3 ✓
+                            </div>
+                        </div>
+                    `
+                }
+            ],
+            'informatics_ege_networks': {
+                title: "Определение IP-адресов в компьютерных сетях",
+                description: `
+                    <p><strong>Условие задачи:</strong></p>
+                    <p>В терминологии сетей TCP/IP маской сети называют двоичное число, которое показывает, какая часть IP-адреса узла сети относится к адресу сети, а какая – к адресу узла в этой сети. Адрес сети получается в результате применения поразрядной конъюнкции к заданному адресу узла и его маске.</p>
+                    
+                    <p>Широковещательным адресом называется специализированный адрес, в котором на месте нулей в маске стоят единицы. Адрес сети и широковещательный адрес не могут быть использованы для адресации сетевых устройств.</p>
+                    
+                    <p><strong>Сеть задана IP-адресом одного из входящих в неё узлов 98.81.154.195 и сетевой маской 255.252.0.0.</strong></p>
+                    
+                    <p>Найдите наибольший в данной сети IP-адрес, который может быть назначен компьютеру. В ответе укажите найденный IP-адрес без разделителей.</p>
+                    
+                    <div class="task-example">
+                        <strong>Пример:</strong> Если бы найденный адрес был равен 111.22.3.44, то в ответе следовало бы записать 11122344.
+                    </div>
+                `,
+                type: 'choice',
+                options: [
+                    "9883255254",
+                    "4582032013",
+                    "392033493", 
+                    "3321234918"
+                ],
+                correctAnswer: 0,
+                explanation: "Правильный ответ: 9883255254"
+            },
+            // НОВЫЕ ЗАДАНИЯ ПО ФИЗИКЕ (Механика, ОГЭ 2026)
             'physics_oge_mechanics': [
                 {
                     id: 'task1',
@@ -1133,37 +1743,43 @@
                 return;
             }
             
-            taskCard.innerHTML = `
-                <div class="task-header">
-                    <div>
-                        <div class="task-meta">
-                            <span class="task-tag">${getSubjectName(currentState.subject)}</span>
-                            <span class="task-tag ${currentState.level}">${getLevelName(currentState.level)}</span>
-                            <span class="task-tag">${currentState.topic.name}</span>
-                        </div>
-                        <h2 class="task-title">Выберите задание</h2>
-                    </div>
-                </div>
-
-                <div class="selection-grid" style="grid-template-columns: 1fr;">
-                    ${tasks.map((task, index) => `
-                        <div class="selection-card" onclick="loadTask(${index})">
-                            <div class="selection-icon">
-                                <i class="fas fa-${task.type === 'input' ? 'keyboard' : 'list'}"></i>
+            // Если это массив заданий
+            if (Array.isArray(tasks)) {
+                taskCard.innerHTML = `
+                    <div class="task-header">
+                        <div>
+                            <div class="task-meta">
+                                <span class="task-tag">${getSubjectName(currentState.subject)}</span>
+                                <span class="task-tag ${currentState.level}">${getLevelName(currentState.level)}</span>
+                                <span class="task-tag">${currentState.topic.name}</span>
                             </div>
-                            <h3 class="selection-title">${task.title}</h3>
-                            <p class="selection-description">${task.type === 'input' ? 'Задание с вводом ответа' : 'Задание с выбором ответа'}</p>
+                            <h2 class="task-title">Выберите задание</h2>
                         </div>
-                    `).join('')}
-                </div>
-            `;
+                    </div>
+
+                    <div class="selection-grid" style="grid-template-columns: 1fr;">
+                        ${tasks.map((task, index) => `
+                            <div class="selection-card" onclick="loadTask(${index})">
+                                <div class="selection-icon">
+                                    <i class="fas fa-${task.type === 'input' ? 'keyboard' : 'list'}"></i>
+                                </div>
+                                <h3 class="selection-title">${task.title}</h3>
+                                <p class="selection-description">${task.type === 'input' ? 'Задание с вводом ответа' : 'Задание с выбором ответа'}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            } else {
+                // Если это одиночное задание (как в informatics_ege_networks)
+                loadTask(0);
+            }
         }
 
         // Загрузка конкретного задания
         function loadTask(taskIndex) {
             const taskCard = document.getElementById('taskCard');
             const tasks = tasksDatabase[currentState.topic.id];
-            const task = tasks[taskIndex];
+            const task = Array.isArray(tasks) ? tasks[taskIndex] : tasks;
             
             if (!task) {
                 taskCard.innerHTML = `
@@ -1177,6 +1793,7 @@
             }
             
             if (task.type === 'input') {
+                // Задание с вводом ответа
                 taskCard.innerHTML = `
                     <div class="task-header">
                         <div>
@@ -1184,17 +1801,17 @@
                                 <span class="task-tag">${getSubjectName(currentState.subject)}</span>
                                 <span class="task-tag ${currentState.level}">${getLevelName(currentState.level)}</span>
                                 <span class="task-tag">${currentState.topic.name}</span>
-                                <span class="task-tag" style="background: rgba(255,165,0,0.2); color: #FFA500; border-color: #FFA500;">
-                                    Задание ${taskIndex + 1} из ${tasks.length}
-                                </span>
+                                ${Array.isArray(tasks) ? `<span class="task-tag" style="background: rgba(255,165,0,0.2); color: #FFA500; border-color: #FFA500;">Задание ${taskIndex + 1} из ${tasks.length}</span>` : ''}
                             </div>
                             <h2 class="task-title">${task.title}</h2>
-                            <div style="margin-top: 1rem;">
-                                <button class="back-button" onclick="loadTasksList()" style="margin-bottom: 0;">
-                                    <i class="fas fa-arrow-left"></i>
-                                    Назад к списку заданий
-                                </button>
-                            </div>
+                            ${Array.isArray(tasks) ? `
+                                <div style="margin-top: 1rem;">
+                                    <button class="back-button" onclick="loadTasksList()" style="margin-bottom: 0;">
+                                        <i class="fas fa-arrow-left"></i>
+                                        Назад к списку заданий
+                                    </button>
+                                </div>
+                            ` : ''}
                         </div>
                     </div>
 
@@ -1207,7 +1824,7 @@
                         
                         <div class="answer-input-container">
                             <input type="text" class="answer-input" id="answerInput" placeholder="Введите число..." oninput="validateInput()">
-                            <div class="input-hint">Введите число (можно с десятичной точкой или запятой)</div>
+                            <div class="input-hint">Введите только число без пробелов и других символов</div>
                         </div>
 
                         <button class="submit-button" id="submitButton" onclick="checkInputAnswer()" disabled>
@@ -1222,6 +1839,7 @@
                     </div>
                 `;
             } else {
+                // Задание с выбором ответа
                 taskCard.innerHTML = `
                     <div class="task-header">
                         <div>
@@ -1229,17 +1847,17 @@
                                 <span class="task-tag">${getSubjectName(currentState.subject)}</span>
                                 <span class="task-tag ${currentState.level}">${getLevelName(currentState.level)}</span>
                                 <span class="task-tag">${currentState.topic.name}</span>
-                                <span class="task-tag" style="background: rgba(255,165,0,0.2); color: #FFA500; border-color: #FFA500;">
-                                    Задание ${taskIndex + 1} из ${tasks.length}
-                                </span>
+                                ${Array.isArray(tasks) ? `<span class="task-tag" style="background: rgba(255,165,0,0.2); color: #FFA500; border-color: #FFA500;">Задание ${taskIndex + 1} из ${tasks.length}</span>` : ''}
                             </div>
                             <h2 class="task-title">${task.title}</h2>
-                            <div style="margin-top: 1rem;">
-                                <button class="back-button" onclick="loadTasksList()" style="margin-bottom: 0;">
-                                    <i class="fas fa-arrow-left"></i>
-                                    Назад к списку заданий
-                                </button>
-                            </div>
+                            ${Array.isArray(tasks) ? `
+                                <div style="margin-top: 1rem;">
+                                    <button class="back-button" onclick="loadTasksList()" style="margin-bottom: 0;">
+                                        <i class="fas fa-arrow-left"></i>
+                                        Назад к списку заданий
+                                    </button>
+                                </div>
+                            ` : ''}
                         </div>
                     </div>
 
@@ -1330,21 +1948,27 @@
             submitButton.disabled = true;
             submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Проверка...';
 
+            // Имитация проверки
             setTimeout(() => {
                 if (isCorrect) {
                     resultMessage.className = 'result-message result-correct';
                     resultIcon.className = 'fas fa-check';
                     resultText.innerHTML = `<div style="text-align: left;">${currentTask.explanation}</div>`;
+                    
+                    // Обновляем статистику
                     updateStatistics(true);
                 } else {
                     resultMessage.className = 'result-message result-incorrect';
                     resultIcon.className = 'fas fa-times';
                     resultText.innerHTML = `<div style="text-align: left;">${currentTask.explanation}</div>`;
+                    
+                    // Обновляем статистику
                     updateStatistics(false);
                 }
                 
                 resultMessage.style.display = 'block';
                 submitButton.style.display = 'none';
+                
             }, 1000);
         }
 
@@ -1354,6 +1978,7 @@
             const submitButton = document.getElementById('submitButton');
             const value = input.value.trim();
             
+            // Проверяем, что введено число (может быть целым или десятичным)
             if (value && /^[\d.,]+$/.test(value)) {
                 submitButton.disabled = false;
             } else {
@@ -1374,11 +1999,14 @@
             submitButton.disabled = true;
             submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Проверка...';
 
+            // Имитация проверки
             setTimeout(() => {
                 if (isCorrect) {
                     resultMessage.className = 'result-message result-correct';
                     resultIcon.className = 'fas fa-check';
                     resultText.innerHTML = `<div style="text-align: left;">${currentTask.explanation}</div>`;
+                    
+                    // Обновляем статистику
                     updateStatistics(true);
                 } else {
                     resultMessage.className = 'result-message result-incorrect';
@@ -1390,17 +2018,21 @@
                             ${currentTask.explanation}
                         </div>
                     `;
+                    
+                    // Обновляем статистику
                     updateStatistics(false);
                 }
                 
                 resultMessage.style.display = 'block';
                 submitButton.style.display = 'none';
+                
             }, 1000);
         }
 
         function updateStatistics(isCorrect) {
             let statistics = JSON.parse(localStorage.getItem('userStatistics') || '{}');
             
+            // Инициализируем статистику заданий если её нет
             if (!statistics.tasks) {
                 statistics.tasks = {
                     completed: 0,
@@ -1418,6 +2050,7 @@
             localStorage.setItem('userStatistics', JSON.stringify(statistics));
         }
 
+        // Добавляем возможность использовать клавиши 1-4 для выбора ответа
         document.addEventListener('keydown', function(event) {
             if (event.key >= '1' && event.key <= '4') {
                 const answerIndex = parseInt(event.key) - 1;
