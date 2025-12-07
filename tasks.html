@@ -513,6 +513,35 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
+        /* Стили для геометрических изображений */
+        .geometry-image {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 1.5rem 0;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .geometry-image img {
+            max-width: 100%;
+            height: auto;
+            max-height: 300px;
+            filter: invert(1) brightness(2);
+            background: transparent;
+        }
+
+        .geometry-diagram {
+            font-family: 'Times New Roman', serif;
+            color: white;
+            margin: 1rem 0;
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
         /* Анимации */
         @keyframes slideUp {
             from {
@@ -565,6 +594,10 @@
                 font-size: 1.4rem;
                 padding: 0.8rem;
             }
+
+            .geometry-image {
+                padding: 1rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -588,6 +621,10 @@
             .formula-latex {
                 font-size: 1.2rem;
                 padding: 0.6rem;
+            }
+
+            .geometry-image {
+                padding: 0.5rem;
             }
         }
     </style>
@@ -1156,13 +1193,13 @@
                         <p>Введите ответ в виде целого числа:</p>
                     `,
                     type: 'input',
-                    correctAnswer: '153000',
+                    correctAnswer: '66000',
                     explanation: `
                         <div class="math-explanation">
                             <p><strong>Решение:</strong></p>
                             <div class="math-step">1. Рассчитываем капитал компании «Альфа»:</div>
                             <div class="math-step" style="text-align: center;">2001 год: 3000 $</div>
-                            <div class="math-step" style="text-align: center;">2002 год: 3000 + 100% = 3000 × 2 = 6000 $</div>
+                            <div class="math-step" style="text-align: center;">2002 год: 3000 × 2 = 6000 $</div>
                             <div class="math-step" style="text-align: center;">2003 год: 6000 × 2 = 12000 $</div>
                             <div class="math-step" style="text-align: center;">2004 год: 12000 × 2 = 24000 $</div>
                             <div class="math-step" style="text-align: center;">2005 год: 24000 × 2 = 48000 $</div>
@@ -1170,35 +1207,197 @@
                             
                             <div class="math-step">2. Рассчитываем капитал компании «Бета»:</div>
                             <div class="math-step" style="text-align: center;">2003 год: 6000 $</div>
-                            <div class="math-step" style="text-align: center;">2004 год: 6000 + 200% = 6000 × 3 = 18000 $</div>
+                            <div class="math-step" style="text-align: center;">2004 год: 6000 × 3 = 18000 $ (200% прибыль = ×3)</div>
                             <div class="math-step" style="text-align: center;">2005 год: 18000 × 3 = 54000 $</div>
                             <div class="math-step" style="text-align: center;">2006 год: 54000 × 3 = 162000 $</div>
                             
                             <div class="math-step">3. Сравниваем капиталы к концу 2006 года:</div>
-                            <div class="math-step" style="text-align: center;">«Альфа»: 96000 $</div>
-                            <div class="math-step" style="text-align: center;">«Бета»: 162000 $</div>
-                            <div class="math-step" style="text-align: center;">Разница: 162000 - 96000 = 66000 $</div>
-                            
-                            <div class="math-step">4. Правильный расчет (с учетом, что 200% означает увеличение в 3 раза):</div>
-                            <div class="math-step" style="text-align: center;">«Альфа» (100% прибыль): каждый год капитал ×2</div>
-                            <div class="math-step" style="text-align: center;">2001: 3000</div>
-                            <div class="math-step" style="text-align: center;">2002: 3000×2 = 6000</div>
-                            <div class="math-step" style="text-align: center;">2003: 6000×2 = 12000</div>
-                            <div class="math-step" style="text-align: center;">2004: 12000×2 = 24000</div>
-                            <div class="math-step" style="text-align: center;">2005: 24000×2 = 48000</div>
-                            <div class="math-step" style="text-align: center;">2006: 48000×2 = 96000</div>
-                            
-                            <div class="math-step" style="text-align: center;">«Бета» (200% прибыль): каждый год капитал ×3</div>
-                            <div class="math-step" style="text-align: center;">2003: 6000</div>
-                            <div class="math-step" style="text-align: center;">2004: 6000×3 = 18000</div>
-                            <div class="math-step" style="text-align: center;">2005: 18000×3 = 54000</div>
-                            <div class="math-step" style="text-align: center;">2006: 54000×3 = 162000</div>
-                            
-                            <div class="math-step" style="text-align: center;">Разница: 162000 - 96000 = 66000</div>
+                            <div class="math-step" style="text-align: center;">«Бета» - «Альфа» = 162000 - 96000 = 66000 $</div>
                             
                             <div class="math-step" style="margin-top: 1rem; font-weight: bold; color: #4CAF50;">Ответ: 66000 долларов</div>
                             <div class="math-step" style="margin-top: 0.5rem; font-size: 0.9rem; color: rgba(255,255,255,0.7);">
-                                Примечание: Прибыль 200% означает увеличение капитала в 3 раза (100% + 200% = 300% от исходного).
+                                Капитал компании «Бета» больше капитала компании «Альфа» на 66000 долларов.
+                            </div>
+                        </div>
+                    `
+                }
+            ],
+            'math_ege_geometry': [
+                {
+                    id: 'task1',
+                    title: "Высота треугольника",
+                    description: `
+                        <p><strong>Условие задачи:</strong></p>
+                        <p>У треугольника со сторонами 9 и 6 проведены высоты к этим сторонам. Высота, проведенная к первой стороне, равна 4. Чему равна высота, проведенная ко второй стороне?</p>
+                        
+                        <div class="geometry-diagram">
+                            <p>Диаграмма: Треугольник ABC со сторонами:</p>
+                            <p>AB = 9, высота из C = 4</p>
+                            <p>AC = 6, высота из B = ?</p>
+                        </div>
+                        
+                        <p>Введите ответ в виде десятичной дроби или целого числа:</p>
+                    `,
+                    type: 'input',
+                    correctAnswer: '6',
+                    explanation: `
+                        <div class="math-explanation">
+                            <p><strong>Решение:</strong></p>
+                            <div class="math-step">1. Площадь треугольника можно найти двумя способами:</div>
+                            <div class="math-step" style="text-align: center;">S = (1/2) × a × h₁ = (1/2) × b × h₂</div>
+                            <div class="math-step">2. Подставляем известные значения:</div>
+                            <div class="math-step" style="text-align: center;">(1/2) × 9 × 4 = (1/2) × 6 × h₂</div>
+                            <div class="math-step">3. Упрощаем уравнение:</div>
+                            <div class="math-step" style="text-align: center;">36 = 6 × h₂</div>
+                            <div class="math-step">4. Решаем уравнение:</div>
+                            <div class="math-step" style="text-align: center;">h₂ = 36 ÷ 6 = 6</div>
+                            
+                            <div class="math-step" style="margin-top: 1rem; font-weight: bold; color: #4CAF50;">Ответ: 6</div>
+                            <div class="math-step" style="margin-top: 0.5rem; font-size: 0.9rem; color: rgba(255,255,255,0.7);">
+                                Проверка: Площадь через первую высоту: (1/2)×9×4 = 18<br>
+                                Площадь через вторую высоту: (1/2)×6×6 = 18 ✓
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    id: 'task2',
+                    title: "Углы параллелограмма",
+                    description: `
+                        <p><strong>Условие задачи:</strong></p>
+                        <p>Сумма двух углов параллелограмма равна 100°. Найдите один из оставшихся углов. Ответ дайте в градусах.</p>
+                        
+                        <div class="geometry-diagram">
+                            <p>Диаграмма: Параллелограмм ABCD</p>
+                            <p>∠A + ∠B = 100° (или ∠A + ∠C, или ∠B + ∠D)</p>
+                            <p>Найти: ∠C или ∠D</p>
+                        </div>
+                        
+                        <p>Введите ответ в виде целого числа:</p>
+                    `,
+                    type: 'input',
+                    correctAnswer: '130',
+                    explanation: `
+                        <div class="math-explanation">
+                            <p><strong>Решение:</strong></p>
+                            <div class="math-step">1. Свойства параллелограмма:</div>
+                            <div class="math-step" style="text-align: center;">Сумма углов, прилежащих к одной стороне = 180°</div>
+                            <div class="math-step" style="text-align: center;">Противоположные углы равны</div>
+                            
+                            <div class="math-step">2. Если сумма двух углов = 100°, то это могут быть:</div>
+                            <div class="math-step" style="text-align: center;">а) Противоположные углы (тогда каждый = 50°)</div>
+                            <div class="math-step" style="text-align: center;">б) Соседние углы (тогда один = x, другой = 100° - x)</div>
+                            
+                            <div class="math-step">3. Проверим вариант а):</div>
+                            <div class="math-step" style="text-align: center;">Если противоположные углы по 50°, то соседние = 180° - 50° = 130°</div>
+                            
+                            <div class="math-step">4. Проверим вариант б):</div>
+                            <div class="math-step" style="text-align: center;">Если соседние углы = x и 100° - x, то их сумма должна быть 180°</div>
+                            <div class="math-step" style="text-align: center;">x + (100° - x) = 100° ≠ 180° → это невозможно</div>
+                            
+                            <div class="math-step">5. Значит, это противоположные углы:</div>
+                            <div class="math-step" style="text-align: center;">Каждый противоположный угол = 100° ÷ 2 = 50°</div>
+                            <div class="math-step" style="text-align: center;">Соседний угол = 180° - 50° = 130°</div>
+                            
+                            <div class="math-step" style="margin-top: 1rem; font-weight: bold; color: #4CAF50;">Ответ: 130°</div>
+                            <div class="math-step" style="margin-top: 0.5rem; font-size: 0.9rem; color: rgba(255,255,255,0.7);">
+                                Проверка: 50° + 50° = 100° (данная сумма)<br>
+                                50° + 130° = 180° (соседние углы) ✓
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    id: 'task3',
+                    title: "Диагональ прямоугольника",
+                    description: `
+                        <p><strong>Условие задачи:</strong></p>
+                        <p>Периметр прямоугольника равен 10, а площадь равна 4,5. Найдите диагональ этого прямоугольника.</p>
+                        
+                        <div class="geometry-diagram">
+                            <p>Диаграмма: Прямоугольник со сторонами a и b</p>
+                            <p>Периметр: P = 2(a + b) = 10</p>
+                            <p>Площадь: S = a × b = 4,5</p>
+                            <p>Диагональ: d = √(a² + b²)</p>
+                        </div>
+                        
+                        <p>Введите ответ в виде десятичной дроби:</p>
+                    `,
+                    type: 'input',
+                    correctAnswer: '4',
+                    explanation: `
+                        <div class="math-explanation">
+                            <p><strong>Решение:</strong></p>
+                            <div class="math-step">1. Записываем данные:</div>
+                            <div class="math-step" style="text-align: center;">2(a + b) = 10 → a + b = 5</div>
+                            <div class="math-step" style="text-align: center;">a × b = 4,5</div>
+                            
+                            <div class="math-step">2. Найдем a² + b²:</div>
+                            <div class="math-step" style="text-align: center;">(a + b)² = a² + 2ab + b²</div>
+                            <div class="math-step" style="text-align: center;">5² = a² + b² + 2 × 4,5</div>
+                            <div class="math-step" style="text-align: center;">25 = a² + b² + 9</div>
+                            <div class="math-step" style="text-align: center;">a² + b² = 25 - 9 = 16</div>
+                            
+                            <div class="math-step">3. Диагональ прямоугольника:</div>
+                            <div class="math-step" style="text-align: center;">d = √(a² + b²) = √16 = 4</div>
+                            
+                            <div class="math-step" style="margin-top: 1rem; font-weight: bold; color: #4CAF50;">Ответ: 4</div>
+                            <div class="math-step" style="margin-top: 0.5rem; font-size: 0.9rem; color: rgba(255,255,255,0.7);">
+                                Проверка: Пусть a = 4,5, b = 1 → 2(4,5+1)=11 ≠10<br>
+                                Пусть a = 3, b = 1,5 → 2(3+1,5)=9 ≠10<br>
+                                Правильно: a = 4,5, b = 0,5 → 2(4,5+0,5)=10 ✓<br>
+                                Площадь: 4,5×0,5=2,25 ≠4,5<br>
+                                Правильное решение: a=3, b=1,5 → P=9, S=4,5<br>
+                                d=√(3²+1,5²)=√(9+2,25)=√11,25=3,354 ≠4<br>
+                                Попробуем: a+b=5, ab=4,5<br>
+                                Решаем квадратное уравнение: x²-5x+4,5=0<br>
+                                D=25-18=7, x=(5±√7)/2<br>
+                                Тогда d=√(a²+b²)=√((a+b)²-2ab)=√(25-9)=√16=4 ✓
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    id: 'task4',
+                    title: "Сторона правильного треугольника",
+                    description: `
+                        <p><strong>Условие задачи:</strong></p>
+                        <p>Радиус окружности, описанной около правильного треугольника, равен √3. Найдите сторону этого треугольника.</p>
+                        
+                        <div class="geometry-diagram">
+                            <p>Диаграмма: Правильный треугольник ABC с описанной окружностью</p>
+                            <p>Радиус описанной окружности R = √3</p>
+                            <p>Сторона треугольника a = ?</p>
+                        </div>
+                        
+                        <p>Введите ответ в виде числа:</p>
+                    `,
+                    type: 'input',
+                    correctAnswer: '3',
+                    explanation: `
+                        <div class="math-explanation">
+                            <p><strong>Решение:</strong></p>
+                            <div class="math-step">1. Формула связи стороны правильного треугольника и радиуса описанной окружности:</div>
+                            <div class="math-step" style="text-align: center;">R = a / √3</div>
+                            <div class="math-step">где a — сторона треугольника, R — радиус описанной окружности.</div>
+                            
+                            <div class="math-step">2. Подставляем данное значение R:</div>
+                            <div class="math-step" style="text-align: center;">√3 = a / √3</div>
+                            
+                            <div class="math-step">3. Умножаем обе части на √3:</div>
+                            <div class="math-step" style="text-align: center;">a = √3 × √3</div>
+                            
+                            <div class="math-step">4. Вычисляем:</div>
+                            <div class="math-step" style="text-align: center;">a = 3</div>
+                            
+                            <div class="math-step" style="margin-top: 1rem; font-weight: bold; color: #4CAF50;">Ответ: 3</div>
+                            <div class="math-step" style="margin-top: 0.5rem; font-size: 0.9rem; color: rgba(255,255,255,0.7);">
+                                Проверка: Для правильного треугольника со стороной 3:<br>
+                                R = 3/√3 = √3 ✓<br>
+                                Формула: R = a√3/3, но в данном случае R = a/√3
+                            </div>
+                            <div class="math-step" style="margin-top: 0.5rem; font-size: 0.9rem; color: rgba(255,255,255,0.7);">
+                                Уточнение: Формула R = a√3/3, тогда a = R√3 = √3 × √3 = 3
                             </div>
                         </div>
                     `
