@@ -6,7 +6,6 @@
     <title>Задания - BSK Education</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* Все стили остаются без изменений */
         * {
             margin: 0;
             padding: 0;
@@ -21,9 +20,486 @@
             overflow-x: hidden;
         }
 
-        /* ... (все остальные стили без изменений) ... */
+        /* Шапка */
+        header {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
 
-        /* Стили для изображений в физике */
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, #fff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: #ffd700;
+        }
+
+        /* Основной контент */
+        .tasks-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 6rem 2rem 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: slideUp 0.8s ease-out;
+        }
+
+        .page-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, #fff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Шаги навигации */
+        .steps-navigation {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0.6;
+        }
+
+        .step.active {
+            opacity: 1;
+        }
+
+        .step-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .step.active .step-circle {
+            background: linear-gradient(45deg, #ff6b9d, #ff1493);
+            border-color: #ff1493;
+            transform: scale(1.1);
+        }
+
+        .step-label {
+            font-weight: 600;
+            text-align: center;
+        }
+
+        /* Сетки выбора */
+        .selection-grid {
+            display: grid;
+            gap: 2rem;
+            animation: slideUp 0.8s ease-out;
+        }
+
+        .subject-grid {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        .level-grid {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+
+        .topic-grid {
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        }
+
+        .selection-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2.5rem;
+            border-radius: 20px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .selection-card:hover {
+            transform: translateY(-5px);
+            border-color: #ffd700;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .selection-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: #ffd700;
+        }
+
+        .selection-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .selection-description {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.5;
+        }
+
+        /* Карточка задания */
+        .task-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 3rem;
+            border-radius: 25px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 2rem;
+            animation: slideUp 0.8s ease-out 0.2s both;
+        }
+
+        .task-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+        }
+
+        .task-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .task-tag {
+            padding: 0.5rem 1.2rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            background: rgba(255, 215, 0, 0.2);
+            color: #ffd700;
+            border: 1px solid #ffd700;
+        }
+
+        .task-tag.ege {
+            background: rgba(255, 107, 157, 0.2);
+            color: #ff6b9d;
+            border: 1px solid #ff6b9d;
+        }
+
+        .task-tag.oge {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4CAF50;
+            border: 1px solid #4CAF50;
+        }
+
+        .task-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1.5rem;
+            line-height: 1.4;
+        }
+
+        .task-description {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .task-description p {
+            margin-bottom: 1rem;
+        }
+
+        .task-description p:last-child {
+            margin-bottom: 0;
+        }
+
+        .task-example {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            border-left: 4px solid #ffd700;
+        }
+
+        /* Форма ответа */
+        .answer-form {
+            margin-top: 2rem;
+        }
+
+        .answer-options {
+            display: grid;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .answer-option {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .answer-option:hover {
+            border-color: #ffd700;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .answer-option.selected {
+            border-color: #ff6b9d;
+            background: rgba(255, 107, 157, 0.1);
+        }
+
+        .answer-option input {
+            transform: scale(1.2);
+            accent-color: #ff6b9d;
+        }
+
+        .answer-label {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(45deg, #ff6b9d, #ff1493);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .submit-button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 20, 147, 0.4);
+        }
+
+        .submit-button:disabled {
+            background: rgba(255, 255, 255, 0.2);
+            cursor: not-allowed;
+        }
+
+        /* Поле для ввода ответа */
+        .answer-input-container {
+            margin-bottom: 2rem;
+        }
+
+        .answer-input {
+            width: 100%;
+            padding: 1.2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .answer-input:focus {
+            outline: none;
+            border-color: #ffd700;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .answer-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .input-hint {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+        }
+
+        /* Результат */
+        .result-message {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            font-weight: 600;
+            display: none;
+        }
+
+        .result-correct {
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid #4CAF50;
+            color: #4CAF50;
+        }
+
+        .result-incorrect {
+            background: rgba(244, 67, 54, 0.2);
+            border: 1px solid #F44336;
+            color: #F44336;
+        }
+
+        /* Кнопка назад */
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .back-button:hover {
+            border-color: #ffd700;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Уведомление */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            border-left: 4px solid #ff1493;
+            z-index: 1000;
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        /* Скрытие секций */
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        /* Математические формулы */
+        .math-formula {
+            font-family: 'Times New Roman', serif;
+            font-style: italic;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            margin: 0.5rem 0;
+            display: inline-block;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .math-explanation {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            border-left: 4px solid #4CAF50;
+        }
+
+        .math-step {
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+        }
+
+        /* Стили для изображений */
+        .formula-image {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .formula-image img {
+            max-width: 100%;
+            height: auto;
+            filter: invert(1) brightness(2);
+            background: transparent;
+        }
+
         .physics-image {
             background: rgba(255, 255, 255, 0.1);
             padding: 2rem;
@@ -50,6 +526,90 @@
             background: rgba(255, 255, 255, 0.05);
             border-radius: 10px;
             border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Анимации */
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .tasks-container {
+                padding: 5rem 1rem 1rem;
+            }
+
+            .steps-navigation {
+                gap: 1rem;
+            }
+
+            .step-circle {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+
+            .selection-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .task-card {
+                padding: 2rem;
+            }
+
+            .page-title {
+                font-size: 2.2rem;
+            }
+
+            .task-title {
+                font-size: 1.5rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .physics-image {
+                padding: 1rem;
+            }
+
+            .physics-image img {
+                max-height: 200px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-container {
+                padding: 0 1rem;
+            }
+
+            .page-title {
+                font-size: 1.8rem;
+            }
+
+            .task-card {
+                padding: 1.5rem;
+            }
+
+            .task-meta {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .physics-image {
+                padding: 0.5rem;
+            }
+
+            .physics-image img {
+                max-height: 150px;
+            }
         }
     </style>
 </head>
@@ -299,27 +859,6 @@
 
         // База данных заданий
         const tasksDatabase = {
-            'math_oge_numbers': [
-                {
-                    id: 'task1',
-                    title: "Оценка значения дроби",
-                    description: `
-                        <p><strong>Условие задачи:</strong></p>
-                        <p>Между какими целыми числами заключено число <strong>110/13</strong>?</p>
-                        <p>Выберите правильный вариант из предложенных:</p>
-                    `,
-                    type: 'choice',
-                    options: [
-                        "8 и 9",
-                        "9 и 10", 
-                        "10 и 11",
-                        "11 и 12"
-                    ],
-                    correctAnswer: 0,
-                    explanation: "110 ÷ 13 ≈ 8.46, значит число заключено между 8 и 9"
-                },
-                // ... остальные математические задания ...
-            ],
             'physics_oge_mechanics': [
                 {
                     id: 'task1',
@@ -328,17 +867,23 @@
                         <p><strong>Условие задачи:</strong></p>
                         <p>Одна и та же горизонтальная сила F действует вначале на тело 1 массой 0,5 кг, а затем на тело 2 массой 3 кг. Оба тела до начала действия силы покоились на гладком горизонтальном столе.</p>
                         <p>С каким по модулю ускорением будет двигаться тело 2 под действием силы F, если тело 1 движется с ускорением, модуль которого равен 1,8 м/с²?</p>
+                        <div class="task-example">
+                            <strong>Формула:</strong> По второму закону Ньютона F = m × a
+                        </div>
                     `,
                     type: 'input',
                     correctAnswer: '0.3',
                     explanation: `
                         <div class="math-explanation">
                             <p><strong>Решение:</strong></p>
-                            <div class="math-step">1. Сначала найдём силу F из движения первого тела:</div>
+                            <div class="math-step">1. Найдём силу F из движения первого тела:</div>
                             <div class="math-step" style="text-align: center;">F = m₁ × a₁ = 0,5 кг × 1,8 м/с² = 0,9 Н</div>
-                            <div class="math-step">2. Затем найдём ускорение второго тела:</div>
+                            <div class="math-step">2. Теперь найдём ускорение второго тела:</div>
                             <div class="math-step" style="text-align: center;">a₂ = F / m₂ = 0,9 Н / 3 кг = 0,3 м/с²</div>
                             <div class="math-step" style="margin-top: 1rem; font-weight: bold; color: #4CAF50;">Ответ: 0,3 м/с²</div>
+                            <div class="math-step" style="margin-top: 0.5rem; font-size: 0.9rem; color: rgba(255,255,255,0.7);">
+                                Проверка: Сила одинаковая, значит ускорение обратно пропорционально массе.
+                            </div>
                         </div>
                     `
                 },
@@ -349,17 +894,25 @@
                         <p><strong>Условие задачи:</strong></p>
                         <p>Два тела находятся на одной и той же высоте над поверхностью земли. Масса первого тела m₁ в пять раз больше массы второго тела m₂.</p>
                         <p>Запишите, чему равно отношение потенциальной энергии первого тела E<sub>п1</sub> к потенциальной энергии второго тела E<sub>п2</sub>.</p>
+                        <div class="task-example">
+                            <strong>Формула:</strong> Потенциальная энергия E<sub>п</sub> = mgh
+                        </div>
                     `,
                     type: 'input',
                     correctAnswer: '5',
                     explanation: `
                         <div class="math-explanation">
                             <p><strong>Решение:</strong></p>
-                            <div class="math-step">1. Формула потенциальной энергии: E<sub>п</sub> = mgh</div>
-                            <div class="math-step">2. Так как высота одинаковая, то отношение энергий равно отношению масс:</div>
+                            <div class="math-step">1. Запишем формулы потенциальной энергии:</div>
+                            <div class="math-step" style="text-align: center;">E<sub>п1</sub> = m₁gh</div>
+                            <div class="math-step" style="text-align: center;">E<sub>п2</sub> = m₂gh</div>
+                            <div class="math-step">2. Найдём отношение:</div>
                             <div class="math-step" style="text-align: center;">E<sub>п1</sub>/E<sub>п2</sub> = (m₁gh) / (m₂gh) = m₁/m₂</div>
                             <div class="math-step">3. По условию m₁/m₂ = 5</div>
                             <div class="math-step" style="margin-top: 1rem; font-weight: bold; color: #4CAF50;">Ответ: 5</div>
+                            <div class="math-step" style="margin-top: 0.5rem; font-size: 0.9rem; color: rgba(255,255,255,0.7);">
+                                Так как высота h и ускорение свободного падения g одинаковы, отношение энергий равно отношению масс.
+                            </div>
                         </div>
                     `
                 },
@@ -376,17 +929,26 @@
                                  style="filter: invert(1) brightness(2) contrast(1.2); background: transparent;">
                         </div>
                         
-                        <p>Введите ответ в виде десятичной дроби:</p>
+                        <div class="task-example">
+                            <strong>Подсказка:</strong> Частота ν = 1/T, где T — период колебаний
+                        </div>
                     `,
                     type: 'input',
                     correctAnswer: '0.25',
                     explanation: `
                         <div class="math-explanation">
                             <p><strong>Решение:</strong></p>
-                            <div class="math-step">1. Из графика видно, что период колебаний T = 4 секунды</div>
-                            <div class="math-step">2. Частота связана с периодом формулой: ν = 1/T</div>
+                            <div class="math-step">1. Из графика определяем период колебаний:</div>
+                            <div class="math-step" style="text-align: center;">Тело возвращается в исходное положение через 4 секунды</div>
+                            <div class="math-step" style="text-align: center;">Значит, период T = 4 с</div>
+                            <div class="math-step">2. Частота связана с периодом формулой:</div>
+                            <div class="math-step" style="text-align: center;">ν = 1/T</div>
+                            <div class="math-step">3. Подставляем значение периода:</div>
                             <div class="math-step" style="text-align: center;">ν = 1 / 4 с = 0,25 Гц</div>
                             <div class="math-step" style="margin-top: 1rem; font-weight: bold; color: #4CAF50;">Ответ: 0,25 Гц</div>
+                            <div class="math-step" style="margin-top: 0.5rem; font-size: 0.9rem; color: rgba(255,255,255,0.7);">
+                                Частота показывает, сколько полных колебаний совершает тело за 1 секунду.
+                            </div>
                         </div>
                     `
                 },
@@ -404,7 +966,7 @@
                         </div>
                         
                         <div class="task-example">
-                            <strong>Примечание:</strong> Груз имеет массу 6 кг, ускорение свободного падения g = 10 м/с².
+                            <strong>Данные:</strong> Масса груза 6 кг, g = 10 м/с². Блоки считайте идеальными (невесомыми и без трения).
                         </div>
                     `,
                     type: 'input',
@@ -412,10 +974,16 @@
                     explanation: `
                         <div class="math-explanation">
                             <p><strong>Решение:</strong></p>
-                            <div class="math-step">1. Вес груза: P = mg = 6 кг × 10 м/с² = 60 Н</div>
-                            <div class="math-step">2. В системе из двух блоков выигрыш в силе составляет 2 раза</div>
-                            <div class="math-step">3. Сила для уравновешивания: F = P / 2 = 60 Н / 2 = 30 Н</div>
+                            <div class="math-step">1. Найдём вес груза:</div>
+                            <div class="math-step" style="text-align: center;">P = mg = 6 кг × 10 м/с² = 60 Н</div>
+                            <div class="math-step">2. Проанализируем систему блоков:</div>
+                            <div class="math-step" style="text-align: center;">В системе два подвижных блока, дающих выигрыш в силе в 2 раза</div>
+                            <div class="math-step">3. Сила для уравновешивания:</div>
+                            <div class="math-step" style="text-align: center;">F = P / 2 = 60 Н / 2 = 30 Н</div>
                             <div class="math-step" style="margin-top: 1rem; font-weight: bold; color: #4CAF50;">Ответ: 30 Н</div>
+                            <div class="math-step" style="margin-top: 0.5rem; font-size: 0.9rem; color: rgba(255,255,255,0.7);">
+                                Подвижный блок даёт выигрыш в силе в 2 раза, но проигрыш в расстоянии.
+                            </div>
                         </div>
                     `
                 },
@@ -425,17 +993,23 @@
                     description: `
                         <p><strong>Условие задачи:</strong></p>
                         <p>Автомобиль трогается с места и движется с постоянным ускорением 2 м/с². Какую скорость он приобретет за 5 секунд?</p>
+                        <div class="task-example">
+                            <strong>Формула:</strong> При равноускоренном движении из состояния покоя v = at
+                        </div>
                     `,
                     type: 'input',
                     correctAnswer: '10',
                     explanation: `
                         <div class="math-explanation">
                             <p><strong>Решение:</strong></p>
-                            <div class="math-step">1. Формула скорости при равноускоренном движении из состояния покоя:</div>
+                            <div class="math-step">1. Используем формулу скорости при равноускоренном движении из состояния покоя:</div>
                             <div class="math-step" style="text-align: center;">v = at</div>
                             <div class="math-step">2. Подставляем значения:</div>
                             <div class="math-step" style="text-align: center;">v = 2 м/с² × 5 с = 10 м/с</div>
                             <div class="math-step" style="margin-top: 1rem; font-weight: bold; color: #4CAF50;">Ответ: 10 м/с</div>
+                            <div class="math-step" style="margin-top: 0.5rem; font-size: 0.9rem; color: rgba(255,255,255,0.7);">
+                                Ускорение 2 м/с² означает, что каждую секунду скорость увеличивается на 2 м/с.
+                            </div>
                         </div>
                     `
                 },
@@ -445,22 +1019,29 @@
                     description: `
                         <p><strong>Условие задачи:</strong></p>
                         <p>Тело массой 4 кг движется со скоростью 3 м/с. Чему равна его кинетическая энергия?</p>
+                        <div class="task-example">
+                            <strong>Формула:</strong> Кинетическая энергия E<sub>к</sub> = (m × v²) / 2
+                        </div>
                     `,
                     type: 'input',
                     correctAnswer: '18',
                     explanation: `
                         <div class="math-explanation">
                             <p><strong>Решение:</strong></p>
-                            <div class="math-step">1. Формула кинетической энергии:</div>
-                            <div class="math-step" style="text-align: center;">E<sub>к</sub> = (mv²)/2</div>
+                            <div class="math-step">1. Запишем формулу кинетической энергии:</div>
+                            <div class="math-step" style="text-align: center;">E<sub>к</sub> = (m × v²) / 2</div>
                             <div class="math-step">2. Подставляем значения:</div>
-                            <div class="math-step" style="text-align: center;">E<sub>к</sub> = (4 кг × (3 м/с)²) / 2 = (4 × 9) / 2 = 36 / 2 = 18 Дж</div>
+                            <div class="math-step" style="text-align: center;">E<sub>к</sub> = (4 кг × (3 м/с)²) / 2</div>
+                            <div class="math-step">3. Вычисляем:</div>
+                            <div class="math-step" style="text-align: center;">E<sub>к</sub> = (4 × 9) / 2 = 36 / 2 = 18 Дж</div>
                             <div class="math-step" style="margin-top: 1rem; font-weight: bold; color: #4CAF50;">Ответ: 18 Дж</div>
+                            <div class="math-step" style="margin-top: 0.5rem; font-size: 0.9rem; color: rgba(255,255,255,0.7);">
+                                Кинетическая энергия зависит от квадрата скорости, поэтому при увеличении скорости в 2 раза энергия увеличивается в 4 раза.
+                            </div>
                         </div>
                     `
                 }
-            ],
-            // ... остальные разделы заданий ...
+            ]
         };
 
         // Функция показа уведомления
@@ -596,7 +1177,6 @@
             }
             
             if (task.type === 'input') {
-                // Задание с вводом ответа
                 taskCard.innerHTML = `
                     <div class="task-header">
                         <div>
@@ -627,7 +1207,7 @@
                         
                         <div class="answer-input-container">
                             <input type="text" class="answer-input" id="answerInput" placeholder="Введите число..." oninput="validateInput()">
-                            <div class="input-hint">Введите только число без пробелов и других символов</div>
+                            <div class="input-hint">Введите число (можно с десятичной точкой или запятой)</div>
                         </div>
 
                         <button class="submit-button" id="submitButton" onclick="checkInputAnswer()" disabled>
@@ -642,7 +1222,6 @@
                     </div>
                 `;
             } else {
-                // Задание с выбором ответа
                 taskCard.innerHTML = `
                     <div class="task-header">
                         <div>
@@ -751,27 +1330,21 @@
             submitButton.disabled = true;
             submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Проверка...';
 
-            // Имитация проверки
             setTimeout(() => {
                 if (isCorrect) {
                     resultMessage.className = 'result-message result-correct';
                     resultIcon.className = 'fas fa-check';
                     resultText.innerHTML = `<div style="text-align: left;">${currentTask.explanation}</div>`;
-                    
-                    // Обновляем статистику
                     updateStatistics(true);
                 } else {
                     resultMessage.className = 'result-message result-incorrect';
                     resultIcon.className = 'fas fa-times';
                     resultText.innerHTML = `<div style="text-align: left;">${currentTask.explanation}</div>`;
-                    
-                    // Обновляем статистику
                     updateStatistics(false);
                 }
                 
                 resultMessage.style.display = 'block';
                 submitButton.style.display = 'none';
-                
             }, 1000);
         }
 
@@ -781,7 +1354,6 @@
             const submitButton = document.getElementById('submitButton');
             const value = input.value.trim();
             
-            // Проверяем, что введено число (может быть целым или десятичным)
             if (value && /^[\d.,]+$/.test(value)) {
                 submitButton.disabled = false;
             } else {
@@ -802,14 +1374,11 @@
             submitButton.disabled = true;
             submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Проверка...';
 
-            // Имитация проверки
             setTimeout(() => {
                 if (isCorrect) {
                     resultMessage.className = 'result-message result-correct';
                     resultIcon.className = 'fas fa-check';
                     resultText.innerHTML = `<div style="text-align: left;">${currentTask.explanation}</div>`;
-                    
-                    // Обновляем статистику
                     updateStatistics(true);
                 } else {
                     resultMessage.className = 'result-message result-incorrect';
@@ -821,21 +1390,17 @@
                             ${currentTask.explanation}
                         </div>
                     `;
-                    
-                    // Обновляем статистику
                     updateStatistics(false);
                 }
                 
                 resultMessage.style.display = 'block';
                 submitButton.style.display = 'none';
-                
             }, 1000);
         }
 
         function updateStatistics(isCorrect) {
             let statistics = JSON.parse(localStorage.getItem('userStatistics') || '{}');
             
-            // Инициализируем статистику заданий если её нет
             if (!statistics.tasks) {
                 statistics.tasks = {
                     completed: 0,
@@ -853,7 +1418,6 @@
             localStorage.setItem('userStatistics', JSON.stringify(statistics));
         }
 
-        // Добавляем возможность использовать клавиши 1-4 для выбора ответа
         document.addEventListener('keydown', function(event) {
             if (event.key >= '1' && event.key <= '4') {
                 const answerIndex = parseInt(event.key) - 1;
