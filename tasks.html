@@ -483,6 +483,36 @@
             padding: 0.5rem;
         }
 
+        /* Стили для изображений формул */
+        .formula-image {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .formula-image img {
+            max-width: 100%;
+            height: auto;
+            filter: invert(1) brightness(2);
+            background: transparent;
+        }
+
+        .formula-latex {
+            font-family: 'Times New Roman', serif;
+            font-style: italic;
+            font-size: 1.8rem;
+            color: white;
+            margin: 1rem 0;
+            text-align: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
         /* Анимации */
         @keyframes slideUp {
             from {
@@ -530,6 +560,11 @@
             .nav-links {
                 gap: 1rem;
             }
+
+            .formula-latex {
+                font-size: 1.4rem;
+                padding: 0.8rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -548,6 +583,11 @@
             .task-meta {
                 flex-direction: column;
                 gap: 0.5rem;
+            }
+
+            .formula-latex {
+                font-size: 1.2rem;
+                padding: 0.6rem;
             }
         }
     </style>
@@ -730,8 +770,16 @@
                         name: 'Числа и вычисления', 
                         description: 'Действия с числами, логарифмы, степени' 
                     },
-                    { id: 'math_ege_algebra', name: 'Алгебра', description: 'Производные, интегралы, пределы' },
-                    { id: 'math_ege_geometry', name: 'Геометрия', description: 'Векторы, координаты, преобразования' }
+                    { 
+                        id: 'math_ege_algebra', 
+                        name: 'Алгебра', 
+                        description: 'Производные, интегралы, пределы' 
+                    },
+                    { 
+                        id: 'math_ege_geometry', 
+                        name: 'Геометрия', 
+                        description: 'Векторы, координаты, преобразования' 
+                    }
                 ]
             },
             physics: {
@@ -985,6 +1033,173 @@
                             <div class="math-step">4. Получаем: <span class="math-formula">log<sub>3</sub>81</span></div>
                             <div class="math-step">5. Находим значение: <span class="math-formula">3<sup>4</sup> = 81</span>, значит <span class="math-formula">log<sub>3</sub>81 = 4</span></div>
                             <div class="math-step" style="margin-top: 1rem; font-weight: bold; color: #4CAF50;">Ответ: 4</div>
+                        </div>
+                    `
+                }
+            ],
+            'math_ege_algebra': [
+                {
+                    id: 'task1',
+                    title: "Определение объёма производства",
+                    description: `
+                        <p><strong>Условие задачи:</strong></p>
+                        <p>Некоторая компания продаёт свою продукцию по цене p = 600 руб. за единицу, переменные затраты на производство одной единицы продукции составляют υ = 300 руб., постоянные расходы предприятия f = 700 000 руб. в месяц. Месячная операционная прибыль предприятия (в рублях) вычисляется по формуле:</p>
+                        <div class="formula-latex">g(q) = q(p − υ) − f</div>
+                        <p>Определите месячный объём производства q (единиц продукции), при котором месячная операционная прибыль предприятия будет равна 500 000 руб.</p>
+                        <p>Введите ответ в виде целого числа:</p>
+                    `,
+                    type: 'input',
+                    correctAnswer: '4000',
+                    explanation: `
+                        <div class="math-explanation">
+                            <p><strong>Решение:</strong></p>
+                            <div class="math-step">1. Подставляем известные значения в формулу:</div>
+                            <div class="math-step" style="text-align: center;">g(q) = q(600 − 300) − 700000</div>
+                            <div class="math-step" style="text-align: center;">g(q) = 300q − 700000</div>
+                            <div class="math-step">2. Приравниваем к заданной прибыли 500000:</div>
+                            <div class="math-step" style="text-align: center;">300q − 700000 = 500000</div>
+                            <div class="math-step">3. Переносим -700000 в правую часть:</div>
+                            <div class="math-step" style="text-align: center;">300q = 500000 + 700000</div>
+                            <div class="math-step" style="text-align: center;">300q = 1200000</div>
+                            <div class="math-step">4. Делим обе части на 300:</div>
+                            <div class="math-step" style="text-align: center;">q = 1200000 ÷ 300</div>
+                            <div class="math-step" style="text-align: center;">q = 4000</div>
+                            <div class="math-step" style="margin-top: 1rem; font-weight: bold; color: #4CAF50;">Ответ: 4000 единиц</div>
+                            <div class="math-step" style="margin-top: 0.5rem; font-size: 0.9rem; color: rgba(255,255,255,0.7);">
+                                Проверка: 4000 × (600 - 300) - 700000 = 4000 × 300 - 700000 = 1200000 - 700000 = 500000 ✓
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    id: 'task2',
+                    title: "Определение ускорения автомобиля",
+                    description: `
+                        <p><strong>Условие задачи:</strong></p>
+                        <p>Автомобиль разгоняется на прямолинейном участке шоссе с постоянным ускорением a км/ч². Скорость вычисляется по формуле:</p>
+                        <div class="formula-latex">v = √(2la)</div>
+                        <p>где l — пройденный автомобилем путь.</p>
+                        <p>Найдите ускорение, с которым должен двигаться автомобиль, чтобы, проехав 0,8 километра, приобрести скорость 100 км/ч.</p>
+                        <p>Ответ выразите в км/ч².</p>
+                    `,
+                    type: 'input',
+                    correctAnswer: '6250',
+                    explanation: `
+                        <div class="math-explanation">
+                            <p><strong>Решение:</strong></p>
+                            <div class="math-step">1. Записываем данную формулу:</div>
+                            <div class="math-step" style="text-align: center;">v = √(2la)</div>
+                            <div class="math-step">2. Подставляем известные значения:</div>
+                            <div class="math-step" style="text-align: center;">v = 100 км/ч, l = 0,8 км</div>
+                            <div class="math-step" style="text-align: center;">100 = √(2 × 0,8 × a)</div>
+                            <div class="math-step" style="text-align: center;">100 = √(1,6a)</div>
+                            <div class="math-step">3. Возводим обе части в квадрат:</div>
+                            <div class="math-step" style="text-align: center;">100² = 1,6a</div>
+                            <div class="math-step" style="text-align: center;">10000 = 1,6a</div>
+                            <div class="math-step">4. Делим обе части на 1,6:</div>
+                            <div class="math-step" style="text-align: center;">a = 10000 ÷ 1,6</div>
+                            <div class="math-step" style="text-align: center;">a = 6250</div>
+                            <div class="math-step" style="margin-top: 1rem; font-weight: bold; color: #4CAF50;">Ответ: 6250 км/ч²</div>
+                            <div class="math-step" style="margin-top: 0.5rem; font-size: 0.9rem; color: rgba(255,255,255,0.7);">
+                                Проверка: √(2 × 0,8 × 6250) = √(1,6 × 6250) = √10000 = 100 ✓
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    id: 'task3',
+                    title: "Определение времени движения автомобиля",
+                    description: `
+                        <p><strong>Условие задачи:</strong></p>
+                        <p>Автомобиль, масса которого равна m = 1500 кг, начинает двигаться с ускорением, которое в течение t секунд остаётся неизменным, и проходит за это время путь S = 1000 метров.</p>
+                        <p>Значение силы (в ньютонах), приложенной в это время к автомобилю, равно:</p>
+                        <div class="formula-latex">F = (2mS) / t²</div>
+                        <p>Определите наибольшее время после начала движения автомобиля, за которое он пройдёт указанный путь, если известно, что сила F, приложенная к автомобилю, не меньше 1200 Н.</p>
+                        <p>Ответ выразите в секундах.</p>
+                    `,
+                    type: 'input',
+                    correctAnswer: '50',
+                    explanation: `
+                        <div class="math-explanation">
+                            <p><strong>Решение:</strong></p>
+                            <div class="math-step">1. Записываем неравенство из условия:</div>
+                            <div class="math-step" style="text-align: center;">F ≥ 1200</div>
+                            <div class="math-step">2. Подставляем формулу для F:</div>
+                            <div class="math-step" style="text-align: center;">(2mS) / t² ≥ 1200</div>
+                            <div class="math-step">3. Подставляем числовые значения:</div>
+                            <div class="math-step" style="text-align: center;">(2 × 1500 × 1000) / t² ≥ 1200</div>
+                            <div class="math-step" style="text-align: center;">3000000 / t² ≥ 1200</div>
+                            <div class="math-step">4. Умножаем обе части на t² (t > 0):</div>
+                            <div class="math-step" style="text-align: center;">3000000 ≥ 1200t²</div>
+                            <div class="math-step">5. Делим обе части на 1200:</div>
+                            <div class="math-step" style="text-align: center;">2500 ≥ t²</div>
+                            <div class="math-step">6. Извлекаем квадратный корень:</div>
+                            <div class="math-step" style="text-align: center;">t ≤ √2500</div>
+                            <div class="math-step" style="text-align: center;">t ≤ 50</div>
+                            <div class="math-step">7. Наибольшее возможное время:</div>
+                            <div class="math-step" style="text-align: center;">t = 50 секунд</div>
+                            <div class="math-step" style="margin-top: 1rem; font-weight: bold; color: #4CAF50;">Ответ: 50 секунд</div>
+                            <div class="math-step" style="margin-top: 0.5rem; font-size: 0.9rem; color: rgba(255,255,255,0.7);">
+                                Проверка: F = (2 × 1500 × 1000) / 50² = 3000000 / 2500 = 1200 Н ✓
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    id: 'task4',
+                    title: "Сравнение капиталов компаний",
+                    description: `
+                        <p><strong>Условие задачи:</strong></p>
+                        <p>Компания «Альфа» начала инвестировать средства в перспективную отрасль в 2001 году, имея капитал в размере 3000 долларов. Каждый год, начиная с 2002 года, она получала прибыль, которая составляла 100% от капитала предыдущего года.</p>
+                        <p>А компания «Бета» начала инвестировать средства в другую отрасль в 2003 году, имея капитал в размере 6000 долларов, и, начиная с 2004 года, ежегодно получала прибыль, составляющую 200% от капитала предыдущего года.</p>
+                        <p>На сколько долларов капитал одной из компаний был больше капитала другой к концу 2006 года, если прибыль из оборота не изымалась?</p>
+                        <p>Введите ответ в виде целого числа:</p>
+                    `,
+                    type: 'input',
+                    correctAnswer: '153000',
+                    explanation: `
+                        <div class="math-explanation">
+                            <p><strong>Решение:</strong></p>
+                            <div class="math-step">1. Рассчитываем капитал компании «Альфа»:</div>
+                            <div class="math-step" style="text-align: center;">2001 год: 3000 $</div>
+                            <div class="math-step" style="text-align: center;">2002 год: 3000 + 100% = 3000 × 2 = 6000 $</div>
+                            <div class="math-step" style="text-align: center;">2003 год: 6000 × 2 = 12000 $</div>
+                            <div class="math-step" style="text-align: center;">2004 год: 12000 × 2 = 24000 $</div>
+                            <div class="math-step" style="text-align: center;">2005 год: 24000 × 2 = 48000 $</div>
+                            <div class="math-step" style="text-align: center;">2006 год: 48000 × 2 = 96000 $</div>
+                            
+                            <div class="math-step">2. Рассчитываем капитал компании «Бета»:</div>
+                            <div class="math-step" style="text-align: center;">2003 год: 6000 $</div>
+                            <div class="math-step" style="text-align: center;">2004 год: 6000 + 200% = 6000 × 3 = 18000 $</div>
+                            <div class="math-step" style="text-align: center;">2005 год: 18000 × 3 = 54000 $</div>
+                            <div class="math-step" style="text-align: center;">2006 год: 54000 × 3 = 162000 $</div>
+                            
+                            <div class="math-step">3. Сравниваем капиталы к концу 2006 года:</div>
+                            <div class="math-step" style="text-align: center;">«Альфа»: 96000 $</div>
+                            <div class="math-step" style="text-align: center;">«Бета»: 162000 $</div>
+                            <div class="math-step" style="text-align: center;">Разница: 162000 - 96000 = 66000 $</div>
+                            
+                            <div class="math-step">4. Правильный расчет (с учетом, что 200% означает увеличение в 3 раза):</div>
+                            <div class="math-step" style="text-align: center;">«Альфа» (100% прибыль): каждый год капитал ×2</div>
+                            <div class="math-step" style="text-align: center;">2001: 3000</div>
+                            <div class="math-step" style="text-align: center;">2002: 3000×2 = 6000</div>
+                            <div class="math-step" style="text-align: center;">2003: 6000×2 = 12000</div>
+                            <div class="math-step" style="text-align: center;">2004: 12000×2 = 24000</div>
+                            <div class="math-step" style="text-align: center;">2005: 24000×2 = 48000</div>
+                            <div class="math-step" style="text-align: center;">2006: 48000×2 = 96000</div>
+                            
+                            <div class="math-step" style="text-align: center;">«Бета» (200% прибыль): каждый год капитал ×3</div>
+                            <div class="math-step" style="text-align: center;">2003: 6000</div>
+                            <div class="math-step" style="text-align: center;">2004: 6000×3 = 18000</div>
+                            <div class="math-step" style="text-align: center;">2005: 18000×3 = 54000</div>
+                            <div class="math-step" style="text-align: center;">2006: 54000×3 = 162000</div>
+                            
+                            <div class="math-step" style="text-align: center;">Разница: 162000 - 96000 = 66000</div>
+                            
+                            <div class="math-step" style="margin-top: 1rem; font-weight: bold; color: #4CAF50;">Ответ: 66000 долларов</div>
+                            <div class="math-step" style="margin-top: 0.5rem; font-size: 0.9rem; color: rgba(255,255,255,0.7);">
+                                Примечание: Прибыль 200% означает увеличение капитала в 3 раза (100% + 200% = 300% от исходного).
+                            </div>
                         </div>
                     `
                 }
