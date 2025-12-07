@@ -527,7 +527,7 @@
             max-width: 100%;
             height: auto;
             max-height: 300px;
-            filter: invert(1) brightness(2);
+            filter: invert(1) brightness(2) contrast(1.2);
             background: transparent;
         }
 
@@ -598,6 +598,10 @@
             .geometry-image {
                 padding: 1rem;
             }
+
+            .geometry-image img {
+                max-height: 200px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -625,6 +629,10 @@
 
             .geometry-image {
                 padding: 0.5rem;
+            }
+
+            .geometry-image img {
+                max-height: 150px;
             }
         }
     </style>
@@ -1230,10 +1238,8 @@
                         <p><strong>Условие задачи:</strong></p>
                         <p>У треугольника со сторонами 9 и 6 проведены высоты к этим сторонам. Высота, проведенная к первой стороне, равна 4. Чему равна высота, проведенная ко второй стороне?</p>
                         
-                        <div class="geometry-diagram">
-                            <p>Диаграмма: Треугольник ABC со сторонами:</p>
-                            <p>AB = 9, высота из C = 4</p>
-                            <p>AC = 6, высота из B = ?</p>
+                        <div class="geometry-image">
+                            <img src="https://math-ege.sdamgia.ru/get_file?id=144288" alt="Треугольник с высотами">
                         </div>
                         
                         <p>Введите ответ в виде десятичной дроби или целого числа:</p>
@@ -1267,10 +1273,8 @@
                         <p><strong>Условие задачи:</strong></p>
                         <p>Сумма двух углов параллелограмма равна 100°. Найдите один из оставшихся углов. Ответ дайте в градусах.</p>
                         
-                        <div class="geometry-diagram">
-                            <p>Диаграмма: Параллелограмм ABCD</p>
-                            <p>∠A + ∠B = 100° (или ∠A + ∠C, или ∠B + ∠D)</p>
-                            <p>Найти: ∠C или ∠D</p>
+                        <div class="geometry-image">
+                            <img src="https://math-ege.sdamgia.ru/get_file?id=29623" alt="Параллелограмм">
                         </div>
                         
                         <p>Введите ответ в виде целого числа:</p>
@@ -1314,11 +1318,8 @@
                         <p><strong>Условие задачи:</strong></p>
                         <p>Периметр прямоугольника равен 10, а площадь равна 4,5. Найдите диагональ этого прямоугольника.</p>
                         
-                        <div class="geometry-diagram">
-                            <p>Диаграмма: Прямоугольник со сторонами a и b</p>
-                            <p>Периметр: P = 2(a + b) = 10</p>
-                            <p>Площадь: S = a × b = 4,5</p>
-                            <p>Диагональ: d = √(a² + b²)</p>
+                        <div class="geometry-image">
+                            <img src="https://math-ege.sdamgia.ru/get_file?id=113307" alt="Прямоугольник">
                         </div>
                         
                         <p>Введите ответ в виде десятичной дроби:</p>
@@ -1343,16 +1344,14 @@
                             
                             <div class="math-step" style="margin-top: 1rem; font-weight: bold; color: #4CAF50;">Ответ: 4</div>
                             <div class="math-step" style="margin-top: 0.5rem; font-size: 0.9rem; color: rgba(255,255,255,0.7);">
-                                Проверка: Пусть a = 4,5, b = 1 → 2(4,5+1)=11 ≠10<br>
-                                Пусть a = 3, b = 1,5 → 2(3+1,5)=9 ≠10<br>
-                                Правильно: a = 4,5, b = 0,5 → 2(4,5+0,5)=10 ✓<br>
+                                Проверка: Пусть a = 4,5, b = 0,5 → 2(4,5+0,5)=10 ✓<br>
                                 Площадь: 4,5×0,5=2,25 ≠4,5<br>
-                                Правильное решение: a=3, b=1,5 → P=9, S=4,5<br>
-                                d=√(3²+1,5²)=√(9+2,25)=√11,25=3,354 ≠4<br>
-                                Попробуем: a+b=5, ab=4,5<br>
-                                Решаем квадратное уравнение: x²-5x+4,5=0<br>
+                                Правильное решение: a=3, b=1,5 → 2(3+1,5)=9 ≠10<br>
+                                Решаем систему: a+b=5, ab=4,5<br>
+                                Квадратное уравнение: x²-5x+4,5=0<br>
                                 D=25-18=7, x=(5±√7)/2<br>
-                                Тогда d=√(a²+b²)=√((a+b)²-2ab)=√(25-9)=√16=4 ✓
+                                Тогда a²+b²=(a+b)²-2ab=25-9=16<br>
+                                d=√16=4 ✓
                             </div>
                         </div>
                     `
@@ -1364,10 +1363,8 @@
                         <p><strong>Условие задачи:</strong></p>
                         <p>Радиус окружности, описанной около правильного треугольника, равен √3. Найдите сторону этого треугольника.</p>
                         
-                        <div class="geometry-diagram">
-                            <p>Диаграмма: Правильный треугольник ABC с описанной окружностью</p>
-                            <p>Радиус описанной окружности R = √3</p>
-                            <p>Сторона треугольника a = ?</p>
+                        <div class="geometry-image">
+                            <img src="https://math-ege.sdamgia.ru/get_file?id=138540" alt="Правильный треугольник с описанной окружностью">
                         </div>
                         
                         <p>Введите ответ в виде числа:</p>
@@ -1378,26 +1375,22 @@
                         <div class="math-explanation">
                             <p><strong>Решение:</strong></p>
                             <div class="math-step">1. Формула связи стороны правильного треугольника и радиуса описанной окружности:</div>
-                            <div class="math-step" style="text-align: center;">R = a / √3</div>
+                            <div class="math-step" style="text-align: center;">R = a√3 / 3</div>
                             <div class="math-step">где a — сторона треугольника, R — радиус описанной окружности.</div>
                             
                             <div class="math-step">2. Подставляем данное значение R:</div>
-                            <div class="math-step" style="text-align: center;">√3 = a / √3</div>
+                            <div class="math-step" style="text-align: center;">√3 = a√3 / 3</div>
                             
-                            <div class="math-step">3. Умножаем обе части на √3:</div>
-                            <div class="math-step" style="text-align: center;">a = √3 × √3</div>
+                            <div class="math-step">3. Умножаем обе части на 3:</div>
+                            <div class="math-step" style="text-align: center;">3√3 = a√3</div>
                             
-                            <div class="math-step">4. Вычисляем:</div>
+                            <div class="math-step">4. Делим обе части на √3:</div>
                             <div class="math-step" style="text-align: center;">a = 3</div>
                             
                             <div class="math-step" style="margin-top: 1rem; font-weight: bold; color: #4CAF50;">Ответ: 3</div>
                             <div class="math-step" style="margin-top: 0.5rem; font-size: 0.9rem; color: rgba(255,255,255,0.7);">
                                 Проверка: Для правильного треугольника со стороной 3:<br>
-                                R = 3/√3 = √3 ✓<br>
-                                Формула: R = a√3/3, но в данном случае R = a/√3
-                            </div>
-                            <div class="math-step" style="margin-top: 0.5rem; font-size: 0.9rem; color: rgba(255,255,255,0.7);">
-                                Уточнение: Формула R = a√3/3, тогда a = R√3 = √3 × √3 = 3
+                                R = 3√3 / 3 = √3 ✓
                             </div>
                         </div>
                     `
