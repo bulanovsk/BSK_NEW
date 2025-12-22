@@ -1,0 +1,1273 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Задания - BSK Education</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Шапка */
+        header {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, #fff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: #ffd700;
+        }
+
+        /* Основной контент */
+        .tasks-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 6rem 2rem 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: slideUp 0.8s ease-out;
+        }
+
+        .page-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, #fff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Шаги навигации */
+        .steps-navigation {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0.6;
+        }
+
+        .step.active {
+            opacity: 1;
+        }
+
+        .step-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .step.active .step-circle {
+            background: linear-gradient(45deg, #ff6b9d, #ff1493);
+            border-color: #ff1493;
+            transform: scale(1.1);
+        }
+
+        .step-label {
+            font-weight: 600;
+            text-align: center;
+        }
+
+        /* Сетки выбора */
+        .selection-grid {
+            display: grid;
+            gap: 2rem;
+            animation: slideUp 0.8s ease-out;
+        }
+
+        .subject-grid {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        .level-grid {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+
+        .topic-grid {
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        }
+
+        .selection-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2.5rem;
+            border-radius: 20px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .selection-card:hover {
+            transform: translateY(-5px);
+            border-color: #ffd700;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .selection-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: #ffd700;
+        }
+
+        .selection-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .selection-description {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.5;
+        }
+
+        /* Карточка задания */
+        .task-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 3rem;
+            border-radius: 25px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 2rem;
+            animation: slideUp 0.8s ease-out 0.2s both;
+        }
+
+        .task-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+        }
+
+        .task-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .task-tag {
+            padding: 0.5rem 1.2rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            background: rgba(255, 215, 0, 0.2);
+            color: #ffd700;
+            border: 1px solid #ffd700;
+        }
+
+        .task-tag.ege {
+            background: rgba(255, 107, 157, 0.2);
+            color: #ff6b9d;
+            border: 1px solid #ff6b9d;
+        }
+
+        .task-tag.oge {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4CAF50;
+            border: 1px solid #4CAF50;
+        }
+
+        .task-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1.5rem;
+            line-height: 1.4;
+        }
+
+        .task-description {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .task-description p {
+            margin-bottom: 1rem;
+        }
+
+        .task-description p:last-child {
+            margin-bottom: 0;
+        }
+
+        .task-example {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            border-left: 4px solid #ffd700;
+        }
+
+        /* Форма ответа */
+        .answer-form {
+            margin-top: 2rem;
+        }
+
+        .answer-options {
+            display: grid;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .answer-option {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .answer-option:hover {
+            border-color: #ffd700;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .answer-option.selected {
+            border-color: #ff6b9d;
+            background: rgba(255, 107, 157, 0.1);
+        }
+
+        .answer-option input {
+            transform: scale(1.2);
+            accent-color: #ff6b9d;
+        }
+
+        .answer-label {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(45deg, #ff6b9d, #ff1493);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .submit-button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 20, 147, 0.4);
+        }
+
+        .submit-button:disabled {
+            background: rgba(255, 255, 255, 0.2);
+            cursor: not-allowed;
+        }
+
+        /* Поле для ввода ответа */
+        .answer-input-container {
+            margin-bottom: 2rem;
+        }
+
+        .answer-input {
+            width: 100%;
+            padding: 1.2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .answer-input:focus {
+            outline: none;
+            border-color: #ffd700;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .answer-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .input-hint {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+        }
+
+        /* Результат */
+        .result-message {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            font-weight: 600;
+            display: none;
+        }
+
+        .result-correct {
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid #4CAF50;
+            color: #4CAF50;
+        }
+
+        .result-incorrect {
+            background: rgba(244, 67, 54, 0.2);
+            border: 1px solid #F44336;
+            color: #F44336;
+        }
+
+        /* Кнопка назад */
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .back-button:hover {
+            border-color: #ffd700;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Уведомление */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            border-left: 4px solid #ff1493;
+            z-index: 1000;
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        /* Скрытие секций */
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        /* Математические формулы */
+        .math-formula {
+            font-family: 'Times New Roman', serif;
+            font-style: italic;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            margin: 0.5rem 0;
+            display: inline-block;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .math-explanation {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            border-left: 4px solid #4CAF50;
+        }
+
+        .math-step {
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+        }
+
+        /* Анимации */
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .tasks-container {
+                padding: 5rem 1rem 1rem;
+            }
+
+            .steps-navigation {
+                gap: 1rem;
+            }
+
+            .step-circle {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+
+            .selection-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .task-card {
+                padding: 2rem;
+            }
+
+            .page-title {
+                font-size: 2.2rem;
+            }
+
+            .task-title {
+                font-size: 1.5rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-container {
+                padding: 0 1rem;
+            }
+
+            .page-title {
+                font-size: 1.8rem;
+            }
+
+            .task-card {
+                padding: 1.5rem;
+            }
+
+            .task-meta {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Уведомление -->
+    <div class="notification" id="notification" role="alert" aria-live="polite">
+        <div id="notificationMessage"></div>
+    </div>
+
+    <!-- Шапка -->
+    <header>
+        <div class="nav-container">
+            <a href="index.html" class="logo">BSK Education</a>
+            <div class="nav-links">
+                <a href="dashboard.html" class="nav-link">
+                    <i class="fas fa-home"></i>Главная
+                </a>
+                <a href="tasks.html" class="nav-link active">
+                    <i class="fas fa-tasks"></i>Задания
+                </a>
+                <a href="profile.html" class="nav-link">
+                    <i class="fas fa-user"></i>Профиль
+                </a>
+                <a href="help.html" class="nav-link">
+                    <i class="fas fa-question-circle"></i>Помощь
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Основной контент -->
+    <div class="tasks-container">
+        <!-- Заголовок -->
+        <div class="page-header">
+            <h1 class="page-title">Система заданий</h1>
+            <p class="page-subtitle">Выберите предмет и тему для начала решения</p>
+        </div>
+
+        <!-- Навигация по шагам -->
+        <div class="steps-navigation">
+            <div class="step active" data-step="1">
+                <div class="step-circle">
+                    <i class="fas fa-book"></i>
+                </div>
+                <div class="step-label">Предмет</div>
+            </div>
+            <div class="step" data-step="2">
+                <div class="step-circle">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <div class="step-label">Уровень</div>
+            </div>
+            <div class="step" data-step="3">
+                <div class="step-circle">
+                    <i class="fas fa-folder"></i>
+                </div>
+                <div class="step-label">Тема</div>
+            </div>
+            <div class="step" data-step="4">
+                <div class="step-circle">
+                    <i class="fas fa-tasks"></i>
+                </div>
+                <div class="step-label">Задание</div>
+            </div>
+        </div>
+
+        <!-- Шаг 1: Выбор предмета -->
+        <div class="section active" id="step1">
+            <div class="selection-grid subject-grid">
+                <div class="selection-card" onclick="selectSubject('math')">
+                    <div class="selection-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h3 class="selection-title">Математика</h3>
+                    <p class="selection-description">
+                        Алгебра, геометрия, математический анализ. Подготовка к ОГЭ и ЕГЭ.
+                    </p>
+                </div>
+
+                <div class="selection-card" onclick="selectSubject('physics')">
+                    <div class="selection-icon">
+                        <i class="fas fa-atom"></i>
+                    </div>
+                    <h3 class="selection-title">Физика</h3>
+                    <p class="selection-description">
+                        Механика, термодинамика, электромагнетизм. Решение задач и эксперименты.
+                    </p>
+                </div>
+
+                <div class="selection-card" onclick="selectSubject('informatics')">
+                    <div class="selection-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3 class="selection-title">Информатика</h3>
+                    <p class="selection-description">
+                        Программирование, алгоритмы, компьютерные сети. Цифровая грамотность.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Шаг 2: Выбор уровня -->
+        <div class="section" id="step2">
+            <a class="back-button" onclick="goToStep(1)">
+                <i class="fas fa-arrow-left"></i>
+                Назад к выбору предмета
+            </a>
+
+            <div class="selection-grid level-grid">
+                <div class="selection-card" onclick="selectLevel('oge')">
+                    <div class="selection-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h3 class="selection-title">ОГЭ 2026</h3>
+                    <p class="selection-description">
+                        Основной государственный экзамен для 9 класса. Базовый уровень подготовки.
+                    </p>
+                </div>
+
+                <div class="selection-card" onclick="selectLevel('ege')">
+                    <div class="selection-icon">
+                        <i class="fas fa-university"></i>
+                    </div>
+                    <h3 class="selection-title">ЕГЭ 2026</h3>
+                    <p class="selection-description">
+                        Единый государственный экзамен для 11 класса. Углубленная подготовка.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Шаг 3: Выбор темы -->
+        <div class="section" id="step3">
+            <a class="back-button" onclick="goToStep(2)">
+                <i class="fas fa-arrow-left"></i>
+                Назад к выбору уровня
+            </a>
+
+            <div class="selection-grid topic-grid" id="topicsGrid">
+                <!-- Темы будут загружены динамически -->
+            </div>
+        </div>
+
+        <!-- Шаг 4: Задание -->
+        <div class="section" id="step4">
+            <a class="back-button" onclick="goToStep(3)">
+                <i class="fas fa-arrow-left"></i>
+                Назад к выбору темы
+            </a>
+
+            <!-- Карточка задания -->
+            <div class="task-card" id="taskCard">
+                <!-- Задание будет загружено динамически -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Текущее состояние выбора
+        let currentState = {
+            subject: null,
+            level: null,
+            topic: null
+        };
+
+        // База данных тем
+        const topicsDatabase = {
+            math: {
+                oge: [
+                    { 
+                        id: 'math_oge_numbers', 
+                        name: 'Числа и вычисления', 
+                        description: 'Действия с числами, сравнение, оценка' 
+                    }
+                ],
+                ege: [
+                    { 
+                        id: 'math_ege_numbers', 
+                        name: 'Числа и вычисления', 
+                        description: 'Действия с числами, логарифмы, степени' 
+                    },
+                    { id: 'math_ege_algebra', name: 'Алгебра', description: 'Производные, интегралы, пределы' },
+                    { id: 'math_ege_geometry', name: 'Геометрия', description: 'Векторы, координаты, преобразования' }
+                ]
+            },
+            physics: {
+                oge: [
+                    { id: 'physics_oge_mechanics', name: 'Механика', description: 'Кинематика, динамика, статика' },
+                    { id: 'physics_oge_thermo', name: 'Термодинамика', description: 'Тепловые явления, газы' }
+                ],
+                ege: [
+                    { id: 'physics_ege_mechanics', name: 'Механика', description: 'Законы Ньютона, энергия, импульс' },
+                    { id: 'physics_ege_electro', name: 'Электродинамика', description: 'Электричество и магнетизм' }
+                ]
+            },
+            informatics: {
+                oge: [
+                    { id: 'informatics_oge_basics', name: 'Основы информатики', description: 'Системы счисления, логика' },
+                    { id: 'informatics_oge_programming', name: 'Программирование', description: 'Алгоритмы и программы' }
+                ],
+                ege: [
+                    { 
+                        id: 'informatics_ege_networks', 
+                        name: 'Цифровая грамотность', 
+                        description: 'Сети, IP-адреса, протоколы' 
+                    },
+                    { id: 'informatics_ege_algorithms', name: 'Алгоритмы', description: 'Поиск, сортировка, графы' }
+                ]
+            }
+        };
+
+        // База данных заданий
+        const tasksDatabase = {
+            'math_oge_numbers': [
+                {
+                    id: 'task1',
+                    title: "Оценка значения дроби",
+                    description: `
+                        <p><strong>Условие задачи:</strong></p>
+                        <p>Между какими целыми числами заключено число <strong>110/13</strong>?</p>
+                        <p>Выберите правильный вариант из предложенных:</p>
+                    `,
+                    type: 'choice',
+                    options: [
+                        "8 и 9",
+                        "9 и 10", 
+                        "10 и 11",
+                        "11 и 12"
+                    ],
+                    correctAnswer: 0,
+                    explanation: "110 ÷ 13 ≈ 8.46, значит число заключено между 8 и 9"
+                },
+                {
+                    id: 'task2',
+                    title: "Расчет стоимости колодца",
+                    description: `
+                        <p><strong>Условие задачи:</strong></p>
+                        <p>В фирме «Родник» стоимость (в рублях) колодца из железобетонных колец рассчитывается по формуле:</p>
+                        <p style="text-align: center; font-size: 1.3rem; margin: 1.5rem 0;">
+                            <strong>C = 6000 + 4100n</strong>
+                        </p>
+                        <p>где <strong>n</strong> — число колец, установленных в колодце.</p>
+                        <p>Пользуясь этой формулой, рассчитайте стоимость колодца из <strong>20 колец</strong>.</p>
+                        <p>Ответ дайте в рублях.</p>
+                    `,
+                    type: 'input',
+                    correctAnswer: '88000',
+                    explanation: `
+                        <div class="math-explanation">
+                            <p><strong>Решение:</strong></p>
+                            <div class="math-step">1. Подставляем n = 20 в формулу:</div>
+                            <div class="math-step" style="text-align: center;">C = 6000 + 4100 × 20</div>
+                            <div class="math-step">2. Вычисляем произведение:</div>
+                            <div class="math-step" style="text-align: center;">4100 × 20 = 82000</div>
+                            <div class="math-step">3. Складываем:</div>
+                            <div class="math-step" style="text-align: center;">6000 + 82000 = 88000</div>
+                            <div class="math-step" style="margin-top: 1rem; font-weight: bold; color: #4CAF50;">Ответ: 88000 рублей</div>
+                        </div>
+                    `
+                }
+            ],
+            'math_ege_numbers': {
+                title: "Вычисление логарифмов",
+                description: `
+                    <p><strong>Условие задачи:</strong></p>
+                    <p>Найдите значение выражения <span class="math-formula">log<sub>3</sub>162 − log<sub>3</sub>2</span>.</p>
+                    <p>Выберите правильный вариант из предложенных:</p>
+                `,
+                type: 'choice',
+                options: [
+                    "3,5",
+                    "10", 
+                    "4",
+                    "3"
+                ],
+                correctAnswer: 2,
+                explanation: `
+                    <div class="math-explanation">
+                        <p><strong>Решение:</strong></p>
+                        <div class="math-step">1. Используем свойство логарифмов: <span class="math-formula">log<sub>a</sub>b − log<sub>a</sub>c = log<sub>a</sub>(b/c)</span></div>
+                        <div class="math-step">2. Применяем к нашему выражению: <span class="math-formula">log<sub>3</sub>162 − log<sub>3</sub>2 = log<sub>3</sub>(162/2)</span></div>
+                        <div class="math-step">3. Вычисляем: <span class="math-formula">162/2 = 81</span></div>
+                        <div class="math-step">4. Получаем: <span class="math-formula">log<sub>3</sub>81</span></div>
+                        <div class="math-step">5. Находим значение: <span class="math-formula">3<sup>4</sup> = 81</span>, значит <span class="math-formula">log<sub>3</sub>81 = 4</span></div>
+                        <div class="math-step" style="margin-top: 1rem; font-weight: bold; color: #4CAF50;">Ответ: 4</div>
+                    </div>
+                `
+            },
+            'informatics_ege_networks': {
+                title: "Определение IP-адресов в компьютерных сетях",
+                description: `
+                    <p><strong>Условие задачи:</strong></p>
+                    <p>В терминологии сетей TCP/IP маской сети называют двоичное число, которое показывает, какая часть IP-адреса узла сети относится к адресу сети, а какая – к адресу узла в этой сети. Адрес сети получается в результате применения поразрядной конъюнкции к заданному адресу узла и его маске.</p>
+                    
+                    <p>Широковещательным адресом называется специализированный адрес, в котором на месте нулей в маске стоят единицы. Адрес сети и широковещательный адрес не могут быть использованы для адресации сетевых устройств.</p>
+                    
+                    <p><strong>Сеть задана IP-адресом одного из входящих в неё узлов 98.81.154.195 и сетевой маской 255.252.0.0.</strong></p>
+                    
+                    <p>Найдите наибольший в данной сети IP-адрес, который может быть назначен компьютеру. В ответе укажите найденный IP-адрес без разделителей.</p>
+                    
+                    <div class="task-example">
+                        <strong>Пример:</strong> Если бы найденный адрес был равен 111.22.3.44, то в ответе следовало бы записать 11122344.
+                    </div>
+                `,
+                type: 'choice',
+                options: [
+                    "9883255254",
+                    "4582032013",
+                    "392033493", 
+                    "3321234918"
+                ],
+                correctAnswer: 0,
+                explanation: "Правильный ответ: 9883255254"
+            }
+        };
+
+        // Функция показа уведомления
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            const messageEl = document.getElementById('notificationMessage');
+            
+            messageEl.textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Переход между шагами
+        function goToStep(stepNumber) {
+            // Скрываем все секции
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Показываем нужную секцию
+            document.getElementById(`step${stepNumber}`).classList.add('active');
+            
+            // Обновляем навигацию
+            document.querySelectorAll('.step').forEach(step => {
+                step.classList.remove('active');
+            });
+            
+            document.querySelector(`.step[data-step="${stepNumber}"]`).classList.add('active');
+        }
+
+        // Выбор предмета
+        function selectSubject(subject) {
+            currentState.subject = subject;
+            goToStep(2);
+        }
+
+        // Выбор уровня
+        function selectLevel(level) {
+            currentState.level = level;
+            loadTopics();
+            goToStep(3);
+        }
+
+        // Загрузка тем
+        function loadTopics() {
+            const topicsGrid = document.getElementById('topicsGrid');
+            const topics = topicsDatabase[currentState.subject][currentState.level];
+            
+            topicsGrid.innerHTML = '';
+            
+            topics.forEach(topic => {
+                const topicCard = document.createElement('div');
+                topicCard.className = 'selection-card';
+                topicCard.onclick = () => selectTopic(topic);
+                topicCard.innerHTML = `
+                    <div class="selection-icon">
+                        <i class="fas fa-folder-open"></i>
+                    </div>
+                    <h3 class="selection-title">${topic.name}</h3>
+                    <p class="selection-description">${topic.description}</p>
+                `;
+                topicsGrid.appendChild(topicCard);
+            });
+        }
+
+        // Выбор темы
+        function selectTopic(topic) {
+            currentState.topic = topic;
+            loadTasksList();
+            goToStep(4);
+        }
+
+        // Загрузка списка заданий для темы
+        function loadTasksList() {
+            const taskCard = document.getElementById('taskCard');
+            const tasks = tasksDatabase[currentState.topic.id];
+            
+            if (!tasks || tasks.length === 0) {
+                taskCard.innerHTML = `
+                    <div style="text-align: center; padding: 3rem; color: rgba(255,255,255,0.7);">
+                        <i class="fas fa-tasks" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                        <h3>Задания пока нет</h3>
+                        <p>В этой теме пока нет доступных заданий</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Если это массив заданий (для ОГЭ)
+            if (Array.isArray(tasks)) {
+                taskCard.innerHTML = `
+                    <div class="task-header">
+                        <div>
+                            <div class="task-meta">
+                                <span class="task-tag">${getSubjectName(currentState.subject)}</span>
+                                <span class="task-tag ${currentState.level}">${getLevelName(currentState.level)}</span>
+                                <span class="task-tag">${currentState.topic.name}</span>
+                            </div>
+                            <h2 class="task-title">Выберите задание</h2>
+                        </div>
+                    </div>
+
+                    <div class="selection-grid" style="grid-template-columns: 1fr;">
+                        ${tasks.map((task, index) => `
+                            <div class="selection-card" onclick="loadTask(${index})">
+                                <div class="selection-icon">
+                                    <i class="fas fa-${task.type === 'input' ? 'keyboard' : 'list'}"></i>
+                                </div>
+                                <h3 class="selection-title">${task.title}</h3>
+                                <p class="selection-description">${task.type === 'input' ? 'Задание с вводом ответа' : 'Задание с выбором ответа'}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            } else {
+                // Если это одиночное задание (для ЕГЭ)
+                loadTask(0);
+            }
+        }
+
+        // Загрузка конкретного задания
+        function loadTask(taskIndex) {
+            const taskCard = document.getElementById('taskCard');
+            const tasks = tasksDatabase[currentState.topic.id];
+            const task = Array.isArray(tasks) ? tasks[taskIndex] : tasks;
+            
+            if (!task) {
+                taskCard.innerHTML = `
+                    <div style="text-align: center; padding: 3rem; color: rgba(255,255,255,0.7);">
+                        <i class="fas fa-tasks" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                        <h3>Задание не найдено</h3>
+                        <p>Выбранное задание временно недоступно</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            if (task.type === 'input') {
+                // Задание с вводом ответа
+                taskCard.innerHTML = `
+                    <div class="task-header">
+                        <div>
+                            <div class="task-meta">
+                                <span class="task-tag">${getSubjectName(currentState.subject)}</span>
+                                <span class="task-tag ${currentState.level}">${getLevelName(currentState.level)}</span>
+                                <span class="task-tag">${currentState.topic.name}</span>
+                                ${Array.isArray(tasks) ? `<span class="task-tag" style="background: rgba(255,165,0,0.2); color: #FFA500; border-color: #FFA500;">Задание ${taskIndex + 1} из ${tasks.length}</span>` : ''}
+                            </div>
+                            <h2 class="task-title">${task.title}</h2>
+                            ${Array.isArray(tasks) ? `
+                                <div style="margin-top: 1rem;">
+                                    <button class="back-button" onclick="loadTasksList()" style="margin-bottom: 0;">
+                                        <i class="fas fa-arrow-left"></i>
+                                        Назад к списку заданий
+                                    </button>
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+
+                    <div class="task-description">
+                        ${task.description}
+                    </div>
+
+                    <div class="answer-form">
+                        <h3 style="margin-bottom: 1.5rem; color: white;">Введите ваш ответ:</h3>
+                        
+                        <div class="answer-input-container">
+                            <input type="text" class="answer-input" id="answerInput" placeholder="Введите число..." oninput="validateInput()">
+                            <div class="input-hint">Введите только число без пробелов и других символов</div>
+                        </div>
+
+                        <button class="submit-button" id="submitButton" onclick="checkInputAnswer()" disabled>
+                            <i class="fas fa-paper-plane"></i>
+                            Проверить ответ
+                        </button>
+
+                        <div class="result-message" id="resultMessage">
+                            <i class="fas fa-check" id="resultIcon"></i>
+                            <span id="resultText"></span>
+                        </div>
+                    </div>
+                `;
+            } else {
+                // Задание с выбором ответа
+                taskCard.innerHTML = `
+                    <div class="task-header">
+                        <div>
+                            <div class="task-meta">
+                                <span class="task-tag">${getSubjectName(currentState.subject)}</span>
+                                <span class="task-tag ${currentState.level}">${getLevelName(currentState.level)}</span>
+                                <span class="task-tag">${currentState.topic.name}</span>
+                                ${Array.isArray(tasks) ? `<span class="task-tag" style="background: rgba(255,165,0,0.2); color: #FFA500; border-color: #FFA500;">Задание ${taskIndex + 1} из ${tasks.length}</span>` : ''}
+                            </div>
+                            <h2 class="task-title">${task.title}</h2>
+                            ${Array.isArray(tasks) ? `
+                                <div style="margin-top: 1rem;">
+                                    <button class="back-button" onclick="loadTasksList()" style="margin-bottom: 0;">
+                                        <i class="fas fa-arrow-left"></i>
+                                        Назад к списку заданий
+                                    </button>
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+
+                    <div class="task-description">
+                        ${task.description}
+                    </div>
+
+                    <div class="answer-form">
+                        <h3 style="margin-bottom: 1.5rem; color: white;">Выберите правильный ответ:</h3>
+                        
+                        <div class="answer-options" id="answerOptions">
+                            ${task.options.map((option, index) => `
+                                <label class="answer-option" onclick="selectAnswer(${index})">
+                                    <input type="radio" name="answer" value="${index}">
+                                    <span class="answer-label">${option}</span>
+                                </label>
+                            `).join('')}
+                        </div>
+
+                        <button class="submit-button" id="submitButton" onclick="checkAnswer()" disabled>
+                            <i class="fas fa-paper-plane"></i>
+                            Проверить ответ
+                        </button>
+
+                        <div class="result-message" id="resultMessage">
+                            <i class="fas fa-check" id="resultIcon"></i>
+                            <span id="resultText"></span>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Сбрасываем состояние
+            selectedAnswer = null;
+            currentTask = task;
+        }
+
+        // Вспомогательные функции
+        function getSubjectName(subject) {
+            const subjects = {
+                'math': 'Математика',
+                'physics': 'Физика',
+                'informatics': 'Информатика'
+            };
+            return subjects[subject] || subject;
+        }
+
+        function getLevelName(level) {
+            const levels = {
+                'oge': 'ОГЭ 2026',
+                'ege': 'ЕГЭ 2026'
+            };
+            return levels[level] || level;
+        }
+
+        // Логика для заданий с выбором ответа
+        let selectedAnswer = null;
+        let currentTask = null;
+
+        function selectAnswer(answerIndex) {
+            selectedAnswer = answerIndex;
+            
+            // Снимаем выделение со всех вариантов
+            document.querySelectorAll('.answer-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Выделяем выбранный вариант
+            event.currentTarget.classList.add('selected');
+            
+            // Активируем кнопку отправки
+            document.getElementById('submitButton').disabled = false;
+        }
+
+        function checkAnswer() {
+            if (selectedAnswer === null) {
+                showNotification('Пожалуйста, выберите ответ');
+                return;
+            }
+
+            const submitButton = document.getElementById('submitButton');
+            const resultMessage = document.getElementById('resultMessage');
+            const resultIcon = document.getElementById('resultIcon');
+            const resultText = document.getElementById('resultText');
+
+            const isCorrect = selectedAnswer === currentTask.correctAnswer;
+
+            submitButton.disabled = true;
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Проверка...';
+
+            // Имитация проверки
+            setTimeout(() => {
+                if (isCorrect) {
+                    resultMessage.className = 'result-message result-correct';
+                    resultIcon.className = 'fas fa-check';
+                    resultText.innerHTML = `<div style="text-align: left;">${currentTask.explanation}</div>`;
+                    
+                    // Обновляем статистику
+                    updateStatistics(true);
+                } else {
+                    resultMessage.className = 'result-message result-incorrect';
+                    resultIcon.className = 'fas fa-times';
+                    resultText.innerHTML = `<div style="text-align: left;">${currentTask.explanation}</div>`;
+                    
+                    // Обновляем статистику
+                    updateStatistics(false);
+                }
+                
+                resultMessage.style.display = 'block';
+                submitButton.style.display = 'none';
+                
+            }, 1000);
+        }
+
+        // Логика для заданий с вводом ответа
+        function validateInput() {
+            const input = document.getElementById('answerInput');
+            const submitButton = document.getElementById('submitButton');
+            const value = input.value.trim();
+            
+            // Проверяем, что введено число
+            if (value && /^\d+$/.test(value)) {
+                submitButton.disabled = false;
+            } else {
+                submitButton.disabled = true;
+            }
+        }
+
+        function checkInputAnswer() {
+            const input = document.getElementById('answerInput');
+            const submitButton = document.getElementById('submitButton');
+            const resultMessage = document.getElementById('resultMessage');
+            const resultIcon = document.getElementById('resultIcon');
+            const resultText = document.getElementById('resultText');
+
+            const userAnswer = input.value.trim();
+            const isCorrect = userAnswer === currentTask.correctAnswer;
+
+            submitButton.disabled = true;
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Проверка...';
+
+            // Имитация проверки
+            setTimeout(() => {
+                if (isCorrect) {
+                    resultMessage.className = 'result-message result-correct';
+                    resultIcon.className = 'fas fa-check';
+                    resultText.innerHTML = `<div style="text-align: left;">${currentTask.explanation}</div>`;
+                    
+                    // Обновляем статистику
+                    updateStatistics(true);
+                } else {
+                    resultMessage.className = 'result-message result-incorrect';
+                    resultIcon.className = 'fas fa-times';
+                    resultText.innerHTML = `
+                        <div style="text-align: left;">
+                            <p>Ваш ответ: <strong>${userAnswer}</strong></p>
+                            <p>Правильный ответ: <strong>${currentTask.correctAnswer}</strong></p>
+                            ${currentTask.explanation}
+                        </div>
+                    `;
+                    
+                    // Обновляем статистику
+                    updateStatistics(false);
+                }
+                
+                resultMessage.style.display = 'block';
+                submitButton.style.display = 'none';
+                
+            }, 1000);
+        }
+
+        function updateStatistics(isCorrect) {
+            let statistics = JSON.parse(localStorage.getItem('userStatistics') || '{}');
+            
+            // Инициализируем статистику заданий если её нет
+            if (!statistics.tasks) {
+                statistics.tasks = {
+                    completed: 0,
+                    correct: 0,
+                    totalPoints: 0
+                };
+            }
+            
+            statistics.tasks.completed += 1;
+            if (isCorrect) {
+                statistics.tasks.correct += 1;
+                statistics.tasks.totalPoints += 10;
+            }
+            
+            localStorage.setItem('userStatistics', JSON.stringify(statistics));
+        }
+
+        // Добавляем возможность использовать клавиши 1-4 для выбора ответа
+        document.addEventListener('keydown', function(event) {
+            if (event.key >= '1' && event.key <= '4') {
+                const answerIndex = parseInt(event.key) - 1;
+                selectAnswer(answerIndex);
+            }
+        });
+    </script>
+</body>
+</html>
