@@ -2,7 +2,7 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require 'vendor/autoload.php'; // Установите PHPMailer через Composer
+require 'vendor/autoload.php'; 
 
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
@@ -15,20 +15,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $mail = new PHPMailer(true);
     
     try {
-        // Настройки SMTP
         $mail->isSMTP();
-        $mail->Host = 'smtp.yandex.ru'; // Или smtp.gmail.com и т.д.
+        $mail->Host = 'smtp.yandex.ru'; 
         $mail->SMTPAuth = true;
         $mail->Username = 'your-email@yandex.ru';
         $mail->Password = 'your-password';
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
         $mail->Port = 465;
         
-        // Отправитель и получатель
         $mail->setFrom('your-email@yandex.ru', 'bsk');
         $mail->addAddress($email);
         
-        // Содержание письма
         $mail->isHTML(true);
         $mail->Subject = 'Код подтверждения для bsk';
         $mail->Body = "
@@ -39,7 +36,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         $mail->send();
         
-        // Сохраняем код
         file_put_contents('codes.json', json_encode([
             'email' => $email, 
             'code' => $code, 
@@ -51,4 +47,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo json_encode(['success' => false, 'message' => $mail->ErrorInfo]);
     }
 }
+
 ?>
