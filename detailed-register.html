@@ -20,7 +20,6 @@
             color: white;
         }
 
-        /* Шапка */
         header {
             background: rgba(255, 255, 255, 0.1);
             padding: 1.2rem 0;
@@ -52,7 +51,6 @@
             text-decoration: none;
         }
 
-        /* Контейнер формы */
         .detailed-container {
             min-height: 100vh;
             display: flex;
@@ -109,7 +107,6 @@
             font-size: 1.1rem;
         }
 
-        /* Секции формы */
         .form-section {
             margin-bottom: 2.5rem;
             padding: 1.5rem;
@@ -132,7 +129,6 @@
             color: #ffd700;
         }
 
-        /* Выбор класса */
         .grade-buttons {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -167,7 +163,6 @@
             box-shadow: 0 5px 15px rgba(255, 20, 147, 0.4);
         }
 
-        /* Выбор цели */
         .goal-cards {
             display: grid;
             grid-template-columns: 1fr;
@@ -239,7 +234,6 @@
             color: rgba(255, 255, 255, 0.9);
         }
 
-        /* Кнопка отправки */
         .submit-button {
             width: 100%;
             background: linear-gradient(45deg, #ff6b9d, #ff1493);
@@ -287,7 +281,6 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Прогресс */
         .progress-info {
             text-align: center;
             margin-bottom: 2rem;
@@ -295,7 +288,6 @@
             font-size: 0.9rem;
         }
 
-        /* Уведомление */
         .notification {
             position: fixed;
             top: 20px;
@@ -315,7 +307,6 @@
             transform: translateX(0);
         }
 
-        /* Анимации */
         @keyframes slideUp {
             from {
                 opacity: 0;
@@ -327,7 +318,6 @@
             }
         }
 
-        /* Декоративные элементы */
         .floating-elements {
             position: absolute;
             top: 0;
@@ -369,7 +359,6 @@
             }
         }
 
-        /* Адаптивность */
         @media (max-width: 768px) {
             .detailed-container {
                 padding: 1rem;
@@ -412,19 +401,16 @@
     </style>
 </head>
 <body>
-    <!-- Уведомление -->
     <div class="notification" id="notification" role="alert" aria-live="polite">
         <div id="notificationMessage"></div>
     </div>
 
-    <!-- Шапка -->
     <header>
         <div class="nav-container">
             <a href="index.html" class="logo">BSK Education</a>
         </div>
     </header>
 
-    <!-- Контейнер формы -->
     <div class="detailed-container">
         <div class="floating-elements">
             <div class="floating-element"></div>
@@ -442,7 +428,6 @@
             </div>
 
             <form id="detailedForm">
-                <!-- Выбор класса -->
                 <div class="form-section">
                     <div class="section-title">
                         <i class="fas fa-graduation-cap"></i>
@@ -457,7 +442,6 @@
                     <input type="hidden" id="selectedGrade" name="grade" required>
                 </div>
 
-                <!-- Выбор цели -->
                 <div class="form-section">
                     <div class="section-title">
                         <i class="fas fa-bullseye"></i>
@@ -510,10 +494,9 @@
     </div>
 
     <script>
-        // Глобальная переменная для отслеживания состояния
         let isSubmitting = false;
 
-        // Функция показа уведомления
+        
         function showNotification(message) {
             const notification = document.getElementById('notification');
             const messageEl = document.getElementById('notificationMessage');
@@ -526,39 +509,30 @@
             }, 3000);
         }
 
-        // Выбор класса
         const gradeButtons = document.querySelectorAll('.grade-button');
         const selectedGradeInput = document.getElementById('selectedGrade');
         
         gradeButtons.forEach(button => {
             button.addEventListener('click', function() {
-                // Убираем выделение у всех кнопок
                 gradeButtons.forEach(btn => btn.classList.remove('selected'));
-                // Добавляем выделение текущей кнопке
                 this.classList.add('selected');
-                // Сохраняем значение
                 selectedGradeInput.value = this.dataset.grade;
                 checkFormValidity();
             });
         });
 
-        // Выбор цели
         const goalCards = document.querySelectorAll('.goal-card');
         const selectedGoalInput = document.getElementById('selectedGoal');
         
         goalCards.forEach(card => {
             card.addEventListener('click', function() {
-                // Убираем выделение у всех карточек
                 goalCards.forEach(c => c.classList.remove('selected'));
-                // Добавляем выделение текущей карточке
                 this.classList.add('selected');
-                // Сохраняем значение
                 selectedGoalInput.value = this.dataset.goal;
                 checkFormValidity();
             });
         });
 
-        // Проверка валидности формы
         function checkFormValidity() {
             const isGradeSelected = selectedGradeInput.value !== '';
             const isGoalSelected = selectedGoalInput.value !== '';
@@ -567,7 +541,6 @@
             submitButton.disabled = !(isGradeSelected && isGoalSelected);
         }
 
-        // Обработка отправки формы
         document.getElementById('detailedForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
@@ -578,30 +551,24 @@
             const originalText = submitButton.innerHTML;
             
             try {
-                // Показываем загрузку
                 submitButton.innerHTML = '<span class="loading"></span>Сохранение...';
                 submitButton.disabled = true;
 
-                // Собираем данные
                 const formData = {
                     grade: selectedGradeInput.value,
                     goal: selectedGoalInput.value,
                     registrationDate: new Date().toISOString()
                 };
 
-                // Проверяем существование страницы профиля
                 const profileExists = await checkPageExists('profile.html');
                 if (!profileExists) {
                     throw new Error('Страница профиля временно недоступна');
                 }
 
-                // Имитация сохранения данных
                 await new Promise(resolve => setTimeout(resolve, 1500));
                 
-                // Сохраняем настройки обучения
                 localStorage.setItem('userPreferences', JSON.stringify(formData));
                 
-                // Сохраняем данные пользователя
                 const userData = {
                     name: localStorage.getItem('userName') || 'Пользователь',
                     email: localStorage.getItem('userEmail') || '',
@@ -609,14 +576,11 @@
                 };
                 localStorage.setItem('bsk_user', JSON.stringify(userData));
                 
-                // Сбрасываем статистику для нового пользователя
                 resetUserStatistics();
                 
-                // Показываем успех
                 showNotification('Регистрация завершена успешно!');
                 submitButton.innerHTML = '<i class="fas fa-check"></i> Успешно!';
                 
-                // Перенаправляем на профиль
                 setTimeout(() => {
                     window.location.href = 'profile.html';
                 }, 1000);
@@ -625,14 +589,12 @@
                 console.error('Form submission error:', error);
                 showNotification('Произошла ошибка. Пожалуйста, попробуйте еще раз.');
                 
-                // Восстанавливаем кнопку
                 submitButton.innerHTML = originalText;
                 submitButton.disabled = false;
                 isSubmitting = false;
             }
         });
 
-        // Функция проверки существования страницы
         async function checkPageExists(url) {
             try {
                 const response = await fetch(url, { method: 'HEAD' });
@@ -642,33 +604,26 @@
             }
         }
 
-        // Функция сброса статистики для нового пользователя
         function resetUserStatistics() {
             const cleanStats = {
-                // Общая статистика
                 completedTests: 0,
                 averageScore: "0%",
                 studyDays: 0,
                 
-                // Прогресс по темам
                 algebraProgress: 0,
                 geometryProgress: 0,
                 trigonometryProgress: 0,
                 
-                // Детальная статистика по темам
                 topics: getDefaultTopics(),
                 
-                // Дата регистрации
                 registrationDate: new Date().toISOString(),
                 
-                // Последняя активность
                 lastActivity: new Date().toISOString()
             };
             
             localStorage.setItem('userStatistics', JSON.stringify(cleanStats));
         }
 
-        // Функция для получения тем по умолчанию в зависимости от класса
         function getDefaultTopics() {
             const grade = selectedGradeInput.value || '10';
             
@@ -698,7 +653,6 @@
             return topicsByGrade[grade] || topicsByGrade['10'];
         }
 
-        // Анимация при загрузке
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => {
                 document.querySelector('.detailed-card').style.opacity = '1';
@@ -706,4 +660,5 @@
         });
     </script>
 </body>
+
 </html>
