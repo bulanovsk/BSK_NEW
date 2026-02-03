@@ -20,7 +20,6 @@
             overflow-x: hidden;
         }
 
-        /* Шапка */
         header {
             background: rgba(255, 255, 255, 0.1);
             padding: 1rem 0;
@@ -89,7 +88,6 @@
             font-weight: 600;
         }
 
-        /* Основной контент */
         .dashboard-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -127,7 +125,6 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        /* Статистика */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -166,7 +163,6 @@
             font-size: 1rem;
         }
 
-        /* Прогресс */
         .progress-section {
             background: rgba(255, 255, 255, 0.1);
             padding: 2.5rem;
@@ -224,7 +220,6 @@
             transition: width 0.5s ease;
         }
 
-        /* Рекомендации */
         .recommendations-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -281,7 +276,6 @@
             box-shadow: 0 5px 15px rgba(255, 20, 147, 0.4);
         }
 
-        /* Уведомление */
         .notification {
             position: fixed;
             top: 20px;
@@ -301,7 +295,6 @@
             transform: translateX(0);
         }
 
-        /* Анимации */
         @keyframes slideUp {
             from {
                 opacity: 0;
@@ -313,7 +306,6 @@
             }
         }
 
-        /* Адаптивность */
         @media (max-width: 768px) {
             .dashboard-container {
                 padding: 5rem 1rem 1rem;
@@ -357,12 +349,10 @@
     </style>
 </head>
 <body>
-    <!-- Уведомление -->
     <div class="notification" id="notification" role="alert" aria-live="polite">
         <div id="notificationMessage"></div>
     </div>
 
-    <!-- Шапка -->
     <header>
         <div class="nav-container">
             <a href="index.html" class="logo">BSK Education</a>
@@ -390,16 +380,13 @@
         </div>
     </header>
 
-    <!-- Основной контент -->
     <div class="dashboard-container">
-        <!-- Приветствие -->
         <div class="welcome-section">
             <h1 class="welcome-title" id="welcomeTitle">Добро пожаловать!</h1>
             <p class="welcome-subtitle">Продолжайте свой путь к успешной сдаче экзаменов</p>
             <div class="date-display" id="currentDate"></div>
         </div>
 
-        <!-- Статистика -->
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-icon">
@@ -431,18 +418,17 @@
             </div>
         </div>
 
-        <!-- Прогресс по темам -->
         <div class="progress-section">
             <h2 class="section-title">
                 <i class="fas fa-tasks"></i>
                 Прогресс обучения
             </h2>
             <div id="progressList">
-                <!-- Прогресс будет загружен через JavaScript -->
+               
             </div>
         </div>
 
-        <!-- Рекомендации -->
+        
         <div class="progress-section">
             <h2 class="section-title">
                 <i class="fas fa-lightbulb"></i>
@@ -478,7 +464,7 @@
     </div>
 
     <script>
-        // Функция показа уведомления
+        
         function showNotification(message) {
             const notification = document.getElementById('notification');
             const messageEl = document.getElementById('notificationMessage');
@@ -491,7 +477,7 @@
             }, 3000);
         }
 
-        // Загрузка данных пользователя
+        
         function loadUserData() {
             try {
                 const savedUser = localStorage.getItem('bsk_user');
@@ -508,21 +494,21 @@
                 const user = JSON.parse(savedUser);
                 const stats = savedStats ? JSON.parse(savedStats) : getDefaultStats();
 
-                // Обновляем приветствие
+               
                 document.getElementById('welcomeTitle').textContent = `Добро пожаловать, ${user.name || 'Пользователь'}!`;
                 
-                // Обновляем аватар
+                
                 if (user.name) {
                     document.getElementById('userAvatar').textContent = user.name.charAt(0).toUpperCase();
                 }
 
-                // Обновляем статистику
+               
                 document.getElementById('completedTests').textContent = stats.completedTests || 0;
                 document.getElementById('averageScore').textContent = stats.averageScore || "0%";
                 document.getElementById('studyDays').textContent = stats.studyDays || 0;
                 document.getElementById('currentLevel').textContent = getCurrentLevel(stats);
 
-                // Обновляем прогресс
+                
                 updateProgressList(stats.topics || []);
 
             } catch (error) {
@@ -531,7 +517,7 @@
             }
         }
 
-        // Получение статистики по умолчанию
+       
         function getDefaultStats() {
             return {
                 completedTests: 0,
@@ -545,7 +531,7 @@
             };
         }
 
-        // Определение текущего уровня
+       
         function getCurrentLevel(stats) {
             const avgScore = parseInt(stats.averageScore) || 0;
             if (avgScore >= 90) return 'Эксперт';
@@ -554,7 +540,7 @@
             return 'Новичок';
         }
 
-        // Обновление списка прогресса
+        
         function updateProgressList(topics) {
             const progressList = document.getElementById('progressList');
             progressList.innerHTML = '';
@@ -575,7 +561,7 @@
             });
         }
 
-        // Обновление даты
+       
         function updateDate() {
             const now = new Date();
             const options = { 
@@ -588,7 +574,7 @@
                 now.toLocaleDateString('ru-RU', options);
         }
 
-        // Выход из системы
+        
         function logout() {
             try {
                 const savedUser = localStorage.getItem('bsk_user');
@@ -603,21 +589,20 @@
             }
         }
 
-        // Инициализация при загрузке страницы
+        
         document.addEventListener('DOMContentLoaded', function() {
             loadUserData();
             updateDate();
 
-            // Добавляем обработчики для кнопок рекомендаций
+            /
             document.querySelectorAll('.rec-button').forEach(button => {
                 button.addEventListener('click', function() {
                     showNotification('Функция в разработке');
                 });
             });
         });
-
-        // Обновляем дату каждую минуту
         setInterval(updateDate, 60000);
     </script>
 </body>
+
 </html>
