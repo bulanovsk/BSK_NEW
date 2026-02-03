@@ -20,7 +20,6 @@
             color: white;
         }
 
-        /* Шапка */
         header {
             background: rgba(255, 255, 255, 0.1);
             padding: 1.2rem 0;
@@ -70,7 +69,6 @@
             box-shadow: 0 5px 15px rgba(255, 20, 147, 0.4);
         }
 
-        /* Контент помощи */
         .help-container {
             min-height: 100vh;
             display: flex;
@@ -224,7 +222,6 @@
             font-size: 1rem;
         }
 
-        /* Уведомление */
         .notification {
             position: fixed;
             top: 20px;
@@ -244,7 +241,6 @@
             transform: translateX(0);
         }
 
-        /* Анимации */
         @keyframes slideUp {
             from {
                 opacity: 0;
@@ -268,7 +264,6 @@
             }
         }
 
-        /* Декоративные элементы */
         .floating-elements {
             position: absolute;
             top: 0;
@@ -318,7 +313,6 @@
             }
         }
 
-        /* Адаптивность */
         @media (max-width: 768px) {
             .help-container {
                 padding: 1rem;
@@ -368,12 +362,11 @@
     </style>
 </head>
 <body>
-    <!-- Уведомление -->
+    
     <div class="notification" id="notification" role="alert" aria-live="polite">
         <div id="notificationMessage"></div>
     </div>
 
-    <!-- Шапка -->
     <header>
         <div class="nav-container">
             <a href="index.html" class="logo">BSK Education</a>
@@ -384,7 +377,6 @@
         </div>
     </header>
 
-    <!-- Контент помощи -->
     <div class="help-container">
         <div class="floating-elements">
             <div class="floating-element"></div>
@@ -440,7 +432,6 @@
     </div>
 
     <script>
-        // Функция показа уведомления
         function showNotification(message) {
             const notification = document.getElementById('notification');
             const messageEl = document.getElementById('notificationMessage');
@@ -453,10 +444,8 @@
             }, 3000);
         }
 
-        // Добавляем интерактивность для контактных элементов
         document.querySelectorAll('.contact-item').forEach(item => {
             item.addEventListener('click', function(e) {
-                // Предотвращаем срабатывание при клике на ссылку
                 if (e.target.tagName === 'A') return;
                 
                 this.style.transform = 'scale(0.98)';
@@ -464,29 +453,25 @@
                     this.style.transform = '';
                 }, 150);
                 
-                // Показываем уведомление при клике на элемент
                 const contactType = this.querySelector('.contact-type').textContent;
                 const contactValue = this.querySelector('.contact-value').textContent;
                 showNotification(`${contactType} скопирован: ${contactValue}`);
                 
-                // Копируем текст в буфер обмена
                 navigator.clipboard.writeText(contactValue).catch(err => {
                     console.log('Ошибка копирования: ', err);
                 });
             });
         });
 
-        // Анимация при загрузке
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => {
                 document.querySelector('.help-card').style.opacity = '1';
             }, 100);
         });
 
-        // Обработка кликов по ссылкам
         document.querySelectorAll('.contact-value').forEach(link => {
             link.addEventListener('click', function(e) {
-                e.stopPropagation(); // Останавливаем всплытие события
+                e.stopPropagation(); 
                 const contactType = this.closest('.contact-item').querySelector('.contact-type').textContent;
                 const contactValue = this.textContent;
                 showNotification(`Открываем ${contactType}: ${contactValue}`);
@@ -494,4 +479,5 @@
         });
     </script>
 </body>
+
 </html>
