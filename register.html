@@ -20,7 +20,6 @@
             color: white;
         }
 
-        /* Логотип */
         .logo {
             position: fixed;
             top: 2rem;
@@ -40,7 +39,6 @@
             transform: translateY(-2px);
         }
 
-        /* Контейнер регистрации */
         .register-container {
             min-height: 100vh;
             display: flex;
@@ -96,7 +94,6 @@
             font-size: 1.1rem;
         }
 
-        /* Форма */
         .form-group {
             margin-bottom: 1.5rem;
             position: relative;
@@ -156,7 +153,6 @@
             color: #ffd700;
         }
 
-        /* Чекбокс */
         .checkbox-group {
             display: flex;
             align-items: flex-start;
@@ -188,7 +184,6 @@
             text-decoration: underline;
         }
 
-        /* Кнопка регистрации */
         .register-button {
             width: 100%;
             background: linear-gradient(45deg, #ff6b9d, #ff1493);
@@ -235,7 +230,6 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Разделитель */
         .divider {
             text-align: center;
             margin: 2rem 0;
@@ -262,7 +256,6 @@
             border-radius: 10px;
         }
 
-        /* Социальные кнопки */
         .social-buttons {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -305,7 +298,6 @@
             color: #fff;
         }
 
-        /* Ссылка на вход */
         .login-link {
             text-align: center;
             margin-top: 2rem;
@@ -325,7 +317,6 @@
             text-decoration: underline;
         }
 
-        /* Анимации */
         @keyframes slideUp {
             from {
                 opacity: 0;
@@ -346,7 +337,6 @@
             }
         }
 
-        /* Декоративные элементы */
         .floating-elements {
             position: absolute;
             top: 0;
@@ -387,7 +377,6 @@
             animation-delay: 4s;
         }
 
-        /* Уведомления */
         .notification {
             position: fixed;
             top: 20px;
@@ -407,7 +396,6 @@
             transform: translateX(0);
         }
 
-        /* Адаптивность */
         @media (max-width: 768px) {
             .register-container {
                 padding: 1rem;
@@ -451,15 +439,12 @@
     </style>
 </head>
 <body>
-    <!-- Уведомление -->
     <div class="notification" id="notification" role="alert" aria-live="polite">
         <div id="notificationMessage"></div>
     </div>
 
-    <!-- Логотип -->
     <a href="index.html" class="logo">BSK Education</a>
 
-    <!-- Контейнер регистрации -->
     <div class="register-container">
         <div class="floating-elements">
             <div class="floating-element"></div>
@@ -540,10 +525,8 @@
     </div>
 
     <script>
-        // Глобальная переменная для отслеживания состояния
         let isRegistering = false;
 
-        // Класс для управления пользователем
         class UserManager {
             constructor() {
                 this.currentUser = null;
@@ -551,7 +534,6 @@
                 this.checkAuthStatus();
             }
 
-            // Загрузка данных пользователя из LocalStorage
             loadUserData() {
                 const savedUser = localStorage.getItem('bsk_user');
                 if (savedUser) {
@@ -567,7 +549,6 @@
                 }
             }
 
-            // Сохранение данных пользователя в LocalStorage
             saveUserData(userData) {
                 this.currentUser = {...this.currentUser, ...userData};
                 localStorage.setItem('bsk_user', JSON.stringify(this.currentUser));
@@ -575,7 +556,6 @@
                 this.showNotification('Регистрация успешна!');
             }
 
-            // Регистрация пользователя
             registerUser(name, email, password) {
                 const userData = {
                     name: name,
@@ -590,22 +570,17 @@
                 return true;
             }
 
-            // Проверка статуса авторизации
             checkAuthStatus() {
                 const userInfo = this.getUserInfo();
                 
-                // Если пользователь уже авторизован и профиль настроен - перенаправляем на дашборд
                 if (userInfo.isLoggedIn && userInfo.setupCompleted) {
                     window.location.href = 'dashboard.html';
                 }
-                // Если пользователь авторизован но профиль не настроен - перенаправляем на настройку
                 else if (userInfo.isLoggedIn) {
                     window.location.href = 'profile-setup.html';
                 }
-                // Если не авторизован - остаемся на странице регистрации
             }
 
-            // Получение информации о пользователе
             getUserInfo() {
                 if (!this.currentUser) {
                     return { 
@@ -622,7 +597,6 @@
                 };
             }
 
-            // Показать уведомление
             showNotification(message) {
                 const notification = document.getElementById('notification');
                 const messageEl = document.getElementById('notificationMessage');
@@ -636,10 +610,8 @@
             }
         }
 
-        // Инициализация менеджера пользователя
         const userManager = new UserManager();
 
-        // Переключение видимости пароля
         function togglePassword(inputId) {
             const input = document.getElementById(inputId);
             const wrapper = input.parentElement;
@@ -656,7 +628,6 @@
             }
         }
 
-        // Валидация формы
         document.getElementById('registerForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -671,14 +642,12 @@
             const button = document.getElementById('registerButton');
             const originalText = button.innerHTML;
 
-            // Проверка заполнения полей
             if (!name || !email || !password || !confirmPassword) {
                 userManager.showNotification('Заполните все поля!');
                 isRegistering = false;
                 return;
             }
 
-            // Проверка email
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) {
                 userManager.showNotification('Введите корректный email!');
@@ -686,37 +655,31 @@
                 return;
             }
 
-            // Проверка совпадения паролей
             if (password !== confirmPassword) {
                 userManager.showNotification('Пароли не совпадают!');
                 isRegistering = false;
                 return;
             }
 
-            // Проверка согласия с условиями
             if (!agreement) {
                 userManager.showNotification('Необходимо согласиться с условиями использования');
                 isRegistering = false;
                 return;
             }
 
-            // Проверка сложности пароля
             if (password.length < 6) {
                 userManager.showNotification('Пароль должен содержать минимум 6 символов');
                 isRegistering = false;
                 return;
             }
 
-            // Регистрация пользователя
             button.innerHTML = '<span class="loading"></span>Регистрация...';
             button.disabled = true;
 
             setTimeout(() => {
-                // Регистрируем пользователя
                 const success = userManager.registerUser(name, email, password);
                 
                 if (success) {
-                    // Перенаправление на страницу настройки профиля
                     setTimeout(() => {
                         window.location.href = 'profile-setup.html';
                     }, 1500);
@@ -729,7 +692,6 @@
             }, 2000);
         });
 
-        // Анимация для логотипа
         const logo = document.querySelector('.logo');
         logo.addEventListener('mouseenter', function() {
             this.style.transform = 'translateY(-2px)';
@@ -739,7 +701,6 @@
             this.style.transform = 'translateY(0)';
         });
 
-        // Добавляем интерактивность полям ввода
         document.querySelectorAll('.form-input').forEach(input => {
             input.addEventListener('focus', function() {
                 this.style.background = 'rgba(255, 255, 255, 0.15)';
@@ -750,7 +711,6 @@
             });
         });
 
-        // Обработка социальных кнопок
         document.querySelectorAll('.social-button').forEach(button => {
             button.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -759,4 +719,5 @@
         });
     </script>
 </body>
+
 </html>
