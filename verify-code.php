@@ -4,7 +4,6 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Headers: Content-Type');
 
-// Функция для чтения кода из файла
 function readCodeFromFile() {
     $filename = 'codes.json';
     
@@ -30,7 +29,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $data['email'] ?? '';
     $code = $data['code'] ?? '';
     
-    // Чтение сохраненного кода
     $result = readCodeFromFile();
     
     if (!$result['success']) {
@@ -43,7 +41,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $savedCode = $savedData['code'] ?? '';
     $timestamp = $savedData['timestamp'] ?? 0;
     
-    // Проверка времени (10 минут)
     if ((time() - $timestamp) > 600) {
         echo json_encode(['success' => false, 'message' => 'Код устарел']);
         exit;
@@ -55,4 +52,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo json_encode(['success' => false, 'message' => 'Неверный код']);
     }
 }
+
 ?>
