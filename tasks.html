@@ -20,7 +20,6 @@
             overflow-x: hidden;
         }
 
-        /* Шапка */
         header {
             background: rgba(255, 255, 255, 0.1);
             padding: 1rem 0;
@@ -71,7 +70,6 @@
             color: #ffd700;
         }
 
-        /* Основной контент */
         .tasks-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -99,7 +97,6 @@
             color: rgba(255, 255, 255, 0.8);
         }
 
-        /* Шаги навигации */
         .steps-navigation {
             display: flex;
             justify-content: center;
@@ -147,7 +144,6 @@
             text-align: center;
         }
 
-        /* Сетки выбора */
         .selection-grid {
             display: grid;
             gap: 2rem;
@@ -201,7 +197,6 @@
             line-height: 1.5;
         }
 
-        /* Карточка задания */
         .task-card {
             background: rgba(255, 255, 255, 0.1);
             padding: 3rem;
@@ -281,7 +276,6 @@
             border-left: 4px solid #ffd700;
         }
 
-        /* Форма ответа */
         .answer-form {
             margin-top: 2rem;
         }
@@ -351,7 +345,6 @@
             cursor: not-allowed;
         }
 
-        /* Поле для ввода ответа */
         .answer-input-container {
             margin-bottom: 2rem;
         }
@@ -385,7 +378,6 @@
             text-align: center;
         }
 
-        /* Результат */
         .result-message {
             margin-top: 2rem;
             padding: 1.5rem;
@@ -407,7 +399,6 @@
             color: #F44336;
         }
 
-        /* Кнопка назад */
         .back-button {
             display: inline-flex;
             align-items: center;
@@ -429,7 +420,6 @@
             background: rgba(255, 255, 255, 0.15);
         }
 
-        /* Уведомление */
         .notification {
             position: fixed;
             top: 20px;
@@ -449,7 +439,6 @@
             transform: translateX(0);
         }
 
-        /* Скрытие секций */
         .section {
             display: none;
         }
@@ -458,7 +447,6 @@
             display: block;
         }
 
-        /* Математические формулы */
         .math-formula {
             font-family: 'Times New Roman', serif;
             font-style: italic;
@@ -483,7 +471,6 @@
             padding: 0.5rem;
         }
 
-        /* Стили для изображений формул */
         .formula-image {
             background: rgba(255, 255, 255, 0.1);
             padding: 1.5rem;
@@ -513,7 +500,6 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        /* Стили для физических изображений */
         .physics-image {
             background: rgba(255, 255, 255, 0.1);
             padding: 2rem;
@@ -531,7 +517,6 @@
             background: transparent;
         }
 
-        /* Стили для геометрических изображений */
         .geometry-image {
             background: rgba(255, 255, 255, 0.1);
             padding: 2rem;
@@ -560,7 +545,6 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* Анимации */
         @keyframes slideUp {
             from {
                 opacity: 0;
@@ -572,7 +556,6 @@
             }
         }
 
-        /* Адаптивность */
         @media (max-width: 768px) {
             .tasks-container {
                 padding: 5rem 1rem 1rem;
@@ -656,12 +639,10 @@
     </style>
 </head>
 <body>
-    <!-- Уведомление -->
     <div class="notification" id="notification" role="alert" aria-live="polite">
         <div id="notificationMessage"></div>
     </div>
 
-    <!-- Шапка -->
     <header>
         <div class="nav-container">
             <a href="index.html" class="logo">BSK Education</a>
@@ -682,15 +663,12 @@
         </div>
     </header>
 
-    <!-- Основной контент -->
     <div class="tasks-container">
-        <!-- Заголовок -->
         <div class="page-header">
             <h1 class="page-title">Система заданий</h1>
             <p class="page-subtitle">Выберите предмет и тему для начала решения</p>
         </div>
 
-        <!-- Навигация по шагам -->
         <div class="steps-navigation">
             <div class="step active" data-step="1">
                 <div class="step-circle">
@@ -718,7 +696,6 @@
             </div>
         </div>
 
-        <!-- Шаг 1: Выбор предмета -->
         <div class="section active" id="step1">
             <div class="selection-grid subject-grid">
                 <div class="selection-card" onclick="selectSubject('math')">
@@ -753,7 +730,6 @@
             </div>
         </div>
 
-        <!-- Шаг 2: Выбор уровня -->
         <div class="section" id="step2">
             <a class="back-button" onclick="goToStep(1)">
                 <i class="fas fa-arrow-left"></i>
@@ -783,7 +759,6 @@
             </div>
         </div>
 
-        <!-- Шаг 3: Выбор темы -->
         <div class="section" id="step3">
             <a class="back-button" onclick="goToStep(2)">
                 <i class="fas fa-arrow-left"></i>
@@ -791,33 +766,27 @@
             </a>
 
             <div class="selection-grid topic-grid" id="topicsGrid">
-                <!-- Темы будут загружены динамически -->
             </div>
         </div>
 
-        <!-- Шаг 4: Задание -->
         <div class="section" id="step4">
             <a class="back-button" onclick="goToStep(3)">
                 <i class="fas fa-arrow-left"></i>
                 Назад к выбору темы
             </a>
 
-            <!-- Карточка задания -->
             <div class="task-card" id="taskCard">
-                <!-- Задание будет загружено динамически -->
             </div>
         </div>
     </div>
 
     <script>
-        // Текущее состояние выбора
         let currentState = {
             subject: null,
             level: null,
             topic: null
         };
 
-        // База данных тем
         const topicsDatabase = {
             math: {
                 oge: [
@@ -899,7 +868,6 @@
             }
         };
 
-        // База данных заданий (ВСЕ задания сохранены)
         const tasksDatabase = {
             'math_oge_numbers': [
                 {
@@ -1468,7 +1436,7 @@
                 correctAnswer: 0,
                 explanation: "Правильный ответ: 9883255254"
             },
-            // ЗАДАНИЯ ПО ФИЗИКЕ (Механика, ОГЭ 2026)
+            
             'physics_oge_mechanics': [
                 {
                     id: 'task1',
@@ -1652,7 +1620,7 @@
                     `
                 }
             ],
-            // НОВЫЕ ЗАДАНИЯ ПО ФИЗИКЕ (Термодинамика, ОГЭ 2026)
+            
             'physics_oge_thermo': [
                 {
                     id: 'task1',
@@ -1849,7 +1817,7 @@
                     `
                 }
             ],
-            // НОВЫЕ ЗАДАНИЯ ПО ФИЗИКЕ (Механика, ЕГЭ 2026)
+
             'physics_ege_mechanics': [
                 {
                     id: 'task1',
@@ -2104,7 +2072,7 @@
                     `
                 }
             ],
-            // НОВЫЕ ЗАДАНИЯ ПО ФИЗИКЕ (Электродинамика, ЕГЭ 2026)
+
             'physics_ege_electro': [
                 {
                     id: 'task1',
@@ -2277,7 +2245,6 @@
             ]
         };
 
-        // Функция показа уведомления
         function showNotification(message) {
             const notification = document.getElementById('notification');
             const messageEl = document.getElementById('notificationMessage');
@@ -2290,17 +2257,13 @@
             }, 3000);
         }
 
-        // Переход между шагами
         function goToStep(stepNumber) {
-            // Скрываем все секции
             document.querySelectorAll('.section').forEach(section => {
                 section.classList.remove('active');
             });
             
-            // Показываем нужную секцию
             document.getElementById(`step${stepNumber}`).classList.add('active');
             
-            // Обновляем навигацию
             document.querySelectorAll('.step').forEach(step => {
                 step.classList.remove('active');
             });
@@ -2308,20 +2271,17 @@
             document.querySelector(`.step[data-step="${stepNumber}"]`).classList.add('active');
         }
 
-        // Выбор предмета
         function selectSubject(subject) {
             currentState.subject = subject;
             goToStep(2);
         }
 
-        // Выбор уровня
         function selectLevel(level) {
             currentState.level = level;
             loadTopics();
             goToStep(3);
         }
 
-        // Загрузка тем
         function loadTopics() {
             const topicsGrid = document.getElementById('topicsGrid');
             const topics = topicsDatabase[currentState.subject][currentState.level];
@@ -2343,14 +2303,12 @@
             });
         }
 
-        // Выбор темы
         function selectTopic(topic) {
             currentState.topic = topic;
             loadTasksList();
             goToStep(4);
         }
 
-        // Загрузка списка заданий для темы
         function loadTasksList() {
             const taskCard = document.getElementById('taskCard');
             const tasks = tasksDatabase[currentState.topic.id];
@@ -2366,7 +2324,6 @@
                 return;
             }
             
-            // Если это массив заданий
             if (Array.isArray(tasks)) {
                 taskCard.innerHTML = `
                     <div class="task-header">
@@ -2393,12 +2350,10 @@
                     </div>
                 `;
             } else {
-                // Если это одиночное задание (как в informatics_ege_networks)
                 loadTask(0);
             }
         }
 
-        // Вспомогательные функции для определения типа задания
         function getTaskIcon(task) {
             if (task.type === 'input') return 'keyboard';
             if (task.type === 'choice') return 'list';
@@ -2415,7 +2370,6 @@
             return 'Задание';
         }
 
-        // Загрузка конкретного задания
         function loadTask(taskIndex) {
             const taskCard = document.getElementById('taskCard');
             const tasks = tasksDatabase[currentState.topic.id];
@@ -2432,7 +2386,6 @@
                 return;
             }
             
-            // Общая часть заголовка
             let taskHtml = `
                 <div class="task-header">
                     <div>
@@ -2462,7 +2415,6 @@
                     <h3 style="margin-bottom: 1.5rem; color: white;">${getAnswerFormTitle(task)}</h3>
             `;
             
-            // Добавляем соответствующую форму в зависимости от типа задания
             if (task.type === 'input') {
                 taskHtml += `
                     <div class="answer-input-container">
@@ -2542,13 +2494,11 @@
             
             taskCard.innerHTML = taskHtml;
             
-            // Сбрасываем состояние
             selectedAnswers = task.type === 'choice-multiple' ? [] : 
                             task.type === 'matching' ? [] : null;
             currentTask = task;
         }
 
-        // Вспомогательные функции
         function getSubjectName(subject) {
             const subjects = {
                 'math': 'Математика',
@@ -2574,12 +2524,10 @@
             return 'Ответьте на вопрос:';
         }
 
-        // Глобальные переменные для хранения состояния
         let selectedAnswers = null;
         let currentTask = null;
         let matchingAnswers = [];
 
-        // Логика для заданий с вводом ответа
         function validateInput() {
             const input = document.getElementById('answerInput');
             const submitButton = document.getElementById('submitButton');
@@ -2630,7 +2578,6 @@
             }, 1000);
         }
 
-        // Логика для заданий с выбором одного ответа
         function selectSingleAnswer(answerIndex) {
             selectedAnswers = answerIndex;
             
@@ -2683,7 +2630,6 @@
             }, 1000);
         }
 
-        // Логика для заданий с выбором нескольких ответов
         function selectMultipleAnswer(answerIndex) {
             if (!selectedAnswers) selectedAnswers = [];
             
@@ -2718,7 +2664,6 @@
             const resultIcon = document.getElementById('resultIcon');
             const resultText = document.getElementById('resultText');
 
-            // Сортируем массивы для сравнения
             const userAnswers = selectedAnswers.slice().sort();
             const correctAnswers = currentTask.correctAnswers.slice().sort();
             
@@ -2753,7 +2698,6 @@
             }, 1000);
         }
 
-        // Логика для заданий на соответствие
         function selectMatchingAnswer(pairIndex, optionIndex) {
             if (!matchingAnswers[pairIndex]) {
                 matchingAnswers[pairIndex] = optionIndex;
@@ -2761,16 +2705,13 @@
                 matchingAnswers[pairIndex] = optionIndex;
             }
             
-            // Снимаем выделение со всех вариантов в этой паре
             const pairContainer = event.currentTarget.closest('.matching-pair');
             pairContainer.querySelectorAll('.answer-option').forEach(option => {
                 option.classList.remove('selected');
             });
             
-            // Выделяем выбранный вариант
             event.currentTarget.classList.add('selected');
             
-            // Проверяем, все ли пары заполнены
             const submitButton = document.getElementById('submitButton');
             const allFilled = matchingAnswers.length === currentTask.pairs.length && 
                             matchingAnswers.every(answer => answer !== undefined);
@@ -2837,7 +2778,6 @@
             localStorage.setItem('userStatistics', JSON.stringify(statistics));
         }
 
-        // Добавляем возможность использовать клавиши 1-4 для выбора ответа
         document.addEventListener('keydown', function(event) {
             if (event.key >= '1' && event.key <= '4') {
                 const answerIndex = parseInt(event.key) - 1;
