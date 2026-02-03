@@ -19,7 +19,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    // Настройки email
     $to = $email;
     $subject = 'Код подтверждения для восстановления пароля';
     $message = "
@@ -42,7 +41,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'Reply-To: no-reply@yourdomain.com'
     ];
 
-    // Отправка email
     if (mail($to, $subject, $message, implode("\r\n", $headers))) {
         error_log("Код $code отправлен на $email");
         echo json_encode(['success' => true, 'message' => 'Код отправлен']);
@@ -55,35 +53,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo json_encode(['success' => false, 'error' => 'Method not allowed']);
 }
 ?>
-// Функция отправки кода через Node.js сервер
-async function sendCode(email, code) {
-    console.log('Отправка запроса на сервер...', { email, code });
-
-    try {
-        const response = await fetch('http://localhost:3000/send-code', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                email: email,
-                code: code
-            })
-        });
-
-        console.log('Статус ответа:', response.status);
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const result = await response.json();
-        console.log('Ответ сервера:', result);
-        
-        return result;
-        
-    } catch (error) {
-        console.error('Ошибка отправки:', error);
-        throw error;
-    }
-}
