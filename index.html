@@ -188,13 +188,12 @@
     </style>
 </head>
 <body>
-    <!-- Уведомление -->
     <div class="notification" id="notification" role="alert" aria-live="polite">
         <div id="notificationMessage"></div>
     </div>
 
     <div class="container">
-        <!-- Левая часть - Описание -->
+
         <div class="hero-content">
             <h1>BSK Education</h1>
             <p>Интеллектуальная платформа для подготовки к ЕГЭ и ОГЭ. Персонализированное обучение, адаптивные задания и отслеживание прогресса.</p>
@@ -215,7 +214,6 @@
             </div>
         </div>
 
-        <!-- Правая часть - Авторизация -->
         <div class="auth-card">
             <h2>Добро пожаловать!</h2>
             <p>Присоединяйтесь к тысячам студентов, которые уже улучшают свои знания с BSK</p>
@@ -231,7 +229,6 @@
     </div>
 
     <script>
-        // Глобальная переменная для отслеживания состояния перенаправления
         let isRedirecting = false;
 
         class AuthManager {
@@ -239,7 +236,6 @@
                 this.checkExistingUser();
             }
 
-            // Проверка существования пользователя
             checkExistingUser() {
                 try {
                     const savedUser = localStorage.getItem('bsk_user');
@@ -250,12 +246,10 @@
                 }
             }
 
-            // Проверка завершена ли регистрация
             isRegistrationComplete(user) {
                 return user && user.name && user.grade && user.subjects && user.subjects.length > 0;
             }
 
-            // Показать уведомление
             showNotification(message) {
                 const notification = document.getElementById('notification');
                 const messageEl = document.getElementById('notificationMessage');
@@ -268,7 +262,6 @@
                 }, 3000);
             }
 
-            // Проверка существования страницы
             async checkPageExists(url) {
                 try {
                     const response = await fetch(url, { method: 'HEAD' });
@@ -278,18 +271,15 @@
                 }
             }
 
-            // Перенаправление на соответствующую страницу
             async redirectToPage(user) {
                 const button = document.getElementById('startButton');
                 const originalText = button.innerHTML;
                 
                 try {
-                    // Показываем индикатор загрузки
                     button.innerHTML = '<span class="loading"></span>Перенаправление...';
                     button.disabled = true;
 
                     if (user && this.isRegistrationComplete(user)) {
-                        // Проверяем существование страницы дашборда
                         const pageExists = await this.checkPageExists('dashboard.html');
                         if (!pageExists) {
                             this.showNotification('Страница временно недоступна. Попробуйте позже.');
@@ -301,7 +291,6 @@
                             window.location.href = 'dashboard.html';
                         }, 1000);
                     } else if (user) {
-                        // Проверяем существование страницы настройки профиля
                         const pageExists = await this.checkPageExists('profile-setup.html');
                         if (!pageExists) {
                             this.showNotification('Страница временно недоступна. Попробуйте позже.');
@@ -313,7 +302,6 @@
                             window.location.href = 'profile-setup.html';
                         }, 1000);
                     } else {
-                        // Проверяем существование страницы регистрации
                         const pageExists = await this.checkPageExists('register.html');
                         if (!pageExists) {
                             this.showNotification('Страница временно недоступна. Попробуйте позже.');
@@ -329,7 +317,6 @@
                     console.error('Redirect error:', error);
                     this.showNotification('Произошла ошибка. Пожалуйста, попробуйте еще раз.');
                     
-                    // Восстанавливаем кнопку
                     button.innerHTML = originalText;
                     button.disabled = false;
                     isRedirecting = false;
@@ -337,7 +324,6 @@
             }
         }
 
-        // Глобальная функция для кнопки
         function checkUserAndRedirect() {
             if (isRedirecting) return;
             
@@ -346,7 +332,6 @@
             const user = authManager.checkExistingUser();
             authManager.redirectToPage(user);
             
-            // Автосброс через 5 секунд на случай ошибки
             setTimeout(() => {
                 const button = document.getElementById('startButton');
                 if (button.disabled) {
@@ -357,11 +342,9 @@
             }, 5000);
         }
 
-        // Инициализация при загрузке
         document.addEventListener('DOMContentLoaded', function() {
-            // Можно добавить автоматическую проверку при загрузке,
-            // но лучше оставить по кнопке для ясности пользователя
         });
     </script>
 </body>
+
 </html>
