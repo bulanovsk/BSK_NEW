@@ -157,7 +157,6 @@
             transform: translate(-50%, -50%);
         }
 
-        /* Декоративные элементы */
         .floating-elements {
             position: absolute;
             top: 0;
@@ -297,7 +296,6 @@
 <body>
     <a href="index.html" class="logo">BSK Education</a>
 
-    <!-- Декоративные элементы -->
     <div class="floating-elements">
         <div class="floating-element"></div>
         <div class="floating-element"></div>
@@ -326,12 +324,10 @@
     </div>
 
     <script>
-        // Автоматическое перенаправление через 5 секунд
         setTimeout(() => {
             window.location.href = 'profile-setup.html';
         }, 5000);
 
-        // Анимация для логотипа
         const logo = document.querySelector('.logo');
         logo.addEventListener('mouseenter', function() {
             this.style.transform = 'translateY(-2px)';
@@ -341,7 +337,6 @@
             this.style.transform = 'translateY(0)';
         });
 
-        // Добавляем интерактивность для кнопки
         const successButton = document.querySelector('.success-button');
         successButton.addEventListener('mouseenter', function() {
             this.style.transform = 'translateY(-3px) scale(1.05)';
@@ -352,4 +347,5 @@
         });
     </script>
 </body>
+
 </html>
