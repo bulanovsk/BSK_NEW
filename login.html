@@ -232,7 +232,6 @@
             text-decoration: underline;
         }
 
-        /* Уведомления */
         .notification {
             position: fixed;
             top: 20px;
@@ -334,7 +333,6 @@
 <body>
     <a href="index.html" class="logo">BSK Education</a>
 
-    <!-- Уведомление -->
     <div class="notification" id="notification" role="alert" aria-live="polite">
         <div id="notificationMessage"></div>
     </div>
@@ -385,16 +383,13 @@
     </div>
 
     <script>
-        // Глобальная переменная для отслеживания состояния
         let isLoggingIn = false;
 
-        // Класс UserManager для управления пользователями
         class UserManager {
             constructor() {
                 this.currentUser = null;
             }
 
-            // Поиск пользователя по email и паролю
             findUser(email, password) {
                 try {
                     const savedUser = localStorage.getItem('bsk_user');
@@ -404,7 +399,6 @@
 
                     const user = JSON.parse(savedUser);
                     
-                    // Проверяем совпадение email и пароля
                     if (user.email === email && user.password === password) {
                         return user;
                     }
@@ -416,16 +410,13 @@
                 }
             }
 
-            // Вход пользователя
             loginUser(email, password) {
                 const user = this.findUser(email, password);
                 
                 if (user) {
-                    // Обновляем статус входа
                     user.isLoggedIn = true;
                     user.lastLogin = new Date().toISOString();
                     
-                    // Сохраняем обновленные данные
                     localStorage.setItem('bsk_user', JSON.stringify(user));
                     this.currentUser = user;
                     
@@ -441,7 +432,6 @@
                 }
             }
 
-            // Проверка завершена ли настройка профиля
             isProfileSetupComplete(user) {
                 return user && 
                        user.name && 
@@ -451,12 +441,10 @@
                        user.subjects.length > 0;
             }
 
-            // Показать уведомление
             showNotification(message, type = 'info') {
                 const notification = document.getElementById('notification');
                 const messageEl = document.getElementById('notificationMessage');
                 
-                // Устанавливаем класс в зависимости от типа
                 notification.className = 'notification';
                 if (type === 'error') notification.classList.add('error');
                 if (type === 'success') notification.classList.add('success');
@@ -469,16 +457,13 @@
                 }, 3000);
             }
 
-            // Перенаправление после успешного входа
             redirectAfterLogin(user) {
                 if (this.isProfileSetupComplete(user)) {
-                    // Профиль полностью настроен - на дашборд
                     this.showNotification('Вход выполнен! Перенаправляем...', 'success');
                     setTimeout(() => {
                         window.location.href = 'dashboard.html';
                     }, 1500);
                 } else {
-                    // Профиль не настроен - на настройку
                     this.showNotification('Завершите настройку профиля', 'success');
                     setTimeout(() => {
                         window.location.href = 'profile-setup.html';
@@ -487,7 +472,6 @@
             }
         }
 
-        // Инициализация менеджера пользователя
         const userManager = new UserManager();
 
         function togglePassword(inputId) {
@@ -517,14 +501,12 @@
             const button = document.getElementById('loginButton');
             const originalText = button.innerHTML;
 
-            // Валидация полей
             if (!email || !password) {
                 userManager.showNotification('Заполните все поля!', 'error');
                 isLoggingIn = false;
                 return;
             }
 
-            // Проверка email
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) {
                 userManager.showNotification('Введите корректный email!', 'error');
@@ -532,7 +514,6 @@
                 return;
             }
 
-            // Проверка пароля
             if (password.length < 6) {
                 userManager.showNotification('Пароль должен содержать минимум 6 символов', 'error');
                 isLoggingIn = false;
@@ -542,7 +523,6 @@
             button.innerHTML = '<span class="loading"></span>Вход...';
             button.disabled = true;
 
-            // Имитация запроса к серверу
             setTimeout(() => {
                 try {
                     const result = userManager.loginUser(email, password);
@@ -564,14 +544,12 @@
             }, 1500);
         });
 
-        // Автопроверка если пользователь уже вошел
         document.addEventListener('DOMContentLoaded', function() {
             try {
                 const savedUser = localStorage.getItem('bsk_user');
                 if (savedUser) {
                     const user = JSON.parse(savedUser);
                     if (user.isLoggedIn) {
-                        // Пользователь уже вошел - перенаправляем
                         if (userManager.isProfileSetupComplete(user)) {
                             window.location.href = 'dashboard.html';
                         } else {
@@ -584,7 +562,6 @@
             }
         });
 
-        // Добавляем интерактивность полям ввода
         document.querySelectorAll('.form-input').forEach(input => {
             input.addEventListener('focus', function() {
                 this.style.background = 'rgba(255, 255, 255, 0.15)';
@@ -595,7 +572,6 @@
             });
         });
 
-        // Анимация для логотипа
         const logo = document.querySelector('.logo');
         logo.addEventListener('mouseenter', function() {
             this.style.transform = 'scale(1.05)';
@@ -606,4 +582,5 @@
         });
     </script>
 </body>
+
 </html>
